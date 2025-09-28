@@ -4,6 +4,7 @@ go 1.23
 
 require (
 	github.com/fsnotify/fsnotify v1.9.0
+	github.com/rs/zerolog v1.34.0
 	github.com/wailsapp/wails/v2 v2.10.2
 )
 

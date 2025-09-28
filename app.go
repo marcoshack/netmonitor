@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"log/slog"
-	"os"
 	"sync"
+
+	"github.com/rs/zerolog/log"
 
 	"NetMonitor/internal/config"
 	"NetMonitor/internal/monitor"
@@ -16,7 +16,6 @@ import (
 type App struct {
 	ctx             context.Context
 	cancel          context.CancelFunc
-	logger          *slog.Logger
 	config          *config.Manager
 	monitor         *monitor.Manager
 	storage         *storage.Manager
@@ -35,38 +34,35 @@ func NewApp() *App {
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx, a.cancel = context.WithCancel(ctx)
-	
-	// Initialize logging first
-	a.initializeLogging()
 
-	a.logger.Info("NetMonitor application starting up")
+	log.Ctx(ctx).Info().Msg("NetMonitor application starting up")
 
 	// Initialize configuration manager
-	configManager, err := config.NewManager(".")
+	configManager, err := config.NewManager(ctx, ".")
 	if err != nil {
-		a.logger.Error("Failed to initialize configuration manager", "error", err)
+		log.Ctx(ctx).Error().Err(err).Msg("Failed to initialize configuration manager")
 		return
 	}
 	a.config = configManager
 
 	// Add configuration change callback
 	a.config.AddCallback(func(cfg *config.Config) {
-		a.logger.Info("Configuration changed", "regions", len(cfg.Regions))
+		log.Ctx(ctx).Info().Int("regions", len(cfg.Regions)).Msg("Configuration changed")
 		// TODO: Restart monitoring with new configuration
 	})
 
 	// Initialize storage manager
-	storageManager, err := storage.NewManager("./data", a.logger)
+	storageManager, err := storage.NewManager(ctx, "./data")
 	if err != nil {
-		a.logger.Error("Failed to initialize storage manager", "error", err)
+		log.Ctx(ctx).Error().Err(err).Msg("Failed to initialize storage manager")
 		return
 	}
 	a.storage = storageManager
 
 	// Initialize monitoring manager
-	monitorManager, err := monitor.NewManager(a.config, a.storage, a.logger)
+	monitorManager, err := monitor.NewManager(ctx, a.config, a.storage)
 	if err != nil {
-		a.logger.Error("Failed to initialize monitor manager", "error", err)
+		log.Ctx(ctx).Error().Err(err).Msg("Failed to initialize monitor manager")
 		return
 	}
 	a.monitor = monitorManager
@@ -75,12 +71,12 @@ func (a *App) startup(ctx context.Context) {
 	a.running = true
 	a.mutex.Unlock()
 
-	a.logger.Info("NetMonitor application startup completed successfully")
+	log.Ctx(ctx).Info().Msg("NetMonitor application startup completed successfully")
 }
 
 // Shutdown gracefully shuts down the application
 func (a *App) Shutdown() error {
-	a.logger.Info("NetMonitor application shutting down")
+	log.Ctx(a.ctx).Info().Msg("NetMonitor application shutting down")
 
 	a.mutex.Lock()
 	if !a.running {
@@ -93,21 +89,21 @@ func (a *App) Shutdown() error {
 	// Stop monitoring
 	if a.monitor != nil {
 		if err := a.monitor.Stop(); err != nil {
-			a.logger.Error("Failed to stop monitoring", "error", err)
+			log.Ctx(a.ctx).Error().Err(err).Msg("Failed to stop monitoring")
 		}
 	}
 
 	// Close storage
 	if a.storage != nil {
 		if err := a.storage.Close(); err != nil {
-			a.logger.Error("Failed to close storage", "error", err)
+			log.Ctx(a.ctx).Error().Err(err).Msg("Failed to close storage")
 		}
 	}
 
 	// Close configuration manager
 	if a.config != nil {
 		if err := a.config.Close(); err != nil {
-			a.logger.Error("Failed to close configuration manager", "error", err)
+			log.Ctx(a.ctx).Error().Err(err).Msg("Failed to close configuration manager")
 		}
 	}
 
@@ -116,7 +112,7 @@ func (a *App) Shutdown() error {
 		a.cancel()
 	}
 
-	a.logger.Info("NetMonitor application shutdown completed")
+	log.Ctx(a.ctx).Info().Msg("NetMonitor application shutdown completed")
 	return nil
 }
 
@@ -145,21 +141,9 @@ type SystemInfo struct {
 	Running         bool   `json:"running"`
 }
 
-// initializeLogging sets up structured logging
-func (a *App) initializeLogging() {
-	// Create structured logger with text output for better development experience
-	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		Level: slog.LevelInfo,
-	}))
-	
-	a.logger = logger
-}
-
 // Greet returns a greeting for the given name (temporary method for testing)
 func (a *App) Greet(name string) string {
-	if a.logger != nil {
-		a.logger.Info("Greet method called", "name", name)
-	}
+	log.Ctx(a.ctx).Info().Str("name", name).Msg("Greet method called")
 	return fmt.Sprintf("Hello %s, Welcome to NetMonitor!", name)
 }
 
@@ -170,13 +154,13 @@ func (a *App) GetConfiguration() (*config.Config, error) {
 	}
 	
 	cfg := a.config.GetConfig()
-	a.logger.Info("Configuration retrieved", "regions", len(cfg.Regions))
+	log.Ctx(a.ctx).Info().Int("regions", len(cfg.Regions)).Msg("Configuration retrieved")
 	return cfg, nil
 }
 
 // SetTheme sets the application theme
 func (a *App) SetTheme(theme string) error {
-	a.logger.Info("Theme change requested", "theme", theme)
+	log.Ctx(a.ctx).Info().Str("theme", theme).Msg("Theme change requested")
 	
 	// Validate theme
 	validThemes := map[string]bool{
@@ -192,7 +176,7 @@ func (a *App) SetTheme(theme string) error {
 	
 	// For now, just log the theme change
 	// TODO: Persist theme preference in configuration
-	a.logger.Info("Theme set successfully", "theme", theme)
+	log.Ctx(a.ctx).Info().Str("theme", theme).Msg("Theme set successfully")
 	return nil
 }
 
@@ -241,7 +225,7 @@ func (a *App) StartMonitoring() error {
 		return fmt.Errorf("monitor manager not initialized")
 	}
 	
-	a.logger.Info("Starting monitoring via API")
+	log.Ctx(a.ctx).Info().Msg("Starting monitoring via API")
 	return a.monitor.Start()
 }
 
@@ -251,7 +235,7 @@ func (a *App) StopMonitoring() error {
 		return fmt.Errorf("monitor manager not initialized")
 	}
 	
-	a.logger.Info("Stopping monitoring via API")
+	log.Ctx(a.ctx).Info().Msg("Stopping monitoring via API")
 	return a.monitor.Stop()
 }
 
@@ -261,6 +245,6 @@ func (a *App) RunManualTest(endpointID string) (*storage.TestResult, error) {
 		return nil, fmt.Errorf("monitor manager not initialized")
 	}
 	
-	a.logger.Info("Manual test requested via API", "endpoint_id", endpointID)
-	return a.monitor.RunManualTest(endpointID)
+	log.Ctx(a.ctx).Info().Str("endpoint_id", endpointID).Msg("Manual test requested via API")
+	return a.monitor.RunManualTest(a.ctx, endpointID)
 }

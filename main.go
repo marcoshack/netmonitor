@@ -1,8 +1,12 @@
 package main
 
 import (
+	"context"
 	"embed"
+	"os"
 
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
@@ -12,6 +16,16 @@ import (
 var assets embed.FS
 
 func main() {
+	// Initialize zerolog
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	logger := zerolog.New(os.Stdout).With().
+		Timestamp().
+		Caller().
+		Logger()
+
+	// Create context with logger
+	ctx := logger.WithContext(context.Background())
+
 	// Create an instance of the app structure
 	app := NewApp()
 
@@ -24,13 +38,16 @@ func main() {
 			Assets: assets,
 		},
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
-		OnStartup:        app.startup,
+		OnStartup: func(appCtx context.Context) {
+			// Pass the logger context to startup
+			app.startup(ctx)
+		},
 		Bind: []interface{}{
 			app,
 		},
 	})
 
 	if err != nil {
-		println("Error:", err.Error())
+		log.Ctx(ctx).Error().Err(err).Msg("Failed to start application")
 	}
 }
