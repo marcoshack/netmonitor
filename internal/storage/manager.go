@@ -1,19 +1,21 @@
 package storage
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"log/slog"
 	"os"
 	"path/filepath"
 	"sync"
 	"time"
+
+	"github.com/rs/zerolog/log"
 )
 
 // Manager handles data storage operations
 type Manager struct {
 	dataDir string
-	logger  *slog.Logger
+	ctx     context.Context
 	mutex   sync.RWMutex
 }
 
@@ -43,7 +45,7 @@ type FileMetadata struct {
 }
 
 // NewManager creates a new storage manager
-func NewManager(dataDir string, logger *slog.Logger) (*Manager, error) {
+func NewManager(ctx context.Context, dataDir string) (*Manager, error) {
 	// Ensure data directory exists
 	if err := os.MkdirAll(dataDir, 0755); err != nil {
 		return nil, fmt.Errorf("failed to create data directory: %w", err)
@@ -51,7 +53,7 @@ func NewManager(dataDir string, logger *slog.Logger) (*Manager, error) {
 
 	return &Manager{
 		dataDir: dataDir,
-		logger:  logger,
+		ctx:     ctx,
 	}, nil
 }
 
@@ -80,10 +82,11 @@ func (m *Manager) StoreTestResult(result *TestResult) error {
 		return fmt.Errorf("failed to save daily file: %w", err)
 	}
 
-	m.logger.Debug("Test result stored",
-		"endpoint_id", result.EndpointID,
-		"date", date,
-		"total_results", dataFile.Metadata.ResultCount)
+	log.Ctx(m.ctx).Debug().
+		Str("endpoint_id", result.EndpointID).
+		Str("date", date).
+		Int("total_results", dataFile.Metadata.ResultCount).
+		Msg("Test result stored")
 
 	return nil
 }
@@ -107,7 +110,7 @@ func (m *Manager) GetResults(date time.Time) ([]*TestResult, error) {
 
 // Close gracefully closes the storage manager
 func (m *Manager) Close() error {
-	m.logger.Info("Storage manager closing")
+	log.Ctx(m.ctx).Info().Msg("Storage manager closing")
 	return nil
 }
 

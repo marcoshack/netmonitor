@@ -1,10 +1,12 @@
 package monitor
 
 import (
+	"context"
 	"fmt"
-	"log/slog"
 	"sync"
 	"time"
+
+	"github.com/rs/zerolog/log"
 
 	"NetMonitor/internal/config"
 	"NetMonitor/internal/storage"
@@ -14,7 +16,7 @@ import (
 type Manager struct {
 	config    *config.Manager
 	storage   *storage.Manager
-	logger    *slog.Logger
+	ctx       context.Context
 	running   bool
 	stopChan  chan struct{}
 	mutex     sync.RWMutex
@@ -30,11 +32,11 @@ const (
 )
 
 // NewManager creates a new monitoring manager
-func NewManager(configMgr *config.Manager, storageMgr *storage.Manager, logger *slog.Logger) (*Manager, error) {
+func NewManager(ctx context.Context, configMgr *config.Manager, storageMgr *storage.Manager) (*Manager, error) {
 	return &Manager{
 		config:   configMgr,
 		storage:  storageMgr,
-		logger:   logger,
+		ctx:      ctx,
 		running:  false,
 		stopChan: make(chan struct{}),
 	}, nil
@@ -49,7 +51,7 @@ func (m *Manager) Start() error {
 		return fmt.Errorf("monitoring is already running")
 	}
 
-	m.logger.Info("Starting network monitoring")
+	log.Ctx(m.ctx).Info().Msg("Starting network monitoring")
 	m.running = true
 
 	// Start monitoring loop in goroutine
@@ -67,7 +69,7 @@ func (m *Manager) Stop() error {
 		return nil
 	}
 
-	m.logger.Info("Stopping network monitoring")
+	log.Ctx(m.ctx).Info().Msg("Stopping network monitoring")
 	m.running = false
 	close(m.stopChan)
 
@@ -82,8 +84,8 @@ func (m *Manager) IsRunning() bool {
 }
 
 // RunManualTest executes a single test for the specified endpoint
-func (m *Manager) RunManualTest(endpointID string) (*storage.TestResult, error) {
-	m.logger.Info("Running manual test", "endpoint_id", endpointID)
+func (m *Manager) RunManualTest(ctx context.Context, endpointID string) (*storage.TestResult, error) {
+	log.Ctx(ctx).Info().Str("endpoint_id", endpointID).Msg("Running manual test")
 
 	// For now, return a mock result
 	// This will be implemented with actual network testing later
@@ -97,7 +99,7 @@ func (m *Manager) RunManualTest(endpointID string) (*storage.TestResult, error) 
 
 	// Store the result
 	if err := m.storage.StoreTestResult(result); err != nil {
-		m.logger.Error("Failed to store test result", "error", err)
+		log.Ctx(ctx).Error().Err(err).Msg("Failed to store test result")
 		return result, fmt.Errorf("failed to store test result: %w", err)
 	}
 
@@ -111,14 +113,14 @@ func (m *Manager) monitoringLoop() {
 	ticker := time.NewTicker(interval)
 	defer ticker.Stop()
 
-	m.logger.Info("Monitoring loop started", "interval", interval)
+	log.Ctx(m.ctx).Info().Dur("interval", interval).Msg("Monitoring loop started")
 
 	for {
 		select {
 		case <-ticker.C:
 			m.runScheduledTests()
 		case <-m.stopChan:
-			m.logger.Info("Monitoring loop stopped")
+			log.Ctx(m.ctx).Info().Msg("Monitoring loop stopped")
 			return
 		}
 	}
@@ -135,17 +137,19 @@ func (m *Manager) runScheduledTests() {
 			// Run test for this endpoint
 			result, err := m.executeTest(endpoint, endpointID)
 			if err != nil {
-				m.logger.Error("Failed to execute test", 
-					"endpoint_id", endpointID, 
-					"error", err)
+				log.Ctx(m.ctx).Error().
+					Str("endpoint_id", endpointID).
+					Err(err).
+					Msg("Failed to execute test")
 				continue
 			}
 
 			// Store result
 			if err := m.storage.StoreTestResult(result); err != nil {
-				m.logger.Error("Failed to store test result", 
-					"endpoint_id", endpointID, 
-					"error", err)
+				log.Ctx(m.ctx).Error().
+					Str("endpoint_id", endpointID).
+					Err(err).
+					Msg("Failed to store test result")
 			}
 		}
 	}
@@ -162,10 +166,11 @@ func (m *Manager) executeTest(endpoint *config.Endpoint, endpointID string) (*st
 		Status:     string(TestStatusSuccess),
 	}
 
-	m.logger.Debug("Test executed",
-		"endpoint_id", endpointID,
-		"latency", result.Latency,
-		"status", result.Status)
+	log.Ctx(m.ctx).Debug().
+		Str("endpoint_id", endpointID).
+		Dur("latency", result.Latency).
+		Str("status", result.Status).
+		Msg("Test executed")
 
 	return result, nil
 }

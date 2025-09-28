@@ -1,21 +1,22 @@
 package config
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
-	"log/slog"
 	"os"
 	"path/filepath"
 	"sync"
 
 	"github.com/fsnotify/fsnotify"
+	"github.com/rs/zerolog/log"
 )
 
 // Manager handles configuration loading and management
 type Manager struct {
 	config     *Config
 	configPath string
-	logger     *slog.Logger
+	ctx        context.Context
 	watcher    *fsnotify.Watcher
 	mutex      sync.RWMutex
 	stopChan   chan struct{}
@@ -59,17 +60,12 @@ type Settings struct {
 }
 
 // NewManager creates a new configuration manager
-func NewManager(configDir string) (*Manager, error) {
+func NewManager(ctx context.Context, configDir string) (*Manager, error) {
 	configPath := filepath.Join(configDir, "config.json")
-	
-	// Create structured logger
-	logger := slog.New(slog.NewJSONHandler(nil, &slog.HandlerOptions{
-		Level: slog.LevelInfo,
-	}))
 
 	manager := &Manager{
 		configPath: configPath,
-		logger:     logger,
+		ctx:        ctx,
 		stopChan:   make(chan struct{}),
 		callbacks:  make([]ConfigCallback, 0),
 	}
@@ -83,7 +79,7 @@ func NewManager(configDir string) (*Manager, error) {
 
 	// Load existing config or create default
 	if err := manager.load(); err != nil {
-		manager.logger.Warn("Failed to load configuration, using defaults", "error", err)
+		log.Ctx(ctx).Warn().Err(err).Msg("Failed to load configuration, using defaults")
 		// If loading fails, create default config
 		manager.config = manager.getDefaultConfig()
 		if err := manager.save(); err != nil {
@@ -135,7 +131,7 @@ func (m *Manager) UpdateConfig(config *Config) error {
 		return fmt.Errorf("failed to save configuration: %w", err)
 	}
 
-	m.logger.Info("Configuration updated successfully")
+	log.Ctx(m.ctx).Info().Msg("Configuration updated successfully")
 	
 	// Notify callbacks
 	go m.notifyCallbacks(config)
@@ -158,11 +154,11 @@ func (m *Manager) Close() error {
 func (m *Manager) watchConfig() {
 	// Add the config file to watcher
 	if err := m.watcher.Add(m.configPath); err != nil {
-		m.logger.Error("Failed to watch config file", "error", err)
+		log.Ctx(m.ctx).Error().Err(err).Msg("Failed to watch config file")
 		return
 	}
 
-	m.logger.Info("Configuration file watcher started", "path", m.configPath)
+	log.Ctx(m.ctx).Info().Str("path", m.configPath).Msg("Configuration file watcher started")
 
 	for {
 		select {
@@ -172,9 +168,9 @@ func (m *Manager) watchConfig() {
 			}
 			
 			if event.Has(fsnotify.Write) {
-				m.logger.Info("Configuration file changed, reloading", "path", event.Name)
+				log.Ctx(m.ctx).Info().Str("path", event.Name).Msg("Configuration file changed, reloading")
 				if err := m.reload(); err != nil {
-					m.logger.Error("Failed to reload configuration", "error", err)
+					log.Ctx(m.ctx).Error().Err(err).Msg("Failed to reload configuration")
 				}
 			}
 
@@ -182,10 +178,10 @@ func (m *Manager) watchConfig() {
 			if !ok {
 				return
 			}
-			m.logger.Error("Configuration file watcher error", "error", err)
+			log.Ctx(m.ctx).Error().Err(err).Msg("Configuration file watcher error")
 
 		case <-m.stopChan:
-			m.logger.Info("Configuration file watcher stopped")
+			log.Ctx(m.ctx).Info().Msg("Configuration file watcher stopped")
 			return
 		}
 	}
@@ -426,7 +422,7 @@ func (m *Manager) GenerateDefaultConfig() error {
 		return fmt.Errorf("failed to save default configuration: %w", err)
 	}
 
-	m.logger.Info("Default configuration generated", "path", m.configPath)
+	log.Ctx(m.ctx).Info().Str("path", m.configPath).Msg("Default configuration generated")
 	return nil
 }
 
