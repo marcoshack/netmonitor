@@ -14,10 +14,10 @@ NetMonitor is a desktop application that monitors network connectivity and perfo
 Initialize a new Wails v2 project with the proper directory structure and basic configuration.
 
 ## Acceptance Criteria
-- [ ] Wails v2 project successfully created
-- [ ] Project builds without errors (`wails build`)
-- [ ] Application launches and displays a basic window
-- [ ] Directory structure follows Wails conventions:
+- [X] Wails v2 project successfully created
+- [X] Project builds without errors (`wails build`)
+- [X] Application launches and displays a basic window
+- [X] Directory structure follows Wails conventions:
   - `app/` - Go backend code
   - `frontend/` - Web frontend code
   - `build/` - Build output
