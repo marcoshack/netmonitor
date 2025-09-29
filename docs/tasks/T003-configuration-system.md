@@ -13,12 +13,12 @@ NetMonitor uses JSON configuration files to define:
 Create a robust configuration system that loads, validates, and manages the JSON configuration structure.
 
 ## Acceptance Criteria
-- [ ] Configuration struct definitions matching the spec format
-- [ ] JSON configuration file loading and parsing
-- [ ] Configuration validation (required fields, value ranges)
-- [ ] Default configuration generation
-- [ ] Configuration file watching for live updates
-- [ ] Error handling for malformed configurations
+- [X] Configuration struct definitions matching the spec format
+- [X] JSON configuration file loading and parsing
+- [X] Configuration validation (required fields, value ranges)
+- [X] Default configuration generation
+- [X] Configuration file watching for live updates
+- [X] Error handling for malformed configurations
 
 ## Expected Configuration Structure
 ```json

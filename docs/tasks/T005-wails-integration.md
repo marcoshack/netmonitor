@@ -10,14 +10,14 @@ Wails v2 provides a context system for frontend-backend communication. The front
 Set up Wails context binding, create basic API methods for frontend-backend communication, and establish the foundation for data exchange.
 
 ## Acceptance Criteria
-- [ ] Wails context properly configured in Go backend
-- [ ] Basic API methods exposed to frontend:
+- [X] Wails context properly configured in Go backend
+- [X] Basic API methods exposed to frontend:
   - `GetConfiguration()` - Retrieve current config
   - `GetSystemInfo()` - Get basic system information
   - `SetTheme(theme string)` - Set application theme
-- [ ] Frontend can successfully call backend methods
-- [ ] Error handling for frontend-backend communication
-- [ ] Frontend displays data received from backend
+- [X] Frontend can successfully call backend methods
+- [X] Error handling for frontend-backend communication
+- [X] Frontend displays data received from backend
 
 ## API Methods to Implement
 ```go

@@ -10,12 +10,12 @@ NetMonitor uses a web-based frontend that will display network monitoring data, 
 Create the basic frontend structure with HTML layout, CSS styling foundation, and JavaScript framework setup.
 
 ## Acceptance Criteria
-- [ ] Basic HTML structure with semantic layout
-- [ ] CSS foundation with CSS variables for theming
-- [ ] JavaScript module structure established
-- [ ] Basic theme switching capability (light/dark)
-- [ ] Responsive design foundations
-- [ ] Frontend builds and serves correctly through Wails
+- [X] Basic HTML structure with semantic layout
+- [X] CSS foundation with CSS variables for theming
+- [X] JavaScript module structure established
+- [X] Basic theme switching capability (light/dark)
+- [X] Responsive design foundations
+- [X] Frontend builds and serves correctly through Wails
 
 ## Frontend Structure
 - `frontend/index.html` - Main application page
