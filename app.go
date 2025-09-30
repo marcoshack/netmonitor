@@ -7,9 +7,9 @@ import (
 
 	"github.com/rs/zerolog/log"
 
-	"NetMonitor/internal/config"
-	"NetMonitor/internal/monitor"
-	"NetMonitor/internal/storage"
+	"github.com/marcoshack/netmonitor/internal/config"
+	"github.com/marcoshack/netmonitor/internal/monitor"
+	"github.com/marcoshack/netmonitor/internal/storage"
 )
 
 // App represents the main application context

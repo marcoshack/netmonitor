@@ -8,8 +8,8 @@ import (
 
 	"github.com/rs/zerolog/log"
 
-	"NetMonitor/internal/config"
-	"NetMonitor/internal/storage"
+	"github.com/marcoshack/netmonitor/internal/config"
+	"github.com/marcoshack/netmonitor/internal/storage"
 )
 
 // Manager handles network monitoring operations
