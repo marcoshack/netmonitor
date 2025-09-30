@@ -54,7 +54,7 @@ type Thresholds struct {
 
 // Settings represents global application settings
 type Settings struct {
-	TestIntervalMinutes  int  `json:"test_interval_minutes"`
+	TestIntervalSeconds  int  `json:"test_interval_seconds"`
 	DataRetentionDays    int  `json:"data_retention_days"`
 	NotificationsEnabled bool `json:"notifications_enabled"`
 }
@@ -285,7 +285,7 @@ func (m *Manager) getDefaultConfig() *Config {
 			},
 		},
 		Settings: &Settings{
-			TestIntervalMinutes:  5,
+			TestIntervalSeconds:  60,
 			DataRetentionDays:    90,
 			NotificationsEnabled: true,
 		},
@@ -323,8 +323,8 @@ func (m *Manager) validateConfig(config *Config) error {
 
 // validateSettings validates the settings section
 func (m *Manager) validateSettings(settings *Settings) error {
-	if settings.TestIntervalMinutes < 1 || settings.TestIntervalMinutes > 1440 {
-		return fmt.Errorf("test interval must be between 1 and 1440 minutes")
+	if settings.TestIntervalSeconds < 1 || settings.TestIntervalSeconds > 86400 {
+		return fmt.Errorf("test interval must be between 1 and 86400 seconds")
 	}
 
 	if settings.DataRetentionDays < 1 || settings.DataRetentionDays > 365 {

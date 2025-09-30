@@ -1,7 +1,7 @@
 export namespace config {
 	
 	export class Settings {
-	    test_interval_minutes: number;
+	    test_interval_seconds: number;
 	    data_retention_days: number;
 	    notifications_enabled: boolean;
 	
@@ -11,7 +11,7 @@ export namespace config {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.test_interval_minutes = source["test_interval_minutes"];
+	        this.test_interval_seconds = source["test_interval_seconds"];
 	        this.data_retention_days = source["data_retention_days"];
 	        this.notifications_enabled = source["notifications_enabled"];
 	    }

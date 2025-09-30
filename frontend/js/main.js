@@ -731,7 +731,7 @@ class NetMonitorApp {
 
         if (config.settings) {
             if (testIntervalEl) {
-                testIntervalEl.textContent = `${config.settings.test_interval_minutes} minutes`;
+                testIntervalEl.textContent = `${config.settings.test_interval_seconds} seconds`;
             }
             if (dataRetentionEl) {
                 dataRetentionEl.textContent = `${config.settings.data_retention_days} days`;
