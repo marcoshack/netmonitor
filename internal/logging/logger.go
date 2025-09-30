@@ -10,25 +10,31 @@ import (
 // Initialize configures and initializes the global zerolog logger.
 // If LOG_CONSOLE=1 is set, it uses colored console output.
 // Otherwise, it uses standard JSON output.
+// If LOG_CALLER=1 is set, it includes file and line number in log messages.
 func Initialize() zerolog.Logger {
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 
 	var logger zerolog.Logger
+	enableCaller := os.Getenv("LOG_CALLER") == "1"
 
 	if os.Getenv("LOG_CONSOLE") == "1" {
 		// Use colored console output
-		logger = zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout}).
+		ctx := zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout}).
 			With().
-			Timestamp().
-			Caller().
-			Logger()
+			Timestamp()
+		if enableCaller {
+			ctx = ctx.Caller()
+		}
+		logger = ctx.Logger()
 	} else {
 		// Use standard JSON output
-		logger = zerolog.New(os.Stdout).
+		ctx := zerolog.New(os.Stdout).
 			With().
-			Timestamp().
-			Caller().
-			Logger()
+			Timestamp()
+		if enableCaller {
+			ctx = ctx.Caller()
+		}
+		logger = ctx.Logger()
 	}
 
 	// Set global logger
