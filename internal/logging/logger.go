@@ -12,14 +12,17 @@ import (
 // Otherwise, it uses standard JSON output.
 // If LOG_CALLER=1 is set, it includes file and line number in log messages.
 func Initialize() zerolog.Logger {
-	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	zerolog.TimeFieldFormat = "2006-01-02T15:04:05.000Z07:00"
 
 	var logger zerolog.Logger
 	enableCaller := os.Getenv("LOG_CALLER") == "1"
 
 	if os.Getenv("LOG_CONSOLE") == "1" {
 		// Use colored console output
-		ctx := zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout}).
+		ctx := zerolog.New(zerolog.ConsoleWriter{
+			Out:        os.Stdout,
+			TimeFormat: "2006-01-02T15:04:05.000Z07:00",
+		}).
 			With().
 			Timestamp()
 		if enableCaller {

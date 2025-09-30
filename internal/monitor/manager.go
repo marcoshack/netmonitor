@@ -109,7 +109,7 @@ func (m *Manager) RunManualTest(ctx context.Context, endpointID string) (*storag
 // monitoringLoop runs the main monitoring loop
 func (m *Manager) monitoringLoop() {
 	config := m.config.GetConfig()
-	interval := time.Duration(config.Settings.TestIntervalMinutes) * time.Minute
+	interval := time.Duration(config.Settings.TestIntervalSeconds) * time.Second
 	ticker := time.NewTicker(interval)
 	defer ticker.Stop()
 
