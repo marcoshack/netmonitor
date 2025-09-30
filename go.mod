@@ -1,4 +1,4 @@
-module NetMonitor
+module github.com/marcoshack/netmonitor
 
 go 1.23
 
