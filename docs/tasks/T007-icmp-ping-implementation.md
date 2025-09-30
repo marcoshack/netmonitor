@@ -10,14 +10,14 @@ ICMP ping is a fundamental network diagnostic tool that sends packets to a desti
 Create a complete ICMP ping implementation that can test connectivity to IP addresses and measure latency accurately.
 
 ## Acceptance Criteria
-- [ ] ICMP ping implementation satisfying NetworkTest interface
-- [ ] Support for both IPv4 and IPv6 addresses
-- [ ] Accurate latency measurement in milliseconds
-- [ ] Proper handling of unreachable hosts
-- [ ] Timeout handling and cancellation support
-- [ ] Cross-platform compatibility (Windows, macOS, Linux)
-- [ ] Unit tests with mock scenarios
-- [ ] Integration tests with real endpoints
+- [x] ICMP ping implementation satisfying NetworkTest interface
+- [x] Support for both IPv4 and IPv6 addresses
+- [x] Accurate latency measurement in milliseconds
+- [x] Proper handling of unreachable hosts
+- [x] Timeout handling and cancellation support
+- [x] Cross-platform compatibility (Windows, macOS, Linux)
+- [x] Unit tests with mock scenarios
+- [x] Integration tests with real endpoints
 
 ## Implementation Requirements
 - Use raw sockets or appropriate OS-specific libraries
