@@ -3,12 +3,9 @@ package network
 import (
 	"context"
 	"fmt"
-	"net"
 	"time"
 
-	"golang.org/x/net/icmp"
-	"golang.org/x/net/ipv4"
-	"golang.org/x/net/ipv6"
+	probing "github.com/prometheus-community/pro-bing"
 )
 
 // ICMPTest implements the NetworkTest interface for ICMP ping functionality
@@ -23,15 +20,6 @@ func (t *ICMPTest) GetProtocol() string {
 func (t *ICMPTest) Validate(config TestConfig) error {
 	if config.Address == "" {
 		return fmt.Errorf("address is required for ICMP test")
-	}
-
-	// Validate that the address is a valid IP or can be resolved
-	if net.ParseIP(config.Address) == nil {
-		// Try to resolve hostname
-		_, err := net.ResolveIPAddr("ip", config.Address)
-		if err != nil {
-			return fmt.Errorf("invalid address: %w", err)
-		}
 	}
 
 	if config.Timeout <= 0 {
@@ -88,9 +76,32 @@ func (t *ICMPTest) Execute(ctx context.Context, config TestConfig) (*TestResult,
 		}
 	}
 
-	// Resolve the address
-	ipAddr, err := net.ResolveIPAddr("ip", config.Address)
+	// Create a pinger
+	pinger, err := probing.NewPinger(config.Address)
 	if err != nil {
+		return &TestResult{
+			Timestamp: startTime,
+			Protocol:  "ICMP",
+			Status:    TestStatusError,
+			Error:     fmt.Sprintf("failed to create pinger: %v", err),
+		}, err
+	}
+
+	// IMPORTANT: On Windows, we must use SetPrivileged(true) even though it doesn't require admin
+	// See: https://github.com/prometheus-community/pro-bing documentation
+	// This works on Windows 10+ without elevated privileges
+	pinger.SetPrivileged(true)
+
+	// Configure pinger
+	pinger.Count = icmpConfig.Count
+	if icmpConfig.Count <= 0 {
+		pinger.Count = 1
+	}
+	pinger.Size = icmpConfig.PacketSize
+	pinger.Timeout = config.Timeout
+
+	// Resolve the address to ensure it's valid
+	if err := pinger.Resolve(); err != nil {
 		return &TestResult{
 			Timestamp: startTime,
 			Protocol:  "ICMP",
@@ -99,17 +110,14 @@ func (t *ICMPTest) Execute(ctx context.Context, config TestConfig) (*TestResult,
 		}, err
 	}
 
-	// Determine if IPv4 or IPv6
-	isIPv4 := ipAddr.IP.To4() != nil
-
-	// Perform the ping
-	latency, err := t.ping(ctx, ipAddr, isIPv4, config.Timeout, icmpConfig)
+	// Run the ping
+	err = pinger.RunWithContext(ctx)
+	stats := pinger.Statistics()
 
 	result := &TestResult{
 		Timestamp:  startTime,
 		EndpointID: config.Name,
 		Protocol:   "ICMP",
-		Latency:    latency,
 	}
 
 	if err != nil {
@@ -120,127 +128,19 @@ func (t *ICMPTest) Execute(ctx context.Context, config TestConfig) (*TestResult,
 			result.Status = TestStatusFailed
 			result.Error = err.Error()
 		}
+		result.Latency = 0
 		return result, err
 	}
 
+	// Check if we received any packets
+	if stats.PacketsRecv == 0 {
+		result.Status = TestStatusTimeout
+		result.Error = "no ICMP reply received"
+		result.Latency = 0
+		return result, fmt.Errorf("no ICMP reply received")
+	}
+
 	result.Status = TestStatusSuccess
+	result.Latency = stats.AvgRtt
 	return result, nil
-}
-
-// ping performs the actual ICMP echo request/reply
-func (t *ICMPTest) ping(ctx context.Context, addr *net.IPAddr, isIPv4 bool, timeout time.Duration, config *ICMPConfig) (time.Duration, error) {
-	// Create context with timeout
-	ctx, cancel := context.WithTimeout(ctx, timeout)
-	defer cancel()
-
-	var network string
-	var icmpType icmp.Type
-
-	if isIPv4 {
-		if config.Privileged {
-			network = "ip4:icmp"
-		} else {
-			network = "udp4"
-		}
-		icmpType = ipv4.ICMPTypeEcho
-	} else {
-		if config.Privileged {
-			network = "ip6:ipv6-icmp"
-		} else {
-			network = "udp6"
-		}
-		icmpType = ipv6.ICMPTypeEchoRequest
-	}
-
-	// Create connection
-	conn, err := icmp.ListenPacket(network, "")
-	if err != nil {
-		return 0, fmt.Errorf("failed to create ICMP connection: %w", err)
-	}
-	defer conn.Close()
-
-	// Set TTL if specified
-	if config.TTL > 0 {
-		if isIPv4 {
-			if ipv4Conn := conn.IPv4PacketConn(); ipv4Conn != nil {
-				ipv4Conn.SetTTL(config.TTL)
-			}
-		} else {
-			if ipv6Conn := conn.IPv6PacketConn(); ipv6Conn != nil {
-				ipv6Conn.SetHopLimit(config.TTL)
-			}
-		}
-	}
-
-	// Prepare ICMP message
-	msg := icmp.Message{
-		Type: icmpType,
-		Code: 0,
-		Body: &icmp.Echo{
-			ID:   1,
-			Seq:  1,
-			Data: make([]byte, config.PacketSize),
-		},
-	}
-
-	msgBytes, err := msg.Marshal(nil)
-	if err != nil {
-		return 0, fmt.Errorf("failed to marshal ICMP message: %w", err)
-	}
-
-	// Send echo request and measure latency
-	start := time.Now()
-
-	if _, err := conn.WriteTo(msgBytes, addr); err != nil {
-		return 0, fmt.Errorf("failed to send ICMP echo request: %w", err)
-	}
-
-	// Set read deadline
-	conn.SetReadDeadline(time.Now().Add(timeout))
-
-	// Wait for reply
-	reply := make([]byte, 1500)
-	for {
-		select {
-		case <-ctx.Done():
-			return 0, ctx.Err()
-		default:
-			n, peer, err := conn.ReadFrom(reply)
-			if err != nil {
-				return 0, fmt.Errorf("failed to read ICMP reply: %w", err)
-			}
-
-			// Measure round-trip time
-			rtt := time.Since(start)
-
-			// Parse the reply
-			var proto int
-			if isIPv4 {
-				proto = 1 // ICMP for IPv4
-			} else {
-				proto = 58 // ICMPv6
-			}
-
-			replyMsg, err := icmp.ParseMessage(proto, reply[:n])
-			if err != nil {
-				continue // Not a valid ICMP message, keep waiting
-			}
-
-			// Check if this is an echo reply
-			isEchoReply := (isIPv4 && replyMsg.Type == ipv4.ICMPTypeEchoReply) ||
-				(!isIPv4 && replyMsg.Type == ipv6.ICMPTypeEchoReply)
-
-			if !isEchoReply {
-				continue // Not an echo reply, keep waiting
-			}
-
-			// Verify it's from the expected peer
-			if peer.String() != addr.String() {
-				continue // Reply from different host, keep waiting
-			}
-
-			// Successfully received echo reply
-			return rtt, nil
-		}
-	}
 }

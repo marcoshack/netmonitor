@@ -166,7 +166,6 @@ export namespace storage {
 	    timestamp: any;
 	    endpoint_id: string;
 	    protocol: string;
-	    latency: number;
 	    status: string;
 	    error?: string;
 	
@@ -179,7 +178,6 @@ export namespace storage {
 	        this.timestamp = this.convertValues(source["timestamp"], null);
 	        this.endpoint_id = source["endpoint_id"];
 	        this.protocol = source["protocol"];
-	        this.latency = source["latency"];
 	        this.status = source["status"];
 	        this.error = source["error"];
 	    }

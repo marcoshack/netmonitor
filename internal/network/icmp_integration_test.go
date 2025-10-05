@@ -50,7 +50,7 @@ func TestICMPTest_Integration_IPv4(t *testing.T) {
 		t.Errorf("Execute() protocol = %v, want ICMP", result.Protocol)
 	}
 
-	t.Logf("Ping to %s: latency=%v, status=%v", config.Address, result.Latency, result.Status)
+	t.Logf("Ping to %s: latencyInMs=%.2f, status=%v", config.Address, float64(result.Latency.Nanoseconds())/1_000_000.0, result.Status)
 }
 
 // TestICMPTest_Integration_IPv6 tests ICMP ping with a real IPv6 endpoint
@@ -97,7 +97,7 @@ func TestICMPTest_Integration_IPv6(t *testing.T) {
 		t.Errorf("Execute() protocol = %v, want ICMP", result.Protocol)
 	}
 
-	t.Logf("Ping to %s: latency=%v, status=%v", config.Address, result.Latency, result.Status)
+	t.Logf("Ping to %s: latencyInMs=%.2f, status=%v", config.Address, float64(result.Latency.Nanoseconds())/1_000_000.0, result.Status)
 }
 
 // TestICMPTest_Integration_Localhost tests ICMP ping to localhost
@@ -145,7 +145,7 @@ func TestICMPTest_Integration_Localhost(t *testing.T) {
 		t.Errorf("Execute() latency = %v, want > 0", result.Latency)
 	}
 
-	t.Logf("Ping to localhost: latency=%v, status=%v", result.Latency, result.Status)
+	t.Logf("Ping to localhost: latencyInMs=%.2f, status=%v", float64(result.Latency.Nanoseconds())/1_000_000.0, result.Status)
 }
 
 // TestICMPTest_Integration_UnreachableHost tests behavior with unreachable host
@@ -226,7 +226,7 @@ func TestICMPTest_Integration_HostnameResolution(t *testing.T) {
 		t.Errorf("Execute() latency = %v, want > 0", result.Latency)
 	}
 
-	t.Logf("Ping to %s: latency=%v, status=%v", config.Address, result.Latency, result.Status)
+	t.Logf("Ping to %s: latencyInMs=%.2f, status=%v", config.Address, float64(result.Latency.Nanoseconds())/1_000_000.0, result.Status)
 }
 
 // TestICMPTest_Integration_ConcurrentPings tests multiple simultaneous pings
@@ -278,7 +278,7 @@ func TestICMPTest_Integration_ConcurrentPings(t *testing.T) {
 
 		if err == nil && result.Status == TestStatusSuccess {
 			successCount++
-			t.Logf("Concurrent ping to %s: latency=%v, status=%v", result.EndpointID, result.Latency, result.Status)
+			t.Logf("Concurrent ping to %s: latencyInMs=%.2f, status=%v", result.EndpointID, float64(result.Latency.Nanoseconds())/1_000_000.0, result.Status)
 		} else if result.Status == TestStatusError {
 			t.Logf("Concurrent ping to %s failed (likely permission): %v", result.EndpointID, err)
 		}
@@ -324,7 +324,7 @@ func TestICMPTest_Integration_DifferentPacketSizes(t *testing.T) {
 			}
 
 			if err == nil && result.Status == TestStatusSuccess {
-				t.Logf("Ping with packet size %d: latency=%v", size, result.Latency)
+				t.Logf("Ping with packet size %d: latencyInMs=%.2f", size, float64(result.Latency.Nanoseconds())/1_000_000.0)
 			}
 		})
 	}
