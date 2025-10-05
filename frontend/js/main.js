@@ -632,8 +632,8 @@ class NetMonitorApp {
             this.showLoading('Running quick test...');
             const result = await this.api.runManualTest(endpointId);
             this.hideLoading();
-            
-            this.showSuccess(`Test completed: ${result.status} (${result.latency}ms)`);
+
+            this.showSuccess(`Test completed: ${result.status} (${result.latencyInMs}ms)`);
         } catch (error) {
             this.hideLoading();
             this.showError('Quick test failed: ' + this.api.formatError(error));
@@ -660,7 +660,7 @@ class NetMonitorApp {
                             </div>
                             <div class="result-item">
                                 <span class="result-label">Latency:</span>
-                                <span class="result-value">${result.latency}ms</span>
+                                <span class="result-value">${result.latencyInMs}ms</span>
                             </div>
                             <div class="result-item">
                                 <span class="result-label">Timestamp:</span>

@@ -14,13 +14,13 @@ import (
 
 // App represents the main application context
 type App struct {
-	ctx             context.Context
-	cancel          context.CancelFunc
-	config          *config.Manager
-	monitor         *monitor.Manager
-	storage         *storage.Manager
-	mutex           sync.RWMutex
-	running         bool
+	ctx     context.Context
+	cancel  context.CancelFunc
+	config  *config.Manager
+	monitor *monitor.Manager
+	storage *storage.Manager
+	mutex   sync.RWMutex
+	running bool
 }
 
 // NewApp creates a new App application struct
@@ -152,7 +152,7 @@ func (a *App) GetConfiguration() (*config.Config, error) {
 	if a.config == nil {
 		return nil, fmt.Errorf("configuration manager not initialized")
 	}
-	
+
 	cfg := a.config.GetConfig()
 	log.Ctx(a.ctx).Info().Int("regions", len(cfg.Regions)).Msg("Configuration retrieved")
 	return cfg, nil
@@ -161,7 +161,7 @@ func (a *App) GetConfiguration() (*config.Config, error) {
 // SetTheme sets the application theme
 func (a *App) SetTheme(theme string) error {
 	log.Ctx(a.ctx).Info().Str("theme", theme).Msg("Theme change requested")
-	
+
 	// Validate theme
 	validThemes := map[string]bool{
 		"light":         true,
@@ -169,11 +169,11 @@ func (a *App) SetTheme(theme string) error {
 		"auto":          true,
 		"high-contrast": true,
 	}
-	
+
 	if !validThemes[theme] {
 		return fmt.Errorf("invalid theme: %s", theme)
 	}
-	
+
 	// For now, just log the theme change
 	// TODO: Persist theme preference in configuration
 	log.Ctx(a.ctx).Info().Str("theme", theme).Msg("Theme set successfully")
@@ -187,9 +187,9 @@ func (a *App) GetMonitoringStatus() (*MonitoringStatus, error) {
 	}
 
 	status := &MonitoringStatus{
-		Running:       a.monitor.IsRunning(),
-		LastTestTime:  "Never", // TODO: Implement actual last test time
-		NextTestTime:  "5 minutes", // TODO: Calculate based on interval
+		Running:        a.monitor.IsRunning(),
+		LastTestTime:   "Never",     // TODO: Implement actual last test time
+		NextTestTime:   "5 minutes", // TODO: Calculate based on interval
 		TotalEndpoints: a.getTotalEndpointCount(),
 	}
 
@@ -209,13 +209,13 @@ func (a *App) getTotalEndpointCount() int {
 	if a.config == nil {
 		return 0
 	}
-	
+
 	cfg := a.config.GetConfig()
 	total := 0
 	for _, region := range cfg.Regions {
 		total += len(region.Endpoints)
 	}
-	
+
 	return total
 }
 
@@ -224,7 +224,7 @@ func (a *App) StartMonitoring() error {
 	if a.monitor == nil {
 		return fmt.Errorf("monitor manager not initialized")
 	}
-	
+
 	log.Ctx(a.ctx).Info().Msg("Starting monitoring via API")
 	return a.monitor.Start()
 }
@@ -234,7 +234,7 @@ func (a *App) StopMonitoring() error {
 	if a.monitor == nil {
 		return fmt.Errorf("monitor manager not initialized")
 	}
-	
+
 	log.Ctx(a.ctx).Info().Msg("Stopping monitoring via API")
 	return a.monitor.Stop()
 }
@@ -244,7 +244,9 @@ func (a *App) RunManualTest(endpointID string) (*storage.TestResult, error) {
 	if a.monitor == nil {
 		return nil, fmt.Errorf("monitor manager not initialized")
 	}
-	
+
 	log.Ctx(a.ctx).Info().Str("endpoint_id", endpointID).Msg("Manual test requested via API")
-	return a.monitor.RunManualTest(a.ctx, endpointID)
+	result, err := a.monitor.RunManualTest(a.ctx, endpointID)
+
+	return result, err
 }

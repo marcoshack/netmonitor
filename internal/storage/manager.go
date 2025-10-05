@@ -24,9 +24,37 @@ type TestResult struct {
 	Timestamp  time.Time     `json:"timestamp"`
 	EndpointID string        `json:"endpoint_id"`
 	Protocol   string        `json:"protocol"`
-	Latency    time.Duration `json:"latency"`
+	Latency    time.Duration `json:"-"` // Don't marshal directly
 	Status     string        `json:"status"`
 	Error      string        `json:"error,omitempty"`
+}
+
+// MarshalJSON implements custom JSON marshaling for TestResult
+func (tr *TestResult) MarshalJSON() ([]byte, error) {
+	type Alias TestResult
+	return json.Marshal(&struct {
+		*Alias
+		LatencyInMs float64 `json:"latencyInMs"`
+	}{
+		Alias:       (*Alias)(tr),
+		LatencyInMs: float64(tr.Latency.Nanoseconds()) / 1_000_000.0,
+	})
+}
+
+// UnmarshalJSON implements custom JSON unmarshaling for TestResult
+func (tr *TestResult) UnmarshalJSON(data []byte) error {
+	type Alias TestResult
+	aux := &struct {
+		*Alias
+		LatencyInMs float64 `json:"latencyInMs"`
+	}{
+		Alias: (*Alias)(tr),
+	}
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	tr.Latency = time.Duration(aux.LatencyInMs * 1_000_000.0)
+	return nil
 }
 
 // DailyDataFile represents a daily data file structure

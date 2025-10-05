@@ -35,7 +35,6 @@ func main() {
 		},
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		OnStartup: func(appCtx context.Context) {
-			// Pass the logger context to startup
 			app.startup(ctx)
 		},
 		Bind: []interface{}{

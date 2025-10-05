@@ -39,7 +39,7 @@ func main() {
 	fmt.Printf("Ping Test Results:\n")
 	fmt.Printf("  Endpoint: %s\n", config.Address)
 	fmt.Printf("  Status: %s\n", result.Status)
-	fmt.Printf("  Latency: %v\n", result.Latency)
+	fmt.Printf("  LatencyInMs: %.2f\n", float64(result.Latency.Nanoseconds())/1_000_000.0)
 	fmt.Printf("  Protocol: %s\n", result.Protocol)
 	fmt.Printf("  Timestamp: %v\n", result.Timestamp)
 
