@@ -69,6 +69,7 @@ The frontend communicates with Go backend through Wails bindings:
 The application uses zerolog for structured logging:
 - Initialized in [internal/logging/logger.go](internal/logging/logger.go)
 - Context-aware logging throughout: `log.Ctx(ctx).Info().Msg("message")`
+- Any non-trivial methods should receive a `ctx` (context.Context type) as the first attribute
 - Console output enabled via `LOG_CONSOLE=1` environment variable
 
 ## Key Implementation Notes
@@ -110,6 +111,21 @@ The project aims for 80% unit test coverage (excluding UI). When writing tests:
 - Use table-driven tests for multiple scenarios
 - Example: [internal/network/interfaces_test.go](internal/network/interfaces_test.go)
 - Mock external dependencies (filesystem, network, time)
+
+## Coding Standards
+
+- Follow Go conventions (gofmt, golint)
+- Use context.Context for all long-running and/or non-trivial operations
+- Use structured logging with zerolog
+- Write clear, maintainable code with comments for complex logic
+- Use dependency injection where appropriate for testability
+- Use input/output objects to facilitate changes without changing methods signature
+- Validate all external inputs (config files, user input)
+- Imports must be separated by new line:
+  - first all standard packages
+  - then external dependencies
+  - finally imports from the current project
+- All public interfaces, structs, methods and attributes must have a comment explaining it's intent and usage examples, when applicable
 
 ## Configuration File Format
 
