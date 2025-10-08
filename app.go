@@ -193,11 +193,29 @@ func (a *App) GetMonitoringStatus() (*MonitoringStatus, error) {
 		return nil, fmt.Errorf("monitor manager not initialized")
 	}
 
+	schedulerStatus := a.monitor.GetSchedulerStatus()
+	cfg := a.config.GetConfig()
+
+	// Get region status
+	regionStatus := make(map[string]*RegionStatus)
+	for regionName, region := range cfg.Regions {
+		regionStatus[regionName] = &RegionStatus{
+			Name:          regionName,
+			EndpointCount: len(region.Endpoints),
+			HealthyCount:  0, // Will be updated with actual data
+			WarningCount:  0,
+			DownCount:     0,
+		}
+	}
+
 	status := &MonitoringStatus{
-		Running:        a.monitor.IsRunning(),
-		LastTestTime:   "Never",     // TODO: Implement actual last test time
-		NextTestTime:   "5 minutes", // TODO: Calculate based on interval
-		TotalEndpoints: a.getTotalEndpointCount(),
+		Running:         a.monitor.IsRunning(),
+		StartTime:       schedulerStatus.LastRun,
+		TotalEndpoints:  a.getTotalEndpointCount(),
+		ActiveEndpoints: a.getTotalEndpointCount(), // All are active by default
+		LastTestTime:    schedulerStatus.LastRun,
+		NextTestTime:    schedulerStatus.NextRun,
+		RegionStatus:    regionStatus,
 	}
 
 	return status, nil
@@ -205,10 +223,56 @@ func (a *App) GetMonitoringStatus() (*MonitoringStatus, error) {
 
 // MonitoringStatus represents the current monitoring state
 type MonitoringStatus struct {
-	Running        bool   `json:"running"`
-	LastTestTime   string `json:"lastTestTime"`
-	NextTestTime   string `json:"nextTestTime"`
-	TotalEndpoints int    `json:"totalEndpoints"`
+	Running         bool                     `json:"running"`
+	StartTime       time.Time                `json:"startTime"`
+	TotalEndpoints  int                      `json:"totalEndpoints"`
+	ActiveEndpoints int                      `json:"activeEndpoints"`
+	LastTestTime    time.Time                `json:"lastTestTime"`
+	NextTestTime    time.Time                `json:"nextTestTime"`
+	RegionStatus    map[string]*RegionStatus `json:"regionStatus"`
+}
+
+// EndpointStatus represents the status of a single endpoint
+type EndpointStatus struct {
+	ID               string        `json:"id"`
+	Name             string        `json:"name"`
+	Status           string        `json:"status"` // "up", "down", "warning"
+	LastLatency      time.Duration `json:"lastLatency"`
+	LastTest         time.Time     `json:"lastTest"`
+	Uptime           float64       `json:"uptime"` // Percentage
+	ConsecutiveFails int           `json:"consecutiveFails"`
+}
+
+// RegionStatus represents the status of a region
+type RegionStatus struct {
+	Name           string  `json:"name"`
+	EndpointCount  int     `json:"endpointCount"`
+	HealthyCount   int     `json:"healthyCount"`
+	WarningCount   int     `json:"warningCount"`
+	DownCount      int     `json:"downCount"`
+	AverageLatency float64 `json:"averageLatency"`
+	OverallHealth  string  `json:"overallHealth"`
+}
+
+// SystemHealth represents system health information
+type SystemHealth struct {
+	Healthy        bool              `json:"healthy"`
+	Issues         []string          `json:"issues"`
+	Warnings       []string          `json:"warnings"`
+	StorageStatus  string            `json:"storageStatus"`
+	SchedulerState string            `json:"schedulerState"`
+	ConfigValid    bool              `json:"configValid"`
+	Metrics        map[string]string `json:"metrics"`
+}
+
+// PerformanceMetrics represents system performance metrics
+type PerformanceMetrics struct {
+	MemoryUsageMB    float64 `json:"memoryUsageMB"`
+	CPUUsagePercent  float64 `json:"cpuUsagePercent"`
+	GoroutineCount   int     `json:"goroutineCount"`
+	ActiveTests      int     `json:"activeTests"`
+	CompletedTests   int64   `json:"completedTests"`
+	StorageSizeBytes int64   `json:"storageSizeBytes"`
 }
 
 // getTotalEndpointCount counts total configured endpoints
@@ -431,4 +495,129 @@ func (a *App) ValidateEndpoint(endpoint *config.Endpoint) (*config.ValidationRes
 		Msg("Validate endpoint requested via API")
 
 	return a.config.ValidateEndpointConfig(endpoint), nil
+}
+
+// GetRecentResults retrieves recent test results for an endpoint
+func (a *App) GetRecentResults(endpointID string, hours int) ([]*storage.TestResult, error) {
+	if a.storage == nil {
+		return nil, fmt.Errorf("storage manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Str("endpoint_id", endpointID).
+		Int("hours", hours).
+		Msg("Recent results requested via API")
+
+	// Get results for the last N hours
+	var allResults []*storage.TestResult
+	now := time.Now()
+
+	for i := 0; i < hours/24+1; i++ {
+		date := now.AddDate(0, 0, -i)
+		results, err := a.storage.GetResults(date)
+		if err != nil {
+			log.Ctx(a.ctx).Warn().
+				Err(err).
+				Time("date", date).
+				Msg("Failed to get results for date")
+			continue
+		}
+
+		// Filter for this endpoint and time range
+		cutoff := now.Add(-time.Duration(hours) * time.Hour)
+		for _, result := range results {
+			if result.EndpointID == endpointID && result.Timestamp.After(cutoff) {
+				allResults = append(allResults, result)
+			}
+		}
+	}
+
+	return allResults, nil
+}
+
+// GetSystemHealth returns system health information
+func (a *App) GetSystemHealth() (*SystemHealth, error) {
+	health := &SystemHealth{
+		Healthy:       true,
+		Issues:        []string{},
+		Warnings:      []string{},
+		ConfigValid:   true,
+		Metrics:       make(map[string]string),
+	}
+
+	// Check monitoring status
+	if a.monitor != nil {
+		if a.monitor.IsRunning() {
+			health.SchedulerState = "running"
+		} else {
+			health.SchedulerState = "stopped"
+			health.Warnings = append(health.Warnings, "Monitoring is not running")
+		}
+	} else {
+		health.Healthy = false
+		health.Issues = append(health.Issues, "Monitor manager not initialized")
+		health.SchedulerState = "error"
+	}
+
+	// Check storage
+	if a.storage != nil {
+		stats, err := a.storage.GetStorageStats()
+		if err != nil {
+			health.Warnings = append(health.Warnings, fmt.Sprintf("Failed to get storage stats: %v", err))
+			health.StorageStatus = "warning"
+		} else {
+			health.StorageStatus = "healthy"
+			health.Metrics["storage_files"] = fmt.Sprintf("%d", stats.TotalFiles)
+			health.Metrics["storage_size_mb"] = fmt.Sprintf("%.2f", float64(stats.TotalSizeBytes)/1024/1024)
+		}
+	} else {
+		health.Healthy = false
+		health.Issues = append(health.Issues, "Storage manager not initialized")
+		health.StorageStatus = "error"
+	}
+
+	// Check configuration
+	if a.config != nil {
+		cfg := a.config.GetConfig()
+		health.Metrics["total_regions"] = fmt.Sprintf("%d", len(cfg.Regions))
+		health.Metrics["total_endpoints"] = fmt.Sprintf("%d", a.getTotalEndpointCount())
+	} else {
+		health.Healthy = false
+		health.Issues = append(health.Issues, "Configuration manager not initialized")
+		health.ConfigValid = false
+	}
+
+	log.Ctx(a.ctx).Info().
+		Bool("healthy", health.Healthy).
+		Int("issues", len(health.Issues)).
+		Int("warnings", len(health.Warnings)).
+		Msg("System health requested via API")
+
+	return health, nil
+}
+
+// GetPerformanceMetrics returns performance metrics
+func (a *App) GetPerformanceMetrics() (*PerformanceMetrics, error) {
+	metrics := &PerformanceMetrics{
+		GoroutineCount: 0, // Will be updated with actual runtime data
+	}
+
+	// Get scheduler metrics
+	if a.monitor != nil {
+		schedulerStatus := a.monitor.GetSchedulerStatus()
+		metrics.ActiveTests = schedulerStatus.ActiveTests
+		metrics.CompletedTests = schedulerStatus.CompletedTests
+	}
+
+	// Get storage metrics
+	if a.storage != nil {
+		stats, err := a.storage.GetStorageStats()
+		if err == nil {
+			metrics.StorageSizeBytes = stats.TotalSizeBytes
+		}
+	}
+
+	log.Ctx(a.ctx).Info().Msg("Performance metrics requested via API")
+
+	return metrics, nil
 }

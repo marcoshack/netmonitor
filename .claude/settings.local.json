@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git commit -m \"$(cat <<''EOF''\nImplement T014: Endpoint Management functionality\n\n- Added comprehensive CRUD operations to config.Manager\n- AddEndpoint, UpdateEndpoint, RemoveEndpoint with full validation\n- MoveEndpoint for transferring endpoints between regions\n- CreateRegion, UpdateRegion, RemoveRegion for region management\n- ValidateEndpointConfig with detailed errors and warnings\n- Automatic configuration persistence on all operations\n- Configuration change callbacks trigger monitoring system updates\n- Duplicate name detection and prevention\n- Prevents removal of last region\n- All operations exposed via Wails API methods in App\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(go test:*)",
+      "Bash(go build:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m *)"
     ],
     "deny": [],
     "ask": []
