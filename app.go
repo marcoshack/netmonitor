@@ -323,3 +323,112 @@ func (a *App) GetAggregatedData(endpointID, regionName, period string, hours int
 
 	return results, err
 }
+
+// AddEndpoint adds a new endpoint to a region
+func (a *App) AddEndpoint(regionName string, endpoint *config.Endpoint) error {
+	if a.config == nil {
+		return fmt.Errorf("configuration manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Str("region", regionName).
+		Str("endpoint", endpoint.Name).
+		Msg("Add endpoint requested via API")
+
+	return a.config.AddEndpoint(regionName, endpoint)
+}
+
+// UpdateEndpoint updates an existing endpoint
+func (a *App) UpdateEndpoint(regionName, endpointName string, endpoint *config.Endpoint) error {
+	if a.config == nil {
+		return fmt.Errorf("configuration manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Str("region", regionName).
+		Str("endpoint", endpointName).
+		Msg("Update endpoint requested via API")
+
+	return a.config.UpdateEndpoint(regionName, endpointName, endpoint)
+}
+
+// RemoveEndpoint removes an endpoint from a region
+func (a *App) RemoveEndpoint(regionName, endpointName string) error {
+	if a.config == nil {
+		return fmt.Errorf("configuration manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Str("region", regionName).
+		Str("endpoint", endpointName).
+		Msg("Remove endpoint requested via API")
+
+	return a.config.RemoveEndpoint(regionName, endpointName)
+}
+
+// MoveEndpoint moves an endpoint between regions
+func (a *App) MoveEndpoint(sourceRegion, targetRegion, endpointName string) error {
+	if a.config == nil {
+		return fmt.Errorf("configuration manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Str("from_region", sourceRegion).
+		Str("to_region", targetRegion).
+		Str("endpoint", endpointName).
+		Msg("Move endpoint requested via API")
+
+	return a.config.MoveEndpoint(sourceRegion, targetRegion, endpointName)
+}
+
+// CreateRegion creates a new region
+func (a *App) CreateRegion(regionName string, thresholds *config.Thresholds) error {
+	if a.config == nil {
+		return fmt.Errorf("configuration manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Str("region", regionName).
+		Msg("Create region requested via API")
+
+	return a.config.CreateRegion(regionName, thresholds)
+}
+
+// UpdateRegion updates a region's thresholds
+func (a *App) UpdateRegion(regionName string, thresholds *config.Thresholds) error {
+	if a.config == nil {
+		return fmt.Errorf("configuration manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Str("region", regionName).
+		Msg("Update region requested via API")
+
+	return a.config.UpdateRegion(regionName, thresholds)
+}
+
+// RemoveRegion removes a region
+func (a *App) RemoveRegion(regionName string) error {
+	if a.config == nil {
+		return fmt.Errorf("configuration manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Str("region", regionName).
+		Msg("Remove region requested via API")
+
+	return a.config.RemoveRegion(regionName)
+}
+
+// ValidateEndpoint validates an endpoint configuration
+func (a *App) ValidateEndpoint(endpoint *config.Endpoint) (*config.ValidationResult, error) {
+	if a.config == nil {
+		return nil, fmt.Errorf("configuration manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Str("endpoint", endpoint.Name).
+		Msg("Validate endpoint requested via API")
+
+	return a.config.ValidateEndpointConfig(endpoint), nil
+}

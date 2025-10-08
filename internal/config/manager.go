@@ -430,3 +430,323 @@ func (m *Manager) GenerateDefaultConfig() error {
 func (m *Manager) GetConfigPath() string {
 	return m.configPath
 }
+
+// AddEndpoint adds a new endpoint to a region
+func (m *Manager) AddEndpoint(regionName string, endpoint *Endpoint) error {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	// Validate endpoint
+	if err := m.validateEndpoint(endpoint); err != nil {
+		return fmt.Errorf("invalid endpoint: %w", err)
+	}
+
+	// Check if region exists
+	region, exists := m.config.Regions[regionName]
+	if !exists {
+		return fmt.Errorf("region not found: %s", regionName)
+	}
+
+	// Check for duplicate endpoint name
+	for _, ep := range region.Endpoints {
+		if ep.Name == endpoint.Name {
+			return fmt.Errorf("endpoint with name '%s' already exists in region '%s'", endpoint.Name, regionName)
+		}
+	}
+
+	// Add endpoint
+	region.Endpoints = append(region.Endpoints, endpoint)
+
+	// Save configuration
+	if err := m.save(); err != nil {
+		return fmt.Errorf("failed to save configuration: %w", err)
+	}
+
+	log.Ctx(m.ctx).Info().
+		Str("region", regionName).
+		Str("endpoint", endpoint.Name).
+		Msg("Endpoint added")
+
+	// Notify callbacks
+	go m.notifyCallbacks(m.config)
+
+	return nil
+}
+
+// UpdateEndpoint updates an existing endpoint
+func (m *Manager) UpdateEndpoint(regionName, endpointName string, updated *Endpoint) error {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	// Validate updated endpoint
+	if err := m.validateEndpoint(updated); err != nil {
+		return fmt.Errorf("invalid endpoint: %w", err)
+	}
+
+	// Find region
+	region, exists := m.config.Regions[regionName]
+	if !exists {
+		return fmt.Errorf("region not found: %s", regionName)
+	}
+
+	// Find and update endpoint
+	found := false
+	for i, ep := range region.Endpoints {
+		if ep.Name == endpointName {
+			// If name is being changed, check for duplicates
+			if updated.Name != endpointName {
+				for _, other := range region.Endpoints {
+					if other.Name == updated.Name {
+						return fmt.Errorf("endpoint with name '%s' already exists in region '%s'", updated.Name, regionName)
+					}
+				}
+			}
+			region.Endpoints[i] = updated
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		return fmt.Errorf("endpoint not found: %s in region %s", endpointName, regionName)
+	}
+
+	// Save configuration
+	if err := m.save(); err != nil {
+		return fmt.Errorf("failed to save configuration: %w", err)
+	}
+
+	log.Ctx(m.ctx).Info().
+		Str("region", regionName).
+		Str("endpoint", updated.Name).
+		Msg("Endpoint updated")
+
+	// Notify callbacks
+	go m.notifyCallbacks(m.config)
+
+	return nil
+}
+
+// RemoveEndpoint removes an endpoint from a region
+func (m *Manager) RemoveEndpoint(regionName, endpointName string) error {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	// Find region
+	region, exists := m.config.Regions[regionName]
+	if !exists {
+		return fmt.Errorf("region not found: %s", regionName)
+	}
+
+	// Find and remove endpoint
+	found := false
+	for i, ep := range region.Endpoints {
+		if ep.Name == endpointName {
+			region.Endpoints = append(region.Endpoints[:i], region.Endpoints[i+1:]...)
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		return fmt.Errorf("endpoint not found: %s in region %s", endpointName, regionName)
+	}
+
+	// Save configuration
+	if err := m.save(); err != nil {
+		return fmt.Errorf("failed to save configuration: %w", err)
+	}
+
+	log.Ctx(m.ctx).Info().
+		Str("region", regionName).
+		Str("endpoint", endpointName).
+		Msg("Endpoint removed")
+
+	// Notify callbacks
+	go m.notifyCallbacks(m.config)
+
+	return nil
+}
+
+// MoveEndpoint moves an endpoint from one region to another
+func (m *Manager) MoveEndpoint(sourceRegion, targetRegion, endpointName string) error {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	// Find source region
+	srcRegion, exists := m.config.Regions[sourceRegion]
+	if !exists {
+		return fmt.Errorf("source region not found: %s", sourceRegion)
+	}
+
+	// Find target region
+	tgtRegion, exists := m.config.Regions[targetRegion]
+	if !exists {
+		return fmt.Errorf("target region not found: %s", targetRegion)
+	}
+
+	// Find endpoint in source region
+	var endpoint *Endpoint
+	var sourceIndex int
+	for i, ep := range srcRegion.Endpoints {
+		if ep.Name == endpointName {
+			endpoint = ep
+			sourceIndex = i
+			break
+		}
+	}
+
+	if endpoint == nil {
+		return fmt.Errorf("endpoint not found: %s in region %s", endpointName, sourceRegion)
+	}
+
+	// Check for duplicate in target region
+	for _, ep := range tgtRegion.Endpoints {
+		if ep.Name == endpointName {
+			return fmt.Errorf("endpoint with name '%s' already exists in target region '%s'", endpointName, targetRegion)
+		}
+	}
+
+	// Remove from source region
+	srcRegion.Endpoints = append(srcRegion.Endpoints[:sourceIndex], srcRegion.Endpoints[sourceIndex+1:]...)
+
+	// Add to target region
+	tgtRegion.Endpoints = append(tgtRegion.Endpoints, endpoint)
+
+	// Save configuration
+	if err := m.save(); err != nil {
+		return fmt.Errorf("failed to save configuration: %w", err)
+	}
+
+	log.Ctx(m.ctx).Info().
+		Str("endpoint", endpointName).
+		Str("from_region", sourceRegion).
+		Str("to_region", targetRegion).
+		Msg("Endpoint moved")
+
+	// Notify callbacks
+	go m.notifyCallbacks(m.config)
+
+	return nil
+}
+
+// CreateRegion creates a new region
+func (m *Manager) CreateRegion(regionName string, thresholds *Thresholds) error {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	// Check if region already exists
+	if _, exists := m.config.Regions[regionName]; exists {
+		return fmt.Errorf("region already exists: %s", regionName)
+	}
+
+	// Create region with empty endpoints
+	m.config.Regions[regionName] = &Region{
+		Endpoints:  []*Endpoint{},
+		Thresholds: thresholds,
+	}
+
+	// Save configuration
+	if err := m.save(); err != nil {
+		return fmt.Errorf("failed to save configuration: %w", err)
+	}
+
+	log.Ctx(m.ctx).Info().
+		Str("region", regionName).
+		Msg("Region created")
+
+	// Notify callbacks
+	go m.notifyCallbacks(m.config)
+
+	return nil
+}
+
+// UpdateRegion updates a region's thresholds
+func (m *Manager) UpdateRegion(regionName string, thresholds *Thresholds) error {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	// Find region
+	region, exists := m.config.Regions[regionName]
+	if !exists {
+		return fmt.Errorf("region not found: %s", regionName)
+	}
+
+	// Update thresholds
+	region.Thresholds = thresholds
+
+	// Save configuration
+	if err := m.save(); err != nil {
+		return fmt.Errorf("failed to save configuration: %w", err)
+	}
+
+	log.Ctx(m.ctx).Info().
+		Str("region", regionName).
+		Msg("Region updated")
+
+	// Notify callbacks
+	go m.notifyCallbacks(m.config)
+
+	return nil
+}
+
+// RemoveRegion removes a region
+func (m *Manager) RemoveRegion(regionName string) error {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	// Check if region exists
+	if _, exists := m.config.Regions[regionName]; !exists {
+		return fmt.Errorf("region not found: %s", regionName)
+	}
+
+	// Remove region
+	delete(m.config.Regions, regionName)
+
+	// Validate that at least one region remains
+	if len(m.config.Regions) == 0 {
+		return fmt.Errorf("cannot remove last region")
+	}
+
+	// Save configuration
+	if err := m.save(); err != nil {
+		return fmt.Errorf("failed to save configuration: %w", err)
+	}
+
+	log.Ctx(m.ctx).Info().
+		Str("region", regionName).
+		Msg("Region removed")
+
+	// Notify callbacks
+	go m.notifyCallbacks(m.config)
+
+	return nil
+}
+
+// ValidationResult contains validation results
+type ValidationResult struct {
+	Valid    bool     `json:"valid"`
+	Errors   []string `json:"errors"`
+	Warnings []string `json:"warnings"`
+}
+
+// ValidateEndpointConfig validates an endpoint configuration
+func (m *Manager) ValidateEndpointConfig(endpoint *Endpoint) *ValidationResult {
+	result := &ValidationResult{
+		Valid:    true,
+		Errors:   []string{},
+		Warnings: []string{},
+	}
+
+	if err := m.validateEndpoint(endpoint); err != nil {
+		result.Valid = false
+		result.Errors = append(result.Errors, err.Error())
+	}
+
+	// Add warnings for common issues
+	if endpoint.Timeout < 3000 {
+		result.Warnings = append(result.Warnings, "Timeout is less than 3 seconds, may cause false failures")
+	}
+
+	return result
+}

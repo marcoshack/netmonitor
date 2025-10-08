@@ -1,7 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git commit -m \"$(cat <<''EOF''\nImplement T013: Test Result Aggregation functionality\n\n- Created aggregation package with Aggregator for statistical processing\n- Hourly and daily aggregation with time boundary normalization\n- Comprehensive statistics: avg/min/max latency, std dev, availability %\n- Intelligent caching system for performance optimization\n- Support for custom time ranges and periods\n- Batch aggregation methods for efficient multi-period queries\n- Cache invalidation for specific endpoints\n- Comprehensive unit tests (8 test cases) covering all scenarios\n- Integrated with App via GetAggregatedData() API method\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nImplement T014: Endpoint Management functionality\n\n- Added comprehensive CRUD operations to config.Manager\n- AddEndpoint, UpdateEndpoint, RemoveEndpoint with full validation\n- MoveEndpoint for transferring endpoints between regions\n- CreateRegion, UpdateRegion, RemoveRegion for region management\n- ValidateEndpointConfig with detailed errors and warnings\n- Automatic configuration persistence on all operations\n- Configuration change callbacks trigger monitoring system updates\n- Duplicate name detection and prevention\n- Prevents removal of last region\n- All operations exposed via Wails API methods in App\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
