@@ -10,6 +10,7 @@ import (
 
 	"github.com/marcoshack/netmonitor/internal/config"
 	"github.com/marcoshack/netmonitor/internal/network"
+	"github.com/marcoshack/netmonitor/internal/scheduler"
 	"github.com/marcoshack/netmonitor/internal/storage"
 )
 
@@ -17,6 +18,7 @@ import (
 type Manager struct {
 	config    *config.Manager
 	storage   *storage.Manager
+	scheduler *scheduler.TestScheduler
 	ctx       context.Context
 	running   bool
 	stopChan  chan struct{}
@@ -34,12 +36,19 @@ const (
 
 // NewManager creates a new monitoring manager
 func NewManager(ctx context.Context, configMgr *config.Manager, storageMgr *storage.Manager) (*Manager, error) {
+	// Create scheduler with max 10 concurrent tests
+	testScheduler, err := scheduler.NewScheduler(ctx, configMgr, storageMgr, 10)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create test scheduler: %w", err)
+	}
+
 	return &Manager{
-		config:   configMgr,
-		storage:  storageMgr,
-		ctx:      ctx,
-		running:  false,
-		stopChan: make(chan struct{}),
+		config:    configMgr,
+		storage:   storageMgr,
+		scheduler: testScheduler,
+		ctx:       ctx,
+		running:   false,
+		stopChan:  make(chan struct{}),
 	}, nil
 }
 
@@ -55,8 +64,11 @@ func (m *Manager) Start() error {
 	log.Ctx(m.ctx).Info().Msg("Starting network monitoring")
 	m.running = true
 
-	// Start monitoring loop in goroutine
-	go m.monitoringLoop()
+	// Start the scheduler
+	if err := m.scheduler.Start(m.ctx); err != nil {
+		m.running = false
+		return fmt.Errorf("failed to start scheduler: %w", err)
+	}
 
 	return nil
 }
@@ -72,7 +84,11 @@ func (m *Manager) Stop() error {
 
 	log.Ctx(m.ctx).Info().Msg("Stopping network monitoring")
 	m.running = false
-	close(m.stopChan)
+
+	// Stop the scheduler
+	if err := m.scheduler.Stop(); err != nil {
+		return fmt.Errorf("failed to stop scheduler: %w", err)
+	}
 
 	return nil
 }
@@ -144,53 +160,9 @@ func (m *Manager) RunManualTest(ctx context.Context, endpointID string) (*storag
 	return result, nil
 }
 
-// monitoringLoop runs the main monitoring loop
-func (m *Manager) monitoringLoop() {
-	config := m.config.GetConfig()
-	interval := time.Duration(config.Settings.TestIntervalSeconds) * time.Second
-	ticker := time.NewTicker(interval)
-	defer ticker.Stop()
-
-	log.Ctx(m.ctx).Info().Dur("interval", interval).Msg("Monitoring loop started")
-
-	for {
-		select {
-		case <-ticker.C:
-			m.runScheduledTests()
-		case <-m.stopChan:
-			log.Ctx(m.ctx).Info().Msg("Monitoring loop stopped")
-			return
-		}
-	}
-}
-
-// runScheduledTests executes tests for all configured endpoints
-func (m *Manager) runScheduledTests() {
-	config := m.config.GetConfig()
-	
-	for regionName, region := range config.Regions {
-		for _, endpoint := range region.Endpoints {
-			endpointID := fmt.Sprintf("%s-%s", regionName, endpoint.Name)
-			
-			// Run test for this endpoint
-			result, err := m.executeTest(endpoint, endpointID)
-			if err != nil {
-				log.Ctx(m.ctx).Error().
-					Str("endpoint_id", endpointID).
-					Err(err).
-					Msg("Failed to execute test")
-				continue
-			}
-
-			// Store result
-			if err := m.storage.StoreTestResult(result); err != nil {
-				log.Ctx(m.ctx).Error().
-					Str("endpoint_id", endpointID).
-					Err(err).
-					Msg("Failed to store test result")
-			}
-		}
-	}
+// GetSchedulerStatus returns the scheduler status
+func (m *Manager) GetSchedulerStatus() scheduler.SchedulerStatus {
+	return m.scheduler.GetStatus()
 }
 
 // executeTest executes a network test for an endpoint

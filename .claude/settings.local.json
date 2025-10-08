@@ -1,12 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)",
       "Bash(go test:*)",
-      "Bash(go:*)",
-      "Bash(git -C \"d:\\Workspaces\\netmonitor\" status)",
-      "Bash(git -C \"d:\\Workspaces\\netmonitor\" diff --stat)",
-      "Bash(git -C \"d:\\Workspaces\\netmonitor\" log -3 --oneline)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nImplement T011: Test Scheduler functionality\n\n- Created scheduler package with TestScheduler implementing concurrent test execution\n- Supports configurable intervals (1min-24hrs) with validation\n- Worker pool pattern with semaphore for max concurrent tests\n- Graceful shutdown with 30s timeout for active tests\n- Auto-reload on configuration changes via callbacks\n- Real-time status reporting with SchedulerStatus\n- Integrated with monitor manager\n- Comprehensive unit tests (8 test cases) covering all scenarios\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
