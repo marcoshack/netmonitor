@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/rs/zerolog/log"
 
+	"github.com/marcoshack/netmonitor/internal/aggregation"
 	"github.com/marcoshack/netmonitor/internal/config"
 	"github.com/marcoshack/netmonitor/internal/monitor"
 	"github.com/marcoshack/netmonitor/internal/storage"
@@ -14,13 +16,14 @@ import (
 
 // App represents the main application context
 type App struct {
-	ctx     context.Context
-	cancel  context.CancelFunc
-	config  *config.Manager
-	monitor *monitor.Manager
-	storage *storage.Manager
-	mutex   sync.RWMutex
-	running bool
+	ctx        context.Context
+	cancel     context.CancelFunc
+	config     *config.Manager
+	monitor    *monitor.Manager
+	storage    *storage.Manager
+	aggregator *aggregation.Aggregator
+	mutex      sync.RWMutex
+	running    bool
 }
 
 // NewApp creates a new App application struct
@@ -58,6 +61,10 @@ func (a *App) startup(ctx context.Context) {
 		return
 	}
 	a.storage = storageManager
+
+	// Initialize aggregation manager
+	aggregator := aggregation.NewAggregator(ctx, storageManager)
+	a.aggregator = aggregator
 
 	// Initialize monitoring manager
 	monitorManager, err := monitor.NewManager(ctx, a.config, a.storage)
@@ -283,6 +290,36 @@ func (a *App) RunAllTests() ([]*storage.DetailedTestResult, error) {
 
 	log.Ctx(a.ctx).Info().Msg("All tests requested via API")
 	results, err := a.monitor.RunAllTests(a.ctx)
+
+	return results, err
+}
+
+// GetAggregatedData retrieves aggregated test results for an endpoint
+func (a *App) GetAggregatedData(endpointID, regionName, period string, hours int) ([]*aggregation.AggregatedResult, error) {
+	if a.aggregator == nil {
+		return nil, fmt.Errorf("aggregator not initialized")
+	}
+
+	endTime := time.Now()
+	startTime := endTime.Add(-time.Duration(hours) * time.Hour)
+
+	log.Ctx(a.ctx).Info().
+		Str("endpoint_id", endpointID).
+		Str("period", period).
+		Int("hours", hours).
+		Msg("Aggregated data requested via API")
+
+	var results []*aggregation.AggregatedResult
+	var err error
+
+	switch period {
+	case "hourly":
+		results, err = a.aggregator.GetHourlyAggregations(endpointID, regionName, startTime, endTime)
+	case "daily":
+		results, err = a.aggregator.GetDailyAggregations(endpointID, regionName, startTime, endTime)
+	default:
+		return nil, fmt.Errorf("invalid period: %s (must be 'hourly' or 'daily')", period)
+	}
 
 	return results, err
 }

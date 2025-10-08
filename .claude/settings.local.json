@@ -1,11 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(go test:*)",
-      "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nImplement T011: Test Scheduler functionality\n\n- Created scheduler package with TestScheduler implementing concurrent test execution\n- Supports configurable intervals (1min-24hrs) with validation\n- Worker pool pattern with semaphore for max concurrent tests\n- Graceful shutdown with 30s timeout for active tests\n- Auto-reload on configuration changes via callbacks\n- Real-time status reporting with SchedulerStatus\n- Integrated with monitor manager\n- Comprehensive unit tests (8 test cases) covering all scenarios\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "Bash(go build:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nImplement T012: Manual Test Execution functionality\n\n- Created DetailedTestResult with timing breakdowns (DNS, connection, TLS, etc.)\n- Implemented RunManualTestDetailed() for single endpoint detailed testing\n- Implemented RunRegionTests() for concurrent region-wide testing\n- Implemented RunAllTests() for all endpoints across all regions\n- Context-aware execution enables cancellation support\n- Concurrent execution via goroutines with proper synchronization\n- Intermediate step logging for progress tracking\n- API methods exposed via Wails for frontend integration\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nImplement T013: Test Result Aggregation functionality\n\n- Created aggregation package with Aggregator for statistical processing\n- Hourly and daily aggregation with time boundary normalization\n- Comprehensive statistics: avg/min/max latency, std dev, availability %\n- Intelligent caching system for performance optimization\n- Support for custom time ranges and periods\n- Batch aggregation methods for efficient multi-period queries\n- Cache invalidation for specific endpoints\n- Comprehensive unit tests (8 test cases) covering all scenarios\n- Integrated with App via GetAggregatedData() API method\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
