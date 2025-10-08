@@ -250,3 +250,39 @@ func (a *App) RunManualTest(endpointID string) (*storage.TestResult, error) {
 
 	return result, err
 }
+
+// RunManualTestDetailed executes a manual test with detailed timing information
+func (a *App) RunManualTestDetailed(endpointID string) (*storage.DetailedTestResult, error) {
+	if a.monitor == nil {
+		return nil, fmt.Errorf("monitor manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().Str("endpoint_id", endpointID).Msg("Detailed manual test requested via API")
+	result, err := a.monitor.RunManualTestDetailed(a.ctx, endpointID)
+
+	return result, err
+}
+
+// RunRegionTests executes manual tests for all endpoints in a region
+func (a *App) RunRegionTests(regionName string) ([]*storage.DetailedTestResult, error) {
+	if a.monitor == nil {
+		return nil, fmt.Errorf("monitor manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().Str("region", regionName).Msg("Region tests requested via API")
+	results, err := a.monitor.RunRegionTests(a.ctx, regionName)
+
+	return results, err
+}
+
+// RunAllTests executes manual tests for all configured endpoints
+func (a *App) RunAllTests() ([]*storage.DetailedTestResult, error) {
+	if a.monitor == nil {
+		return nil, fmt.Errorf("monitor manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().Msg("All tests requested via API")
+	results, err := a.monitor.RunAllTests(a.ctx)
+
+	return results, err
+}
