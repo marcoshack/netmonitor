@@ -74,13 +74,6 @@ The application uses zerolog for structured logging:
 
 ## Key Implementation Notes
 
-### Current Limitations
-
-- Network test implementations use mock data (see [internal/monitor/manager.go](internal/monitor/manager.go) `executeTest()`)
-- Theme preferences are logged but not persisted to configuration
-- Manual test execution creates mock results instead of real network tests
-- ICMP/HTTP/TCP/UDP test implementations are pending (see docs/tasks/T007-T010)
-
 ### Adding New Network Test Types
 
 1. Implement the `NetworkTest` interface from [internal/network/interfaces.go](internal/network/interfaces.go)

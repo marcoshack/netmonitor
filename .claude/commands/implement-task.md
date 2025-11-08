@@ -1,15 +1,32 @@
 ---
-enabled: true
+description: Implement a NetMonitor task following project guidelines
+arguments:
+  - name: task_file
+    description: Path to task file (e.g., docs/tasks/T017-xxx.md)
+    required: true
 ---
 
-# Task Implementation Guidelines
+# Task Implementation: {{task_file}}
 
-## Overview
-This document provides guidelines for implementing tasks in the NetMonitor project.
+## ⚠️ CRITICAL: Documentation Requirements
+
+You are implementing a task for NetMonitor. **You MUST follow these documentation rules:**
+
+### Where to Document (CRITICAL!)
+1. ✅ **CORRECT**: Add Implementation Summary to **{{task_file}}** (the original task file)
+2. ❌ **WRONG**: Creating separate files like `T0XX-SUMMARY.md`, `T0XX-implementation.md`, etc.
+
+### Required Steps After Implementation
+1. Update acceptance criteria in **{{task_file}}**: Change `[ ]` to `[x]`
+2. Add `---` separator at the end of **{{task_file}}**
+3. Add `## Implementation Summary` section with all required subsections
+4. **DO NOT create any separate summary documents**
+
+---
 
 ## Task File Structure
 
-Each task file in `docs/tasks/` should follow this structure:
+Each task file in `docs/tasks/` follows this structure:
 
 1. **Header**: Task number and title
 2. **Overview**: Brief description of what needs to be implemented
@@ -23,13 +40,16 @@ Each task file in `docs/tasks/` should follow this structure:
 10. **Notes**: Additional considerations or future enhancements
 11. **Implementation Summary**: Added after task completion (see below)
 
-## Task Implementation Process
+---
+
+## Implementation Process
 
 ### 1. Before Starting
-- Read the task file completely
+- Read **{{task_file}}** completely
 - Check dependencies are satisfied
 - Understand acceptance criteria
 - Plan the implementation approach
+- Create todo list with TodoWrite
 
 ### 2. During Implementation
 - Follow the acceptance criteria
@@ -39,7 +59,9 @@ Each task file in `docs/tasks/` should follow this structure:
 
 ### 3. After Completion
 
-#### Update Acceptance Criteria
+⚠️ **IMPORTANT: Follow these steps in {{task_file}} (the ORIGINAL task file)**
+
+#### Step 1: Update Acceptance Criteria
 Mark all acceptance criteria as completed by changing `[ ]` to `[x]`:
 ```markdown
 ## Acceptance Criteria
@@ -48,8 +70,14 @@ Mark all acceptance criteria as completed by changing `[ ]` to `[x]`:
 - [x] Tests written
 ```
 
-#### Add Implementation Summary Section
-Add a comprehensive "Implementation Summary" section at the end of the task file (after a horizontal rule `---`). This section should include:
+#### Step 2: Add Implementation Summary Section
+**Location: {{task_file}} (THE ORIGINAL TASK FILE)**
+
+Add a comprehensive "Implementation Summary" section at the **END** of **{{task_file}}** (after a horizontal rule `---`).
+
+**⚠️ DO NOT create a separate summary document!**
+
+This section should include:
 
 ```markdown
 ---
@@ -126,9 +154,7 @@ Comprehensive test suite added to [test_file.go](../../path/to/test_file.go):
 [Links to other documentation files if created]
 ```
 
-## Example: Complete Task File
-
-See [T016: JSON Storage System](../../docs/tasks/T016-json-storage-system.md) for a complete example of a properly documented completed task.
+---
 
 ## Best Practices
 
@@ -162,6 +188,8 @@ See [T016: JSON Storage System](../../docs/tasks/T016-json-storage-system.md) fo
 - Verify integration with dependent components
 - Update related documentation
 
+---
+
 ## Task Status Indicators
 
 Use these indicators in task files:
@@ -170,16 +198,33 @@ Use these indicators in task files:
 - `[~]` - In progress (optional)
 - `[-]` - Blocked or skipped (with explanation)
 
-## Related Documents
+---
 
-- [Project README](readme.md) - Project overview and build instructions
-- [Task Files](../../docs/tasks/) - All task definitions
-- [API Reference Docs](../../docs/) - Generated API documentation
+## ⚠️ CRITICAL REMINDERS
 
-## Notes
+### Implementation Summary Location
+- ✅ **CORRECT**: Add to **{{task_file}}** after `---` separator
+- ❌ **WRONG**: Creating separate summary files like `Txxx-SUMMARY.md` or `Txxx-implementation.md`
 
-- Always update the task file's Implementation Summary when completing a task
+### Required Actions on Task Completion
+1. Update acceptance criteria in **{{task_file}}**: `[ ]` → `[x]`
+2. Add `---` separator after the Notes section in **{{task_file}}**
+3. Add `## Implementation Summary` section with all required subsections to **{{task_file}}**
+4. Verify all sections follow the template above
+5. **DO NOT create any separate summary documents**
+
+### Documentation Quality
 - The Implementation Summary should be detailed enough that someone can understand what was done without reading all the code
 - Include code examples and test results to demonstrate functionality
 - Link to specific file locations with line numbers for easy navigation
 - If you create additional documentation (like API references), link to it in the Implementation Summary
+
+---
+
+## Example Reference
+
+See [T016: JSON Storage System](../../docs/tasks/T016-json-storage-system.md) for a complete example of a properly documented completed task.
+
+---
+
+**Now implement the task at {{task_file}}. Start by reading the file and creating a todo list with TodoWrite.**

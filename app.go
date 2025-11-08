@@ -11,6 +11,7 @@ import (
 	"github.com/marcoshack/netmonitor/internal/aggregation"
 	"github.com/marcoshack/netmonitor/internal/config"
 	"github.com/marcoshack/netmonitor/internal/monitor"
+	"github.com/marcoshack/netmonitor/internal/retention"
 	"github.com/marcoshack/netmonitor/internal/storage"
 )
 
@@ -22,6 +23,7 @@ type App struct {
 	monitor    *monitor.Manager
 	storage    *storage.Manager
 	aggregator *aggregation.Aggregator
+	retention  *retention.Manager
 	mutex      sync.RWMutex
 	running    bool
 }
@@ -66,6 +68,14 @@ func (a *App) startup(ctx context.Context) {
 	aggregator := aggregation.NewAggregator(ctx, storageManager)
 	a.aggregator = aggregator
 
+	// Initialize retention manager with default policy
+	retentionManager, err := retention.NewManager(ctx, "./data", retention.DefaultRetentionPolicy())
+	if err != nil {
+		log.Ctx(ctx).Error().Err(err).Msg("Failed to initialize retention manager")
+		return
+	}
+	a.retention = retentionManager
+
 	// Initialize monitoring manager
 	monitorManager, err := monitor.NewManager(ctx, a.config, a.storage)
 	if err != nil {
@@ -97,6 +107,13 @@ func (a *App) Shutdown() error {
 	if a.monitor != nil {
 		if err := a.monitor.Stop(); err != nil {
 			log.Ctx(a.ctx).Error().Err(err).Msg("Failed to stop monitoring")
+		}
+	}
+
+	// Close retention manager
+	if a.retention != nil {
+		if err := a.retention.Close(); err != nil {
+			log.Ctx(a.ctx).Error().Err(err).Msg("Failed to close retention manager")
 		}
 	}
 
@@ -620,4 +637,64 @@ func (a *App) GetPerformanceMetrics() (*PerformanceMetrics, error) {
 	log.Ctx(a.ctx).Info().Msg("Performance metrics requested via API")
 
 	return metrics, nil
+}
+
+// UpdateRetentionPolicy updates the data retention policy
+func (a *App) UpdateRetentionPolicy(policy *retention.RetentionPolicy) error {
+	if a.retention == nil {
+		return fmt.Errorf("retention manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Int("raw_data_days", policy.RawDataDays).
+		Int("aggregated_data_days", policy.AggregatedDataDays).
+		Bool("auto_cleanup", policy.AutoCleanupEnabled).
+		Msg("Update retention policy requested via API")
+
+	return a.retention.UpdatePolicy(policy)
+}
+
+// GetRetentionPolicy returns the current retention policy
+func (a *App) GetRetentionPolicy() (*retention.RetentionPolicy, error) {
+	if a.retention == nil {
+		return nil, fmt.Errorf("retention manager not initialized")
+	}
+
+	policy := a.retention.GetPolicy()
+	log.Ctx(a.ctx).Info().Msg("Get retention policy requested via API")
+
+	return policy, nil
+}
+
+// TriggerManualCleanup triggers an immediate cleanup operation
+func (a *App) TriggerManualCleanup() (*retention.CleanupReport, error) {
+	if a.retention == nil {
+		return nil, fmt.Errorf("retention manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().Msg("Manual cleanup requested via API")
+
+	return a.retention.TriggerManualCleanup()
+}
+
+// GetStorageStats returns storage statistics
+func (a *App) GetStorageStats() (*retention.StorageStats, error) {
+	if a.retention == nil {
+		return nil, fmt.Errorf("retention manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().Msg("Storage stats requested via API")
+
+	return a.retention.GetStorageStats()
+}
+
+// GetCleanupHistory returns the cleanup operation history
+func (a *App) GetCleanupHistory() ([]*retention.CleanupOperation, error) {
+	if a.retention == nil {
+		return nil, fmt.Errorf("retention manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().Msg("Cleanup history requested via API")
+
+	return a.retention.GetCleanupHistory(), nil
 }
