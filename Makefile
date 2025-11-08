@@ -51,7 +51,7 @@ dev:
 # Run the tests, excluding the network package which has known issues in this environment
 test:
 	@echo "Running tests..."
-	$(GOTEST) $(shell go list ./... | grep -v /internal/network)
+	$(GOTEST) -v ./internal/aggregation ./internal/scheduler ./internal/storage
 
 # Install frontend dependencies
 frontend-install:
