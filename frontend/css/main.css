@@ -126,6 +126,294 @@ body {
   margin: 0;
 }
 
+.card-content {
+  color: var(--color-text-primary);
+}
+
+/* Widget styles */
+.widget {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-normal);
+}
+
+.widget:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.widget-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.widget-content {
+  color: var(--color-text-primary);
+}
+
+/* Status grid for widgets */
+.status-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.status-item:last-child {
+  border-bottom: none;
+}
+
+.status-label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.status-value {
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.status-value.running {
+  color: var(--color-success);
+}
+
+/* Summary statistics */
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: 1rem;
+  text-align: center;
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.stat-number.status-healthy {
+  color: var(--color-success);
+}
+
+.stat-number.status-warning {
+  color: var(--color-warning);
+}
+
+.stat-number.status-danger {
+  color: var(--color-danger);
+}
+
+/* Region list widget */
+.region-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.region-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  background-color: var(--color-surface);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.region-item:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-primary);
+}
+
+.region-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 0.875rem;
+}
+
+.region-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.region-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.region-indicator.healthy {
+  background-color: var(--color-success);
+}
+
+.region-indicator.warning {
+  background-color: var(--color-warning);
+}
+
+.region-indicator.critical {
+  background-color: var(--color-danger);
+}
+
+.region-indicator.unknown {
+  background-color: var(--color-text-muted);
+}
+
+/* Action buttons group */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Config summary */
+.config-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.config-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.config-item:last-child {
+  border-bottom: none;
+}
+
+.config-label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.config-value {
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+/* Widget interactive states */
+.widget[data-interactive="true"] {
+  cursor: pointer;
+}
+
+.widget[data-interactive="true"]:active {
+  transform: scale(0.98);
+}
+
+/* Refresh button in widgets */
+.refresh-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1.25rem;
+  transition: all var(--transition-fast);
+  border-radius: 0.25rem;
+}
+
+.refresh-btn:hover {
+  color: var(--color-primary);
+  background-color: var(--color-surface-hover);
+}
+
+.refresh-btn:active {
+  transform: rotate(180deg);
+}
+
+/* Latest test results widget */
+.latest-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: var(--color-surface);
+  font-size: 0.875rem;
+}
+
+.result-endpoint {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.result-latency {
+  color: var(--color-text-secondary);
+}
+
+.result-status {
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.result-status.success {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.result-status.warning {
+  background-color: var(--color-warning);
+  color: black;
+}
+
+.result-status.error {
+  background-color: var(--color-danger);
+  color: white;
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
