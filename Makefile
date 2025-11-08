@@ -22,10 +22,16 @@ ifeq ($(OS),Windows_NT)
     RM = del /Q
     RM_DIR = rmdir /s /q
     MKDIR_P = mkdir
+    FRONTEND_NODE_MODULES = frontend\node_modules
+    FRONTEND_DIST = frontend\dist
+    BUILD_BIN = build\bin
 else
     RM = rm -f
     RM_DIR = rm -rf
     MKDIR_P = mkdir -p
+    FRONTEND_NODE_MODULES = frontend/node_modules
+    FRONTEND_DIST = frontend/dist
+    BUILD_BIN = build/bin
 endif
 
 .PHONY: all build dev test frontend-install frontend-build frontend-dev clean help
@@ -66,9 +72,9 @@ frontend-dev:
 clean:
 	@echo "Cleaning up the project..."
 	-$(GOCLEAN)
-	-$(RM_DIR) frontend/node_modules
-	-$(RM_DIR) frontend/dist
-	-$(RM_DIR) build/bin
+	-$(RM_DIR) $(FRONTEND_NODE_MODULES)
+	-$(RM_DIR) $(FRONTEND_DIST)
+	-$(RM_DIR) $(BUILD_BIN)
 
 # Display help
 help:
