@@ -51,51 +51,52 @@ class NetMonitorApp {
     renderMainLayout() {
         const app = document.getElementById('app');
         app.innerHTML = `
-            <div class="app">
-                <header class="app-header">
+            <a href="#mainContent" class="skip-to-main">Skip to main content</a>
+            <div class="app" role="application">
+                <header class="app-header" role="banner">
                     <h1 class="app-title">NetMonitor</h1>
                     <div class="header-controls">
-                        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
-                            🌙
+                        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false" title="Toggle dark/light theme">
+                            <span aria-hidden="true">Theme</span>
                         </button>
-                        <button class="btn-icon" id="settingsBtn" aria-label="Settings" title="Settings">
-                            ⚙️
+                        <button class="btn-icon" id="settingsBtn" aria-label="Open settings" title="Settings">
+                            <span aria-hidden="true">Settings</span>
                         </button>
                     </div>
                 </header>
 
                 <div class="app-main">
-                    <nav class="sidebar">
-                        <ul class="nav-menu" id="navMenu">
-                            <li class="nav-item">
-                                <a href="#overview" class="nav-link active" data-view="overview">📊 Overview</a>
+                    <nav class="sidebar" role="navigation" aria-label="Main navigation">
+                        <ul class="nav-menu" id="navMenu" role="menubar">
+                            <li class="nav-item" role="none">
+                                <a href="#overview" class="nav-link active" data-view="overview" role="menuitem" aria-current="page">Overview</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#regions" class="nav-link" data-view="regions">🌍 Regions</a>
+                            <li class="nav-item" role="none">
+                                <a href="#regions" class="nav-link" data-view="regions" role="menuitem">Regions</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#endpoints" class="nav-link" data-view="endpoints">🎯 Endpoints</a>
+                            <li class="nav-item" role="none">
+                                <a href="#endpoints" class="nav-link" data-view="endpoints" role="menuitem">Endpoints</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#manual" class="nav-link" data-view="manual">⚡ Manual Tests</a>
+                            <li class="nav-item" role="none">
+                                <a href="#manual" class="nav-link" data-view="manual" role="menuitem">Manual Tests</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#settings" class="nav-link" data-view="settings">⚙️ Settings</a>
+                            <li class="nav-item" role="none">
+                                <a href="#settings" class="nav-link" data-view="settings" role="menuitem">Settings</a>
                             </li>
                         </ul>
                     </nav>
 
-                    <main class="content" id="mainContent">
+                    <main class="content" id="mainContent" role="main" aria-live="polite">
                         <!-- Dynamic content will be loaded here -->
                     </main>
                 </div>
 
-                <footer class="app-footer">
+                <footer class="app-footer" role="contentinfo">
                     <div class="status-bar">
-                        <span class="connection-status" id="connectionStatus">
+                        <span class="connection-status" id="connectionStatus" role="status" aria-live="polite">
                             <span class="status-indicator status-healthy">Connected</span>
                         </span>
-                        <span class="last-update" id="lastUpdate">Last update: Just now</span>
+                        <span class="last-update" id="lastUpdate" role="status" aria-live="polite">Last update: Just now</span>
                     </div>
                 </footer>
             </div>
@@ -163,14 +164,19 @@ class NetMonitorApp {
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.classList.remove('active');
+            link.removeAttribute('aria-current');
             if (link.dataset.view === viewName) {
                 link.classList.add('active');
+                link.setAttribute('aria-current', 'page');
             }
         });
 
         // Update content
         const content = document.getElementById('mainContent');
         this.currentView = viewName;
+
+        // Set page title for screen readers
+        document.title = `NetMonitor - ${viewName.charAt(0).toUpperCase() + viewName.slice(1)}`;
 
         switch (viewName) {
             case 'overview':
@@ -253,14 +259,14 @@ class NetMonitorApp {
                         </div>
                         <div class="card-content">
                             <div class="action-buttons">
-                                <button class="btn btn-primary" id="startMonitoringBtn" disabled>
-                                    ▶ Start Monitoring
+                                <button class="btn btn-primary" id="startMonitoringBtn" disabled aria-label="Start monitoring">
+                                    Start Monitoring
                                 </button>
-                                <button class="btn btn-secondary" id="stopMonitoringBtn" disabled>
-                                    ⏹ Stop Monitoring
+                                <button class="btn btn-secondary" id="stopMonitoringBtn" disabled aria-label="Stop monitoring">
+                                    Stop Monitoring
                                 </button>
-                                <button class="btn btn-secondary" id="runTestBtn" disabled>
-                                    🧪 Run Test
+                                <button class="btn btn-secondary" id="runTestBtn" disabled aria-label="Run quick test">
+                                    Run Test
                                 </button>
                             </div>
                         </div>
@@ -372,15 +378,15 @@ class NetMonitorApp {
                         <div class="settings-grid">
                             <div class="setting-group">
                                 <h4>Theme</h4>
-                                <div class="theme-options">
-                                    <button class="btn btn-secondary theme-btn" data-theme="light">☀️ Light</button>
-                                    <button class="btn btn-secondary theme-btn" data-theme="dark">🌙 Dark</button>
-                                    <button class="btn btn-secondary theme-btn active" data-theme="auto">🔄 Auto</button>
+                                <div class="theme-options" role="radiogroup" aria-label="Theme selection">
+                                    <button class="btn btn-secondary theme-btn" data-theme="light" role="radio" aria-checked="false">Light</button>
+                                    <button class="btn btn-secondary theme-btn" data-theme="dark" role="radio" aria-checked="false">Dark</button>
+                                    <button class="btn btn-secondary theme-btn active" data-theme="auto" role="radio" aria-checked="true">Auto</button>
                                 </div>
                             </div>
                             <div class="setting-group">
                                 <h4>System Information</h4>
-                                <div class="system-info" id="systemInfo">
+                                <div class="system-info" id="systemInfo" role="region" aria-live="polite">
                                     Loading system information...
                                 </div>
                             </div>
@@ -453,10 +459,14 @@ class NetMonitorApp {
             btn.addEventListener('click', () => {
                 const theme = btn.dataset.theme;
                 this.themeManager.setTheme(theme);
-                
-                // Update active button
-                themeButtons.forEach(b => b.classList.remove('active'));
+
+                // Update active button and ARIA attributes
+                themeButtons.forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-checked', 'false');
+                });
                 btn.classList.add('active');
+                btn.setAttribute('aria-checked', 'true');
             });
         });
     }

@@ -1,42 +1,62 @@
 /* CSS Variables for Theme Management */
 :root {
-  /* Light theme (default) */
+  /* Light theme (default) - Matches T026 specification */
   --color-primary: #007bff;
   --color-primary-hover: #0056b3;
   --color-primary-light: #e3f2fd;
-  
+
+  /* Secondary color */
+  --color-secondary: #6c757d;
+
   /* Status colors */
   --color-success: #28a745;
   --color-warning: #ffc107;
   --color-danger: #dc3545;
   --color-info: #17a2b8;
-  
+
   /* Background colors */
   --color-background: #ffffff;
   --color-surface: #f8f9fa;
   --color-surface-hover: #e9ecef;
   --color-card: #ffffff;
-  
+
   /* Text colors */
   --color-text-primary: #212529;
   --color-text-secondary: #6c757d;
   --color-text-muted: #adb5bd;
   --color-text-inverse: #ffffff;
-  
+
   /* Border colors */
   --color-border: #dee2e6;
   --color-border-light: #f1f3f4;
   --color-divider: #e9ecef;
-  
+
   /* Shadow */
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
   --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
   --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
-  
+
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
   --transition-slow: 400ms ease;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Typography */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                      sans-serif;
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --line-height-base: 1.5;
 }
 
 /* Dark theme */

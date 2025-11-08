@@ -129,17 +129,24 @@ class ThemeManager {
         if (!themeToggle) return;
 
         const effectiveTheme = this.getEffectiveTheme();
-        
-        // Update icon based on effective theme
-        const icons = {
-            light: '☀️',
-            dark: '🌙',
-            'high-contrast': '🔳',
-            auto: '🔄'
+
+        // Update text based on effective theme (minimalist design - no emojis)
+        const labels = {
+            light: 'Light',
+            dark: 'Dark',
+            'high-contrast': 'High Contrast',
+            auto: 'Auto'
         };
 
-        themeToggle.textContent = icons[effectiveTheme] || '🔄';
+        const themeText = themeToggle.querySelector('span[aria-hidden="true"]');
+        if (themeText) {
+            themeText.textContent = labels[this.currentTheme] || 'Theme';
+        } else {
+            themeToggle.textContent = labels[this.currentTheme] || 'Theme';
+        }
+
         themeToggle.setAttribute('aria-label', `Current theme: ${this.currentTheme}`);
+        themeToggle.setAttribute('aria-pressed', effectiveTheme === 'dark' ? 'true' : 'false');
         themeToggle.setAttribute('title', `Current theme: ${this.currentTheme} (${effectiveTheme})`);
     }
 
