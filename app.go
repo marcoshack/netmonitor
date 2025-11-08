@@ -10,6 +10,7 @@ import (
 
 	"github.com/marcoshack/netmonitor/internal/aggregation"
 	"github.com/marcoshack/netmonitor/internal/config"
+	"github.com/marcoshack/netmonitor/internal/export"
 	"github.com/marcoshack/netmonitor/internal/monitor"
 	"github.com/marcoshack/netmonitor/internal/retention"
 	"github.com/marcoshack/netmonitor/internal/storage"
@@ -24,6 +25,7 @@ type App struct {
 	storage    *storage.Manager
 	aggregator *aggregation.Aggregator
 	retention  *retention.Manager
+	export     *export.Manager
 	mutex      sync.RWMutex
 	running    bool
 }
@@ -76,6 +78,14 @@ func (a *App) startup(ctx context.Context) {
 	}
 	a.retention = retentionManager
 
+	// Initialize export manager
+	exportManager, err := export.NewManager(ctx, storageManager, "./exports")
+	if err != nil {
+		log.Ctx(ctx).Error().Err(err).Msg("Failed to initialize export manager")
+		return
+	}
+	a.export = exportManager
+
 	// Initialize monitoring manager
 	monitorManager, err := monitor.NewManager(ctx, a.config, a.storage)
 	if err != nil {
@@ -107,6 +117,13 @@ func (a *App) Shutdown() error {
 	if a.monitor != nil {
 		if err := a.monitor.Stop(); err != nil {
 			log.Ctx(a.ctx).Error().Err(err).Msg("Failed to stop monitoring")
+		}
+	}
+
+	// Close export manager
+	if a.export != nil {
+		if err := a.export.Close(); err != nil {
+			log.Ctx(a.ctx).Error().Err(err).Msg("Failed to close export manager")
 		}
 	}
 
@@ -697,4 +714,77 @@ func (a *App) GetCleanupHistory() ([]*retention.CleanupOperation, error) {
 	log.Ctx(a.ctx).Info().Msg("Cleanup history requested via API")
 
 	return a.retention.GetCleanupHistory(), nil
+}
+
+// CreateExport creates a new data export job
+func (a *App) CreateExport(request export.ExportRequest) (*export.ExportJob, error) {
+	if a.export == nil {
+		return nil, fmt.Errorf("export manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Str("format", request.Format).
+		Time("start_date", request.StartDate).
+		Time("end_date", request.EndDate).
+		Bool("compressed", request.Compressed).
+		Msg("Export creation requested via API")
+
+	return a.export.CreateExport(request)
+}
+
+// GetExportStatus returns the status of an export job
+func (a *App) GetExportStatus(jobID string) (*export.ExportStatus, error) {
+	if a.export == nil {
+		return nil, fmt.Errorf("export manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().Str("job_id", jobID).Msg("Export status requested via API")
+
+	return a.export.GetExportStatus(jobID)
+}
+
+// CancelExport cancels a running export job
+func (a *App) CancelExport(jobID string) error {
+	if a.export == nil {
+		return fmt.Errorf("export manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().Str("job_id", jobID).Msg("Export cancellation requested via API")
+
+	return a.export.CancelExport(jobID)
+}
+
+// GetExportHistory returns the export job history
+func (a *App) GetExportHistory() ([]*export.ExportJob, error) {
+	if a.export == nil {
+		return nil, fmt.Errorf("export manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().Msg("Export history requested via API")
+
+	return a.export.GetExportHistory(), nil
+}
+
+// GetActiveExports returns all active export jobs
+func (a *App) GetActiveExports() ([]*export.ExportJob, error) {
+	if a.export == nil {
+		return nil, fmt.Errorf("export manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().Msg("Active exports requested via API")
+
+	return a.export.GetActiveJobs(), nil
+}
+
+// CleanupOldExports removes export files older than the specified number of days
+func (a *App) CleanupOldExports(retentionDays int) (int, error) {
+	if a.export == nil {
+		return 0, fmt.Errorf("export manager not initialized")
+	}
+
+	log.Ctx(a.ctx).Info().
+		Int("retention_days", retentionDays).
+		Msg("Export cleanup requested via API")
+
+	return a.export.CleanupOldExports(retentionDays)
 }
