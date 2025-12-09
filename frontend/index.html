@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>NetMonitor</title>
+    <link href="./src/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="glass-panel"
+            style="margin: 1rem; padding: 1rem; display: flex; align-items: center; justify-content: space-between;">
+            <div class="flex items-center gap-md">
+                <div style="width: 32px; height: 32px; background: var(--accent-primary); border-radius: 6px;"></div>
+                <!-- Logo placeholder -->
+                <h1 class="text-xl">NetMonitor</h1>
+            </div>
+
+            <div class="flex items-center gap-md">
+                <!-- Region Selector -->
+                <select id="region-select" class="glass-panel"
+                    style="padding: 0.5rem; color: var(--text-primary); border: 1px solid var(--glass-border); outline: none;">
+                    <!-- Options populated by JS -->
+                </select>
+
+                <select id="time-range-select" class="glass-panel"
+                    style="padding: 0.5rem; color: var(--text-primary); border: 1px solid var(--glass-border); outline: none;">
+                    <option value="24h">Last 24 Hours</option>
+                    <option value="week">Last Week</option>
+                    <option value="month">Last Month</option>
+                </select>
+
+                <button id="btn-settings" class="btn btn-icon" title="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main id="dashboard-content" style="flex: 1; padding: 0 1rem 1rem; overflow-y: auto;">
+            <!-- Grid of Cards -->
+            <div id="endpoints-grid" class="grid-container">
+                <!-- Cards injected here -->
+            </div>
+        </main>
+
+        <!-- Status Bar -->
+        <footer class="glass-panel"
+            style="margin: 0 1rem 1rem; padding: 0.5rem 1rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted);">
+            <div id="status-message">System Ready</div>
+            <div>Last Updated: <span id="last-updated">Never</span></div>
+        </footer>
+
+        <!-- Settings Modal -->
+        <div id="settings-modal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="flex items-center justify-between" style="margin-bottom: 1.5rem">
+                    <h2 class="text-xl">Settings</h2>
+                    <button id="btn-close-settings" class="btn btn-icon">✕</button>
+                </div>
+
+                <form id="settings-form">
+                    <div class="form-group">
+                        <label>Test Interval (Minutes)</label>
+                        <input type="number" id="setting-interval" min="1" max="1440" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Data Retention (Days)</label>
+                        <input type="number" id="setting-retention" min="1" max="365" required>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="setting-notifications">
+                        <label for="setting-notifications" style="margin:0">Enable Notifications</label>
+                    </div>
+
+                    <div class="flex gap-md" style="margin-top: 2rem">
+                        <button type="submit" class="btn btn-primary" style="flex: 1">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="./src/main.js" type="module"></script>
+</body>
+
+</html>

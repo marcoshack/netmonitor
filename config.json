@@ -1,0 +1,41 @@
+{
+  "regions": {
+    "Default": {
+      "endpoints": [
+        {
+          "name": "Google DNS",
+          "type": "ICMP",
+          "address": "8.8.8.8",
+          "timeout": 1000
+        },
+        {
+          "name": "Google TCP",
+          "type": "TCP",
+          "address": "google.com:80",
+          "timeout": 2000
+        },
+        {
+          "name": "Google DNS UDP",
+          "type": "UDP",
+          "address": "8.8.8.8:53",
+          "timeout": 2000
+        },
+        {
+          "name": "GitHub HTTP",
+          "type": "HTTP",
+          "address": "https://github.com",
+          "timeout": 5000
+        }
+      ],
+      "thresholds": {
+        "latency_ms": 100,
+        "availability_percent": 99
+      }
+    }
+  },
+  "settings": {
+    "test_interval_minutes": 1,
+    "data_retention_days": 90,
+    "notifications_enabled": true
+  }
+}
