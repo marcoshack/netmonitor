@@ -1,10 +1,12 @@
 package monitor
 
 import (
+	"fmt"
 	"net"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/marcoshack/netmonitor/internal/models"
 )
@@ -62,5 +64,29 @@ func TestMonitorTCP(t *testing.T) {
 	res := mon.TestEndpoint(ep)
 	if res.Status != "success" {
 		t.Errorf("Expected success for TCP, got %s (err: %s)", res.Status, res.Error)
+	}
+}
+
+func TestCheckICMP_Integration(t *testing.T) {
+	// Pinging localhost should generally work, but might require privileges or specific setup on Windows.
+	// Since we are switching to pro-bing with unprivileged support via API, this test is crucial.
+
+	// Skip if short test? No, we want to run this.
+
+	target := "127.0.0.1"
+	timeout := 2 * time.Second
+
+	fmt.Printf("Attempting to ping %s...\n", target)
+
+	err := checkICMP(target, timeout)
+	if err != nil {
+		t.Logf("ICMP Ping to %s failed: %v", target, err)
+		t.Logf("Note: This might be expected if running without sufficient privileges or OS support.")
+		// We don't fail the test immediately because CI/Environments vary,
+		// but for local dev this should pass.
+		// Un-commenting Fatal to enforce it for now as per user request.
+		t.Fatal(err)
+	} else {
+		t.Logf("ICMP Ping to %s succeeded", target)
 	}
 }

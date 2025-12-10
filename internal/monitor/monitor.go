@@ -1,16 +1,15 @@
 package monitor
 
 import (
-	"context"
 	"fmt"
 	"net"
 	"net/http"
-	"os/exec"
 	"runtime"
 	"sync"
 	"time"
 
 	"github.com/marcoshack/netmonitor/internal/models"
+	probing "github.com/prometheus-community/pro-bing"
 )
 
 type Monitor struct {
@@ -167,40 +166,28 @@ func checkUDP(address string, timeout time.Duration) error {
 }
 
 func checkICMP(address string, timeout time.Duration) error {
-	var cmd *exec.Cmd
-
-	// Normalize address logic if needed (remove http:// if user put it by mistake for ICMP, etc)
-	// For now assume address is IP or Hostname
-
-	if runtime.GOOS == "windows" {
-		cmd = exec.Command("ping", "-n", "1", "-w", fmt.Sprintf("%d", timeout.Milliseconds()), address)
-	} else {
-		// Linux/Mac
-		// -c 1 count, -W 1 wait in seconds (some ping versions take float, some int. safely use 1s or calculate)
-		// MacOS ping -W is in milliseconds? No, seconds usually. Linux iputils-ping -W is seconds.
-		// To be safe with timeout, we just use Context with timeout for the command execution,
-		// but ping flags are better for actual latency constraints.
-		// However, accurately mapping milliseconds to Ping flags across distros is hard.
-		// Let's rely on Context timeout for defining "failure" and parse output if needed?
-		// Or just use basic ping.
-		cmd = exec.Command("ping", "-c", "1", address)
-	}
-
-	// Use context to enforce our timeout
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	defer cancel()
-
-	// We need to run command with context
-	// Go 1.20+ has exec.CommandContext
-	if runtime.GOOS == "windows" {
-		cmd = exec.CommandContext(ctx, "ping", "-n", "1", "-w", fmt.Sprintf("%d", timeout.Milliseconds()), address)
-	} else {
-		cmd = exec.CommandContext(ctx, "ping", "-c", "1", address)
-	}
-
-	// Run
-	if err := cmd.Run(); err != nil {
+	pinger, err := probing.NewPinger(address)
+	if err != nil {
 		return err
 	}
+
+	pinger.Count = 1
+	pinger.Timeout = timeout
+
+	// On Windows, this triggers the use of the IcmpSendEcho API which works for unprivileged users.
+	// On Linux, it attempts raw sockets (requires root) unless configured otherwise.
+	if runtime.GOOS == "windows" {
+		pinger.SetPrivileged(true)
+	}
+
+	err = pinger.Run()
+	if err != nil {
+		return err
+	}
+
+	if pinger.Statistics().PacketsRecv == 0 {
+		return fmt.Errorf("packet loss")
+	}
+
 	return nil
 }
