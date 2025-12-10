@@ -18,10 +18,26 @@ export function GetRegions() {
   return window['go']['main']['App']['GetRegions']();
 }
 
+export function HideWindow() {
+  return window['go']['main']['App']['HideWindow']();
+}
+
+export function InitSystemTray() {
+  return window['go']['main']['App']['InitSystemTray']();
+}
+
 export function ManualTest(arg1) {
   return window['go']['main']['App']['ManualTest'](arg1);
 }
 
+export function QuitApp() {
+  return window['go']['main']['App']['QuitApp']();
+}
+
 export function SaveConfig(arg1) {
   return window['go']['main']['App']['SaveConfig'](arg1);
+}
+
+export function ShowWindow() {
+  return window['go']['main']['App']['ShowWindow']();
 }

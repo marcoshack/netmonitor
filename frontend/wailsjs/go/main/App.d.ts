@@ -10,6 +10,14 @@ export function GetHistoryRange(arg1:string):Promise<Array<models.TestResult>>;
 
 export function GetRegions():Promise<Record<string, models.Region>>;
 
+export function HideWindow():Promise<void>;
+
+export function InitSystemTray():Promise<void>;
+
 export function ManualTest(arg1:models.Endpoint):Promise<models.TestResult>;
 
+export function QuitApp():Promise<void>;
+
 export function SaveConfig(arg1:models.Configuration):Promise<string>;
+
+export function ShowWindow():Promise<void>;
