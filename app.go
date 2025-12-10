@@ -52,6 +52,9 @@ func NewApp() *App {
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 
+	// Initialize system tray
+	go a.InitSystemTray()
+
 	// Start Monitor
 	// Relay results to frontend
 	go func() {
