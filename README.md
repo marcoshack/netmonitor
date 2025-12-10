@@ -10,6 +10,10 @@ NetMonitor is a real-time desktop network monitoring application built with [Wai
 - **Cross-Platform**: Runs on Windows and Linux (macOS supported but not verified in this guide).
 - **Configurable**: Easy JSON-based configuration for endpoints, thresholds, and intervals.
 
+[![NetMonitor Screenshot](assets/netmonitor-20251210.png)](https://www.youtube.com/watch?v=fsdT9iVjCSM)
+<br>
+<small>[https://www.youtube.com/watch?v=fsdT9iVjCSM](https://www.youtube.com/watch?v=fsdT9iVjCSM)</small>
+
 ## Prerequisites
 
 Before setting up the project, ensure you have the following installed:
@@ -122,3 +126,7 @@ The application uses `config.json`. Example structure:
   }
 }
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
