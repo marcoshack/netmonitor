@@ -25,6 +25,18 @@
           "type": "HTTP",
           "address": "https://github.com",
           "timeout": 5000
+        },
+        {
+          "name": "AWS us-east-1",
+          "type": "UDP",
+          "address": "ec2.us-east-1.amazonaws.com",
+          "timeout": 2000
+        },
+        {
+          "name": "AWS us-west-2",
+          "type": "UDP",
+          "address": "ec2.us-west-2.amazonaws.com",
+          "timeout": 2000
         }
       ],
       "thresholds": {
@@ -34,7 +46,7 @@
     }
   },
   "settings": {
-    "test_interval_minutes": 1,
+    "test_interval_seconds": 5,
     "data_retention_days": 90,
     "notifications_enabled": true
   }

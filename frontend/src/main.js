@@ -316,7 +316,7 @@ function setupSettings() {
     document.getElementById("btn-settings").addEventListener("click", () => {
         // Populate fields
         if (currentConfig && currentConfig.settings) {
-            document.getElementById("setting-interval").value = currentConfig.settings.test_interval_minutes;
+            document.getElementById("setting-interval").value = currentConfig.settings.test_interval_seconds;
             document.getElementById("setting-retention").value = currentConfig.settings.data_retention_days;
             document.getElementById("setting-notifications").checked = currentConfig.settings.notifications_enabled;
         }
@@ -333,11 +333,11 @@ function setupSettings() {
         e.preventDefault();
 
         const newSettings = {
-            test_interval_minutes: parseInt(document.getElementById("setting-interval").value),
+            test_interval_seconds: parseInt(document.getElementById("setting-interval").value),
             data_retention_days: parseInt(document.getElementById("setting-retention").value),
             notifications_enabled: document.getElementById("setting-notifications").checked
         };
-
+        
         // Update local object deeply
         currentConfig.settings = newSettings;
 

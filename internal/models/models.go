@@ -43,7 +43,7 @@ type TestResult struct {
 
 // AppSettings defines global application settings
 type AppSettings struct {
-	TestIntervalMinutes  int  `json:"test_interval_minutes"`
+	TestIntervalSeconds  int  `json:"test_interval_seconds"`
 	DataRetentionDays    int  `json:"data_retention_days"`
 	NotificationsEnabled bool `json:"notifications_enabled"`
 }

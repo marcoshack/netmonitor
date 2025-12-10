@@ -15,12 +15,12 @@ func TestLoadSaveConfig(t *testing.T) {
 	if err != nil {
 		t.Fatalf("LoadConfig failed: %v", err)
 	}
-	if cfg.Settings.TestIntervalMinutes != 5 {
-		t.Errorf("Expected default interval 5, got %d", cfg.Settings.TestIntervalMinutes)
+	if cfg.Settings.TestIntervalSeconds != 300 {
+		t.Errorf("Expected default interval 300, got %d", cfg.Settings.TestIntervalSeconds)
 	}
 
 	// Test Save
-	cfg.Settings.TestIntervalMinutes = 10
+	cfg.Settings.TestIntervalSeconds = 10
 	err = SaveConfig(tmpFile, cfg)
 	if err != nil {
 		t.Fatalf("SaveConfig failed: %v", err)
@@ -31,8 +31,8 @@ func TestLoadSaveConfig(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Reload failed: %v", err)
 	}
-	if cfg2.Settings.TestIntervalMinutes != 10 {
-		t.Errorf("Expected interval 10, got %d", cfg2.Settings.TestIntervalMinutes)
+	if cfg2.Settings.TestIntervalSeconds != 10 {
+		t.Errorf("Expected interval 10, got %d", cfg2.Settings.TestIntervalSeconds)
 	}
 
 	if !reflect.DeepEqual(cfg, cfg2) {

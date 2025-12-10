@@ -23,7 +23,7 @@ func DefaultConfig() *models.Configuration {
 			},
 		},
 		Settings: models.AppSettings{
-			TestIntervalMinutes:  5,
+			TestIntervalSeconds:  300,
 			DataRetentionDays:    90,
 			NotificationsEnabled: true,
 		},
@@ -48,6 +48,10 @@ func LoadConfig(path string) (*models.Configuration, error) {
 	var cfg models.Configuration
 	if err := json.Unmarshal(data, &cfg); err != nil {
 		return nil, err
+	}
+
+	if cfg.Settings.TestIntervalSeconds < 1 {
+		cfg.Settings.TestIntervalSeconds = 300
 	}
 
 	return &cfg, nil

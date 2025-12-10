@@ -53,7 +53,7 @@ func (m *Monitor) Stop() {
 }
 
 func (m *Monitor) runLoop() {
-	ticker := time.NewTicker(time.Duration(m.Config.Settings.TestIntervalMinutes) * time.Minute)
+	ticker := time.NewTicker(time.Duration(m.Config.Settings.TestIntervalSeconds) * time.Second)
 	defer ticker.Stop()
 
 	// Run immediately on start
