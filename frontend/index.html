@@ -91,6 +91,65 @@
             </div>
         </div>
 
+        <!-- Endpoint Details Modal -->
+        <div id="details-modal" class="modal-overlay">
+            <div class="modal-content modal-large">
+                <div class="flex items-center justify-between" style="margin-bottom: 1rem">
+                    <div class="flex items-center gap-sm">
+                        <div id="detail-status-dot" class="status-dot"></div>
+                        <h2 id="detail-title" class="text-xl">Endpoint Details</h2>
+                    </div>
+                    <button id="btn-close-details" class="btn btn-icon">✕</button>
+                </div>
+
+                <!-- Big Graph -->
+                <div class="chart-container-large">
+                    <canvas id="detail-canvas"></canvas>
+                </div>
+
+                <!-- Info -->
+                <div class="grid-2-col" style="margin: 1.5rem 0; gap: 1.5rem;">
+                    <div class="glass-panel" style="padding: 1rem;">
+                        <div class="text-sm text-muted">Address</div>
+                        <div id="detail-address" class="text-lg font-mono" style="margin-top: 0.25rem"></div>
+                    </div>
+                    <div class="glass-panel" style="padding: 1rem;">
+                        <div class="text-sm text-muted">Protocol</div>
+                        <div id="detail-protocol" class="text-lg" style="margin-top: 0.25rem"></div>
+                    </div>
+                    <div class="glass-panel" style="padding: 1rem;">
+                        <div class="text-sm text-muted">Current Latency</div>
+                        <div class="flex items-baseline gap-xs" style="margin-top: 0.25rem">
+                            <div id="detail-latency" class="text-lg font-bold"></div>
+                            <div class="text-sm text-muted">ms</div>
+                        </div>
+                    </div>
+                    <div class="glass-panel" style="padding: 1rem;">
+                        <div class="text-sm text-muted">Status</div>
+                        <div id="detail-status-text" style="margin-top: 0.25rem"></div>
+                    </div>
+                </div>
+
+                <!-- History Table -->
+                <h3 class="text-lg" style="margin-bottom: 1rem">Last 10 Tests</h3>
+                <div class="table-container header-fixed">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th style="text-align: center">Status</th>
+                                <th style="text-align: right">Latency</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detail-history-body">
+                            <!-- Rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
     <!-- Scripts -->

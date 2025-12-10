@@ -1,21 +1,14 @@
 import Chart from 'chart.js/auto';
-import 'chartjs-adapter-date-fns'; // If using time scale, often needed, but let's check if chart.js/auto includes it or if we need an adapter.
-// Actually handling dates usually requires an adapter in Chart.js v3+.
-// The user installed chart.js but maybe not an adapter.
-// Let's check package.json again. 
-// "chart.js": "^4.5.1". Chart.js v4 requires a date adapter for time text.
-// If I use 'time' scale, I need 'chartjs-adapter-date-fns' or 'luxon' etc.
-// But I might not have installed it.
-// I ran `npm install chart.js`. I did NOT install an adapter.
-// This might be another reason why graphs fail if I used `type: 'time'`.
-// Let's check if I used `type: 'time'`. Yes I did.
-// So I need to install a date adapter too.
-// For now, let's fix the import. I will also install the adapter.
+import 'chartjs-adapter-date-fns';
 
 let currentConfig = null;
 let currentRegion = null;
-let testResults = {}; // Map endpointID -> Array of results
-const maxHistory = 30; // Points on graph
+let testResults = {}; // EndpointId -> Array of full TestResult objects
+let chartInstances = {}; // id -> Chart instance
+
+// Detail View State
+let detailChartInstance = null;
+let currentDetailId = null;
 
 // Wails Runtime and Backend variables (injected by Wails)
 // We assume window.go.main.App is available
@@ -34,6 +27,7 @@ async function init() {
         window.runtime.EventsOn("test-result", handleTestResult);
 
         setupSettings();
+        setupDetailsModal();
 
         // Initial Layout
         renderDashboard();
@@ -107,6 +101,14 @@ function createEndpointCard(ep) {
     div.className = "card";
     div.id = `card-${id}`;
 
+    // Add click event to open details
+    div.onclick = (e) => {
+        // Prevent click if clicking on chart specifically if we wanted, 
+        // but user asked "click in any endpoint", so clicking anywhere on card is good.
+        openDetailView(id);
+    };
+    div.style.cursor = "pointer";
+
     div.innerHTML = `
         <div class="card-header">
             <div class="flex items-center gap-sm">
@@ -126,40 +128,33 @@ function createEndpointCard(ep) {
         </div>
     `;
 
-    // Initialize chart for this card
-    // We defer chart init slightly to ensure DOM is ready? No, div is not attached yet? 
-    // It will be attached.
-    // We'll store chart instances in a map effectively via closure or global
-    // But canvas needs to be in DOM or at least created.
-
     return div;
 }
 
-// Chart.js helper
-const chartInstances = {}; // id -> Chart instance
-let historyData = {}; // endpointId -> []{timestamp, latency}
-
 async function fetchHistory(range) {
-    historyData = {}; // Clear
+    // Clear existing results or keep them? 
+    // Usually fetching range means "reload all data for this range".
+    testResults = {};
+
     try {
         const results = await window.go.main.App.GetHistoryRange(range);
+
         // Process results into map
         results.forEach(r => {
             const id = r.endpoint_id;
-            if (!historyData[id]) historyData[id] = [];
-            historyData[id].push({
-                x: new Date(r.timestamp),
-                y: r.latency_ms
-            });
+            if (!testResults[id]) testResults[id] = [];
+
+            // Standardize timestamp
+            r.timestamp = new Date(r.timestamp);
+            testResults[id].push(r);
         });
 
-        // Refresh all charts
+        // Refresh all charts & details if open
         Object.keys(chartInstances).forEach(id => {
             updateChartHistory(id);
         });
 
-        // Also ensure charts are initialized if they don't exist yet (e.g. on first load)
-        // Iterate over current DOM cards to init them
+        // Initialize any missing charts
         const cards = document.querySelectorAll('[id^="card-"]');
         cards.forEach(card => {
             const id = card.id.replace("card-", "");
@@ -170,6 +165,11 @@ async function fetchHistory(range) {
             }
         });
 
+        // If detail view is open, update it
+        if (currentDetailId) {
+            updateDetailView(currentDetailId);
+        }
+
     } catch (err) {
         console.error("Failed to fetch history", err);
     }
@@ -179,10 +179,16 @@ function updateChartHistory(id) {
     const chart = chartInstances[id];
     if (!chart) return;
 
-    // reset data
-    const data = historyData[id] || [];
-    // sort by time just in case, though backend should be ok? backend was daily files.
-    data.sort((a, b) => a.x - b.x);
+    const results = testResults[id] || [];
+
+    // Sort
+    results.sort((a, b) => a.timestamp - b.timestamp);
+
+    // Map to {x, y}
+    const data = results.map(r => ({
+        x: r.timestamp,
+        y: r.latency_ms
+    }));
 
     chart.data.datasets[0].data = data;
     chart.update();
@@ -224,17 +230,243 @@ function initChart(id) {
                 tooltip: {
                     mode: 'index',
                     intersect: false,
+                    displayColors: false,
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: { unit: 'minute', displayFormats: { minute: 'HH:mm' } },
+                    grid: { display: false },
+                    ticks: { display: false } // Hide ticks on small cards for cleaner look
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: { display: false },
+                    ticks: { display: false } // Hide ticks on small cards
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            },
+            events: [] // Disable hover events for performance on small cards? Or keep them.
+            // Let's keep default events but maybe reduce hover overhead if needed.
+        }
+    });
+
+    // Initial load
+    updateChartHistory(id);
+
+    return chartInstances[id];
+}
+
+function handleTestResult(result) {
+    // result comes with timestamp as string probably if from JSON?
+    // Wails JSON encoding might keep it as string.
+    result.timestamp = new Date(result.timestamp);
+
+    const id = result.endpoint_id;
+
+    // Add to store
+    if (!testResults[id]) testResults[id] = [];
+    testResults[id].push(result);
+
+    // Trim store if too big (optional, maybe run every N updates)
+    if (testResults[id].length > 2000) {
+        testResults[id].shift();
+    }
+
+    // Is it visible on current dashboard?
+    if (id.startsWith(currentRegion + "-")) {
+        // Update Card UI
+        const latSpan = document.getElementById(`latency-${id}`);
+        const dot = document.getElementById(`status-dot-${id}`);
+        const updated = document.getElementById(`last-updated`);
+
+        if (latSpan) latSpan.innerText = result.latency_ms;
+        if (dot) {
+            dot.className = "status-dot " + (result.status === "success" ? "success" : "failure");
+        }
+        if (updated) {
+            updated.innerText = new Date().toLocaleTimeString();
+        }
+
+        // Update Chart
+        const chart = chartInstances[id] || initChart(id);
+        if (chart) {
+            chart.data.datasets[0].data.push({
+                x: result.timestamp,
+                y: result.latency_ms
+            });
+            // Simple trim for chart
+            if (chart.data.datasets[0].data.length > 2000) {
+                chart.data.datasets[0].data.shift();
+            }
+            chart.update('none');
+        }
+    }
+
+    // Is it the currently detailed endpoint?
+    if (currentDetailId && currentDetailId === id) {
+        updateDetailView(id);
+    }
+}
+
+// --- Details View Functions ---
+
+function setupDetailsModal() {
+    const modal = document.getElementById("details-modal");
+    document.getElementById("btn-close-details").onclick = closeDetailView;
+    modal.onclick = (e) => {
+        if (e.target === modal) closeDetailView();
+    };
+}
+
+function openDetailView(id) {
+    currentDetailId = id;
+    const modal = document.getElementById("details-modal");
+    modal.classList.add("active");
+
+    updateDetailView(id);
+    initDetailChart(); // Create if not exists
+    renderDetailChart(id);
+}
+
+function closeDetailView() {
+    document.getElementById("details-modal").classList.remove("active");
+    currentDetailId = null;
+}
+
+function updateDetailView(id) {
+    // 1. Find Endpoint Config
+    const parts = id.split("-");
+    // This splitting is fragile if region has hyphens. 
+    // Better iterate regions to find match.
+    // currentConfig.regions[currentRegion].endpoints
+    // We know 'currentRegion' is selected. 
+    // And id = currentRegion + "-" + ep.name
+    // So we can extract ep name.
+
+    // A safer way: Check if id starts with currentRegion + "-"
+    if (!id.startsWith(currentRegion + "-")) return; // Only show details for current region items?
+
+    const epName = id.substring(currentRegion.length + 1);
+    const endpoint = currentConfig.regions[currentRegion].endpoints.find(e => e.name === epName);
+
+    if (!endpoint) return;
+
+    // 2. Populate Info
+    document.getElementById("detail-title").innerText = endpoint.name;
+    document.getElementById("detail-address").innerText = endpoint.address;
+    document.getElementById("detail-protocol").innerText = endpoint.type;
+
+    // 3. Get Latest Data
+    const results = testResults[id] || [];
+    if (results.length > 0) {
+        const last = results[results.length - 1];
+        document.getElementById("detail-latency").innerText = last.latency_ms;
+
+        const statusText = document.getElementById("detail-status-text");
+        const dot = document.getElementById("detail-status-dot");
+
+        if (last.status === "success") {
+            statusText.innerText = "Operational";
+            statusText.className = "text-success font-bold";
+            dot.className = "status-dot success";
+        } else {
+            statusText.innerText = "Failure: " + (last.error || "Unknown");
+            statusText.className = "text-error font-bold";
+            dot.className = "status-dot failure";
+        }
+    } else {
+        document.getElementById("detail-latency").innerText = "--";
+        document.getElementById("detail-status-text").innerText = "No Data";
+    }
+
+    // 4. Populate Table (Last 10)
+    const tbody = document.getElementById("detail-history-body");
+    tbody.innerHTML = "";
+
+    // Copy and reverse for table
+    const last10 = [...results].sort((a, b) => b.timestamp - a.timestamp).slice(0, 10);
+
+    last10.forEach(r => {
+        const tr = document.createElement("tr");
+
+        // Time
+        const tdTime = document.createElement("td");
+        tdTime.innerText = r.timestamp.toLocaleTimeString();
+        tr.appendChild(tdTime);
+
+        // Status
+        const tdStatus = document.createElement("td");
+        tdStatus.className = "text-center";
+        const statusSpan = document.createElement("span");
+        if (r.status === "success") {
+            statusSpan.className = "text-success";
+            statusSpan.innerText = "✔"; // Checkmark
+        } else {
+            statusSpan.className = "text-error";
+            statusSpan.innerText = "✖"; // X
+        }
+        tdStatus.appendChild(statusSpan);
+        tr.appendChild(tdStatus);
+
+        // Latency
+        const tdLat = document.createElement("td");
+        tdLat.className = "text-right font-mono";
+        tdLat.innerText = r.latency_ms + " ms";
+        tr.appendChild(tdLat);
+
+        tbody.appendChild(tr);
+    });
+
+    // 5. Update Chart (if already initialized)
+    if (detailChartInstance) {
+        renderDetailChart(id);
+    }
+}
+
+function initDetailChart() {
+    if (detailChartInstance) return;
+
+    const ctx = document.getElementById("detail-canvas").getContext("2d");
+
+    // Gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+    gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
+
+    detailChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'Latency',
+                data: [],
+                borderColor: '#3b82f6',
+                backgroundColor: gradient,
+                borderWidth: 2,
+                pointRadius: 1, // Visible points
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
                     backgroundColor: 'rgba(15, 23, 42, 0.9)',
                     titleColor: '#94a3b8',
-                    bodyColor: '#f8fafc',
-                    borderColor: 'rgba(255,255,255,0.1)',
-                    borderWidth: 1,
-                    displayColors: false,
                     callbacks: {
                         title: (items) => {
                             if (!items.length) return '';
-                            const d = new Date(items[0].raw.x);
-                            return d.toLocaleTimeString();
+                            return new Date(items[0].raw.x).toLocaleString();
                         }
                     }
                 }
@@ -242,13 +474,8 @@ function initChart(id) {
             scales: {
                 x: {
                     type: 'time',
-                    time: {
-                        unit: 'minute',
-                        displayFormats: {
-                            minute: 'HH:mm'
-                        }
-                    },
-                    grid: { display: false },
+                    time: { unit: 'minute', displayFormats: { minute: 'HH:mm:ss' } },
+                    grid: { color: 'rgba(255,255,255,0.05)' },
                     ticks: { color: '#64748b' }
                 },
                 y: {
@@ -264,49 +491,22 @@ function initChart(id) {
             }
         }
     });
-
-    // Initial load
-    updateChartHistory(id);
-
-    return chartInstances[id];
 }
 
-function handleTestResult(result) {
-    // Check if result belongs to current view
-    if (!result.endpoint_id.startsWith(currentRegion + "-")) return;
+function renderDetailChart(id) {
+    if (!detailChartInstance) return;
 
-    const id = result.endpoint_id;
+    const results = testResults[id] || [];
+    // Sort
+    const sorted = [...results].sort((a, b) => a.timestamp - b.timestamp);
 
-    // Update DOM
-    const latSpan = document.getElementById(`latency-${id}`);
-    const dot = document.getElementById(`status-dot-${id}`);
-    const updated = document.getElementById(`last-updated`);
+    const data = sorted.map(r => ({
+        x: r.timestamp,
+        y: r.latency_ms
+    }));
 
-    if (latSpan) latSpan.innerText = result.latency_ms;
-    if (dot) {
-        dot.className = "status-dot " + (result.status === "success" ? "success" : "failure");
-    }
-    if (updated) {
-        updated.innerText = new Date().toLocaleTimeString();
-    }
-
-    // Update Chart Live
-    const chart = chartInstances[id] || initChart(id);
-    if (chart) {
-        chart.data.datasets[0].data.push({
-            x: new Date(result.timestamp),
-            y: result.latency_ms
-        });
-
-        // Pruning? depends on range?
-        // If range is "24h", we keep lots.
-        // Let's rely on Chart.js performance or simple limit
-        if (chart.data.datasets[0].data.length > 2000) {
-            chart.data.datasets[0].data.shift();
-        }
-
-        chart.update('none'); // efficient update
-    }
+    detailChartInstance.data.datasets[0].data = data;
+    detailChartInstance.update();
 }
 
 function setupSettings() {
@@ -337,7 +537,7 @@ function setupSettings() {
             data_retention_days: parseInt(document.getElementById("setting-retention").value),
             notifications_enabled: document.getElementById("setting-notifications").checked
         };
-        
+
         // Update local object deeply
         currentConfig.settings = newSettings;
 

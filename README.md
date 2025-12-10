@@ -100,7 +100,7 @@ wails build
 The output binary will be located in `build/bin/`.
 
 **Note for Windows Users**:
-If you are running the specific binary `netmonitorv2.exe` from the `build/bin` folder, ensure the `data` folder and `config.json` are present in that directory relative to the executable **if** you want portable behavior. However, by default, the app looks for configuration in the current working directory.
+If you are running the specific binary `netmonitor.exe` from the `build/bin` folder, ensure the `data` folder and `config.json` are present in that directory relative to the executable **if** you want portable behavior. However, by default, the app looks for configuration in the current working directory.
 
 ## Configuration
 
