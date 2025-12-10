@@ -87,36 +87,37 @@ func (m *Monitor) RunAllTests() {
 }
 
 func (m *Monitor) TestEndpoint(ep models.Endpoint) models.TestResult {
-	start := time.Now()
 	var err error
 	var status string
+	var durationMs int64
 
 	timeout := time.Duration(ep.Timeout) * time.Millisecond
+	var d time.Duration
 
 	switch ep.Type {
 	case models.TypeHTTP:
-		err = checkHTTP(ep.Address, timeout)
+		d, err = checkHTTP(ep.Address, timeout)
 	case models.TypeTCP:
-		err = checkTCP(ep.Address, timeout)
+		d, err = checkTCP(ep.Address, timeout)
 	case models.TypeUDP:
-		err = checkUDP(ep.Address, timeout)
+		d, err = checkUDP(ep.Address, timeout)
 	case models.TypeICMP:
-		err = checkICMP(ep.Address, timeout)
+		d, err = checkICMP(ep.Address, timeout)
 	default:
 		err = fmt.Errorf("unknown endpoint type: %s", ep.Type)
 	}
 
-	duration := time.Since(start).Milliseconds()
+	durationMs = d.Milliseconds()
 	if err != nil {
 		status = "failure"
-		// If it failed immediately, ensure duration reflects that or is recorded
+		// If it failed, we can still show the duration if it was a timeout or partial
 	} else {
 		status = "success"
 	}
 
 	return models.TestResult{
 		Timestamp: time.Now(),
-		LatencyMs: duration,
+		LatencyMs: durationMs,
 		Status:    status,
 		Error:     errStr(err),
 	}
@@ -129,46 +130,49 @@ func errStr(err error) string {
 	return err.Error()
 }
 
-func checkHTTP(url string, timeout time.Duration) error {
+func checkHTTP(url string, timeout time.Duration) (time.Duration, error) {
+	start := time.Now()
 	client := http.Client{
 		Timeout: timeout,
 	}
 	resp, err := client.Get(url)
 	if err != nil {
-		return err
+		return time.Since(start), err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode >= 400 {
-		return fmt.Errorf("http status %d", resp.StatusCode)
+		return time.Since(start), fmt.Errorf("http status %d", resp.StatusCode)
 	}
-	return nil
+	return time.Since(start), nil
 }
 
-func checkTCP(address string, timeout time.Duration) error {
+func checkTCP(address string, timeout time.Duration) (time.Duration, error) {
+	start := time.Now()
 	conn, err := net.DialTimeout("tcp", address, timeout)
 	if err != nil {
-		return err
+		return time.Since(start), err
 	}
 	conn.Close()
-	return nil
+	return time.Since(start), nil
 }
 
-func checkUDP(address string, timeout time.Duration) error {
+func checkUDP(address string, timeout time.Duration) (time.Duration, error) {
+	start := time.Now()
 	conn, err := net.DialTimeout("udp", address, timeout)
 	if err != nil {
-		return err
+		return time.Since(start), err
 	}
 	defer conn.Close()
 
 	// Attempt to write a byte to verify socket
 	_, err = conn.Write([]byte{0})
-	return err
+	return time.Since(start), err
 }
 
-func checkICMP(address string, timeout time.Duration) error {
+func checkICMP(address string, timeout time.Duration) (time.Duration, error) {
 	pinger, err := probing.NewPinger(address)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	pinger.Count = 1
@@ -182,12 +186,13 @@ func checkICMP(address string, timeout time.Duration) error {
 
 	err = pinger.Run()
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	if pinger.Statistics().PacketsRecv == 0 {
-		return fmt.Errorf("packet loss")
+	stats := pinger.Statistics()
+	if stats.PacketsRecv == 0 {
+		return 0, fmt.Errorf("packet loss")
 	}
 
-	return nil
+	return stats.AvgRtt, nil
 }

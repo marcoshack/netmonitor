@@ -78,7 +78,7 @@ func TestCheckICMP_Integration(t *testing.T) {
 
 	fmt.Printf("Attempting to ping %s...\n", target)
 
-	err := checkICMP(target, timeout)
+	_, err := checkICMP(target, timeout)
 	if err != nil {
 		t.Logf("ICMP Ping to %s failed: %v", target, err)
 		t.Logf("Note: This might be expected if running without sufficient privileges or OS support.")
