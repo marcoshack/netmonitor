@@ -41,3 +41,7 @@ export function SaveConfig(arg1) {
 export function ShowWindow() {
   return window['go']['main']['App']['ShowWindow']();
 }
+
+export function WindowResized() {
+  return window['go']['main']['App']['WindowResized']();
+}

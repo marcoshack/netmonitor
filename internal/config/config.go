@@ -26,6 +26,10 @@ func DefaultConfig() *models.Configuration {
 			TestIntervalSeconds:  300,
 			DataRetentionDays:    90,
 			NotificationsEnabled: true,
+			WindowWidth:          1024,
+			WindowHeight:         880,
+			WindowX:              -1,
+			WindowY:              -1,
 		},
 	}
 }

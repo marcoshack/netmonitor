@@ -4,6 +4,10 @@ export namespace models {
 	    test_interval_seconds: number;
 	    data_retention_days: number;
 	    notifications_enabled: boolean;
+	    window_width?: number;
+	    window_height?: number;
+	    window_x?: number;
+	    window_y?: number;
 	
 	    static createFrom(source: any = {}) {
 	        return new AppSettings(source);
@@ -14,6 +18,10 @@ export namespace models {
 	        this.test_interval_seconds = source["test_interval_seconds"];
 	        this.data_retention_days = source["data_retention_days"];
 	        this.notifications_enabled = source["notifications_enabled"];
+	        this.window_width = source["window_width"];
+	        this.window_height = source["window_height"];
+	        this.window_x = source["window_x"];
+	        this.window_y = source["window_y"];
 	    }
 	}
 	export class Thresholds {

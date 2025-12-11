@@ -46,6 +46,10 @@ type AppSettings struct {
 	TestIntervalSeconds  int  `json:"test_interval_seconds"`
 	DataRetentionDays    int  `json:"data_retention_days"`
 	NotificationsEnabled bool `json:"notifications_enabled"`
+	WindowWidth          int  `json:"window_width,omitempty"`
+	WindowHeight         int  `json:"window_height,omitempty"`
+	WindowX              int  `json:"window_x,omitempty"`
+	WindowY              int  `json:"window_y,omitempty"`
 }
 
 // Configuration represents the entire application config structure

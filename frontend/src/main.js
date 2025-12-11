@@ -28,6 +28,7 @@ async function init() {
 
         setupSettings();
         setupDetailsModal();
+        setupWindowListeners();
 
         // Initial Layout
         renderDashboard();
@@ -559,5 +560,17 @@ function setupSettings() {
     // Close on click outside
     modal.addEventListener("click", (e) => {
         if (e.target === modal) modal.classList.remove("active");
+    });
+}
+
+function setupWindowListeners() {
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            if (window.go && window.go.main && window.go.main.App) {
+                window.go.main.App.WindowResized();
+            }
+        }, 500);
     });
 }
