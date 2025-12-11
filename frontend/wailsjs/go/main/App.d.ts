@@ -21,3 +21,5 @@ export function QuitApp():Promise<void>;
 export function SaveConfig(arg1:models.Configuration):Promise<string>;
 
 export function ShowWindow():Promise<void>;
+
+export function WindowResized():Promise<void>;

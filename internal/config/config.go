@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -26,35 +27,63 @@ func DefaultConfig() *models.Configuration {
 			TestIntervalSeconds:  300,
 			DataRetentionDays:    90,
 			NotificationsEnabled: true,
+			WindowWidth:          1024,
+			WindowHeight:         880,
+			WindowX:              -1,
+			WindowY:              -1,
 		},
 	}
 }
 
 // LoadConfig reads the configuration from the specified file path
-func LoadConfig(path string) (*models.Configuration, error) {
+func LoadConfig(path string) (*models.Configuration, []models.Notification, error) {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		// Return default config if file doesn't exist
 		cfg := DefaultConfig()
 		// Attempt to save the default config so the user has a starting point
 		_ = SaveConfig(path, cfg)
-		return cfg, nil
+		return cfg, []models.Notification{}, nil
 	}
 
 	data, err := os.ReadFile(path)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var cfg models.Configuration
 	if err := json.Unmarshal(data, &cfg); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	if cfg.Settings.TestIntervalSeconds < 1 {
 		cfg.Settings.TestIntervalSeconds = 300
 	}
 
-	return &cfg, nil
+	// Validation for duplicates
+	seen := make(map[string]bool)
+	var notifications []models.Notification
+
+	for regionName, region := range cfg.Regions {
+		var validEndpoints []models.Endpoint
+		for _, ep := range region.Endpoints {
+			id := fmt.Sprintf("%s:%s", ep.Type, ep.Address)
+			if seen[id] {
+				notifications = append(notifications, models.Notification{
+					Level:   "error",
+					Type:    "config",
+					Message: fmt.Sprintf("Duplicate endpoint ignored: %s (%s) in region %s", ep.Name, id, regionName),
+				})
+			} else {
+				seen[id] = true
+				validEndpoints = append(validEndpoints, ep)
+			}
+		}
+		// Update endpoints with only valid ones
+		region.Endpoints = validEndpoints
+		cfg.Regions[regionName] = region
+	}
+
+	return &cfg, notifications, nil
 }
 
 // SaveConfig writes the configuration to the specified file path

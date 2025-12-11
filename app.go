@@ -21,6 +21,8 @@ type App struct {
 	// Paths
 	ConfigPath string
 	DataDir    string
+	// Validation
+	Notifications []models.Notification
 }
 
 // NewApp creates a new App application struct
@@ -31,7 +33,7 @@ func NewApp() *App {
 	// Ensure absolute paths in real app, but relative is fine for portable desktop app often.
 	// Wails runs from build dir or current dir.
 
-	cfg, _ := config.LoadConfig(configPath)
+	cfg, notifications, _ := config.LoadConfig(configPath)
 	// We ignore error here because LoadConfig returns default if fail, or error if completely broken.
 	// Ideally we handle it.
 
@@ -39,17 +41,18 @@ func NewApp() *App {
 	mon := monitor.NewMonitor(cfg)
 
 	return &App{
-		Config:     cfg,
-		Monitor:    mon,
-		Storage:    store,
-		ConfigPath: configPath,
-		DataDir:    dataDir,
+		Config:        cfg,
+		Monitor:       mon,
+		Storage:       store,
+		ConfigPath:    configPath,
+		DataDir:       dataDir,
+		Notifications: notifications,
 	}
 }
 
-// startup is called when the app starts. The context is saved
+// Startup is called when the app starts. The context is saved
 // so we can call the runtime methods
-func (a *App) startup(ctx context.Context) {
+func (a *App) Startup(ctx context.Context) {
 	a.ctx = ctx
 
 	// Initialize system tray
@@ -69,8 +72,37 @@ func (a *App) startup(ctx context.Context) {
 	a.Monitor.Start()
 }
 
-// shutdown is called at termination
-func (a *App) shutdown(ctx context.Context) {
+// DomReady is called after the front-end is created.
+func (a *App) DomReady(ctx context.Context) {
+	// Restore Window Position if set
+	if a.Config.Settings.WindowX != -1 && a.Config.Settings.WindowY != -1 {
+		// Safety check for multi-monitor:
+		// If the user disconnected a monitor, coordinates might be off-screen.
+		// We use a heuristic: If only 1 screen is detected, we enforce positive coordinates.
+
+		screens, err := runtime.ScreenGetAll(a.ctx)
+		if err == nil && len(screens) == 1 {
+			// Single monitor setup
+			if a.Config.Settings.WindowX < 0 || a.Config.Settings.WindowY < 0 {
+				// Window was likely on a secondary monitor (top/left) that is gone.
+				runtime.WindowCenter(a.ctx)
+				return
+			}
+
+			screen := screens[0]
+			// Check if out of bounds to the right/bottom
+			if a.Config.Settings.WindowX > screen.Size.Width || a.Config.Settings.WindowY > screen.Size.Height {
+				runtime.WindowCenter(a.ctx)
+				return
+			}
+		}
+
+		runtime.WindowSetPosition(a.ctx, a.Config.Settings.WindowX, a.Config.Settings.WindowY)
+	}
+}
+
+// Shutdown is called at termination
+func (a *App) Shutdown(ctx context.Context) {
 	if a.Monitor != nil {
 		a.Monitor.Stop()
 	}
@@ -140,4 +172,38 @@ func (a *App) ManualTest(endpoint models.Endpoint) models.TestResult {
 
 func (a *App) GetRegions() map[string]models.Region {
 	return a.Config.Regions
+}
+
+func (a *App) WindowResized() {
+	if a.ctx == nil {
+		return
+	}
+	width, height := runtime.WindowGetSize(a.ctx)
+	x, y := runtime.WindowGetPosition(a.ctx)
+	a.Config.Settings.WindowWidth = width
+	a.Config.Settings.WindowHeight = height
+	a.Config.Settings.WindowX = x
+	a.Config.Settings.WindowY = y
+	_ = config.SaveConfig(a.ConfigPath, a.Config)
+}
+
+func (a *App) GetNotifications() []models.Notification {
+	return a.Notifications
+}
+
+func (a *App) RemoveDuplicateEndpoints() string {
+	// The config loaded in a.Config is already deduped by LoadConfig.
+	// So we just need to save it back to disk.
+	if len(a.Notifications) == 0 {
+		return "No duplicates to remove."
+	}
+
+	err := config.SaveConfig(a.ConfigPath, a.Config)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Clear notifications as we've saved the clean version
+	a.Notifications = []models.Notification{}
+	return ""
 }

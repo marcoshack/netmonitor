@@ -46,10 +46,21 @@ type AppSettings struct {
 	TestIntervalSeconds  int  `json:"test_interval_seconds"`
 	DataRetentionDays    int  `json:"data_retention_days"`
 	NotificationsEnabled bool `json:"notifications_enabled"`
+	WindowWidth          int  `json:"window_width,omitempty"`
+	WindowHeight         int  `json:"window_height,omitempty"`
+	WindowX              int  `json:"window_x,omitempty"`
+	WindowY              int  `json:"window_y,omitempty"`
 }
 
 // Configuration represents the entire application config structure
 type Configuration struct {
 	Regions  map[string]Region `json:"regions"`
 	Settings AppSettings       `json:"settings"`
+}
+
+// Notification represents a system notification
+type Notification struct {
+	Level   string `json:"level"`   // e.g., "error", "warning", "info"
+	Type    string `json:"type"`    // e.g., "config"
+	Message string `json:"message"` // e.g., "Duplicate endpoint ignored"
 }

@@ -77,7 +77,7 @@ func (m *Monitor) RunAllTests() {
 			go func(rName string, ep models.Endpoint) {
 				defer wg.Done()
 				result := m.TestEndpoint(ep)
-				result.EndpointID = fmt.Sprintf("%s-%s", rName, ep.Name) // Simple ID generation
+				result.EndpointID = fmt.Sprintf("%s:%s", ep.Type, ep.Address)
 				m.ResultsChan <- result
 			}(regionName, endpoint)
 		}

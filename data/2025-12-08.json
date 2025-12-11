@@ -1,3559 +1,3559 @@
 [
   {
     "timestamp": "2025-12-08T17:32:03.131754-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 142,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:32:19.4320309-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 144,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:33:19.4203853-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:34:19.4472535-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 159,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:35:19.4596162-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 172,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:36:19.4445053-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 156,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:37:19.4366155-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 149,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:38:19.4533736-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 165,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:39:19.413449-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:47:52.1627781-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 146,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:48:52.1669948-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 149,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:49:52.1872561-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 170,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:50:52.174438-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 157,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:52:20.8434214-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 1,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:52:20.8865886-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 44,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:52:20.9752396-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:52:20.9991846-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 157,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:53:20.8419309-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:53:20.8507986-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 8,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:53:20.9568237-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 114,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:53:20.9667562-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:54:20.8423263-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:54:20.8639513-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 21,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:54:20.9626063-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 120,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:54:20.9723387-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 130,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:55:20.8428686-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:55:20.8694833-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 27,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:55:20.9425164-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 100,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:55:20.9601926-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 117,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:56:20.8421709-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:56:20.8698905-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 27,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:56:20.9502256-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 108,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:56:20.9767318-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:57:20.8428977-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:57:20.8612519-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 18,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:57:20.9676979-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:57:20.976594-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:58:20.8420462-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:58:20.8531857-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 11,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:58:20.9527565-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 110,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:58:20.9615961-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 119,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:59:20.8420293-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:59:20.8532769-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 11,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:59:20.9609549-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 118,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T17:59:20.9634687-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 121,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:00:20.8424207-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:00:20.8706001-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 28,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:00:20.9547873-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 112,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:00:20.9873274-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 144,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:01:20.8427363-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:01:20.8784022-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 35,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:01:20.9790351-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:01:20.9816086-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 138,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:02:20.8420222-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:02:20.8543008-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 12,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:02:20.9743086-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:02:20.9779681-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 135,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:03:20.8424863-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:03:20.8590276-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 17,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:03:20.9644306-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 122,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:03:20.9815837-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 139,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:04:20.8419734-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:04:20.8767123-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 34,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:04:20.951313-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 109,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:04:20.975148-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:05:20.8428207-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:05:20.8770575-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 34,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:05:20.9629973-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 120,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:05:20.9833365-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 141,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:06:20.8423622-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:06:20.8791217-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 36,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:06:20.9719992-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:06:20.9925993-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 150,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:07:20.8424656-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:07:20.8600431-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 17,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:07:20.9714436-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 128,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:07:20.9786494-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:08:20.842899-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:08:20.8683873-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 25,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:08:20.9631444-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 120,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:08:20.9810938-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 138,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:09:20.8422194-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:09:20.8568737-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 14,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:09:20.9560374-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 113,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:09:20.9916966-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 149,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:10:20.8428166-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:10:20.8689338-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 26,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:10:20.9692736-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 127,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:10:21.0036477-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 161,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:11:20.8421148-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:11:20.8672763-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 25,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:11:20.9516124-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 109,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:11:20.9737713-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 131,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:12:20.8423646-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:12:20.8712513-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 29,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:12:20.9779392-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 135,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:12:20.9864173-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 144,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:13:20.8420577-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:13:20.8518618-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 9,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:13:20.9614034-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 119,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:13:20.9802134-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 138,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:14:20.8420274-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:14:20.8588901-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 16,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:14:20.9627331-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 120,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:14:20.9715851-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:15:20.8425443-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:15:20.8767702-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 34,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:15:20.9669024-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:15:20.9696938-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 127,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:16:20.8424054-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:16:20.8726923-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 30,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:16:20.9582014-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 115,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:16:20.9720994-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:17:20.8426029-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:17:20.8583993-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 16,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:17:20.9672285-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:17:20.9878961-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 145,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:18:20.8423644-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:18:20.8509748-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 8,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:18:20.9588369-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 116,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:18:20.9634726-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 121,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:19:20.8423102-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:19:20.8595852-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 17,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:19:20.984924-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 142,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:19:21.029866-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 187,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:20:20.8419213-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:20:20.883001-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 41,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:20:20.9687912-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 126,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:20:20.9875196-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 145,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:21:20.8419313-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:21:20.8768851-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 34,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:21:20.9565828-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 114,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:21:20.976994-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 135,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:22:20.842658-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:22:20.871215-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 29,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:22:20.952694-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 110,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:22:20.9839212-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 141,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:23:20.8431596-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 1,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:23:20.8669405-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 24,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:23:20.9776507-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 135,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:23:20.9836129-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 141,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:24:20.8426967-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:24:20.856918-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 14,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:24:20.9670887-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:24:20.9789637-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:25:20.8428186-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:25:20.8750218-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 32,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:25:20.9663723-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:25:20.9832699-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 140,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:26:20.841946-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:26:20.8880163-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 46,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:26:20.972687-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 130,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:26:20.9790251-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 137,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:27:20.8421202-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:27:20.8791818-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 37,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:27:20.9666898-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:27:20.9719388-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:28:20.8423266-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:28:20.8679966-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 25,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:28:20.9605681-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 118,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:28:20.968945-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 126,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:29:20.8426787-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:29:20.8903834-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 48,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:29:20.9783909-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:29:20.9963119-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 154,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:30:20.8421066-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:30:20.864431-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 22,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:30:20.9823005-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 140,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:30:20.9828037-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 140,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:31:20.8422186-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:31:20.8823197-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 40,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:31:20.9769795-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:31:20.9818357-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 139,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:32:20.8421807-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:32:20.8645322-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 22,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:32:20.9720016-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:32:20.9802581-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 138,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:33:20.8420203-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:33:20.85694-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 14,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:33:20.9754191-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:33:20.986781-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 144,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:34:20.8424004-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:34:20.8673201-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 24,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:34:20.962507-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 120,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:34:20.9753985-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:35:20.8424106-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:35:20.8735425-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 31,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:35:20.9521254-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 110,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:35:20.984579-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 142,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:36:20.8419964-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:36:20.878247-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 36,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:36:20.9642866-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 122,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:36:20.9690645-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 127,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:37:20.8421336-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:37:20.9210796-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 78,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:37:20.9697032-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 127,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:37:21.0134375-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 171,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:38:20.8422212-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:38:20.8596806-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 17,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:38:20.959152-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 116,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:38:20.9808285-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 138,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:39:20.8427154-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:39:20.8850201-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 42,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:39:20.9584557-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 116,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:39:20.9779639-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 135,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:40:20.8422657-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:40:20.8808152-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 38,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:40:20.9727548-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 130,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:40:20.9918454-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 149,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:41:20.8421082-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:41:20.8869497-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 44,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:41:20.9683496-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 126,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:41:20.9919701-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 149,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:42:20.8424073-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:42:20.8858452-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 43,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:42:20.9750364-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:42:21.0010015-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 158,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:43:20.8421297-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:43:20.8766481-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 34,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:43:20.9608061-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 118,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:43:20.9842014-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 142,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:44:20.8427538-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:44:20.8697742-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 27,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:44:20.9733428-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 131,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:44:20.9805666-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 138,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:45:20.842391-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:45:20.8596114-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 17,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:45:20.9658533-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 123,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:45:20.979313-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:46:20.8419352-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:46:20.8725245-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 30,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:46:20.9692153-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 127,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:46:20.9726406-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 130,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:47:20.8425107-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:47:20.8857305-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 43,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:47:20.9737659-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 131,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:47:20.9905341-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 148,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:48:20.8426071-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:48:20.8722394-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 30,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:48:20.9695661-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 127,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:48:20.9834893-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 141,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:49:20.8426549-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:49:20.8557267-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 13,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:49:20.9640232-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 121,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:49:20.9749083-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:50:20.8420173-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:50:20.8688447-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 26,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:50:20.9755808-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:50:20.9787285-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:51:20.8420983-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:51:20.9025449-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 60,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:51:20.9766844-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:51:20.9880423-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 145,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:52:20.8422111-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:52:20.8585761-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 16,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:52:20.973238-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 131,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:52:20.9747985-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:53:20.842796-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:53:20.86017-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 17,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:53:20.9846187-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 142,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:53:20.9866772-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 144,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:54:20.8427708-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:54:20.862362-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 20,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:54:20.9711525-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 128,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:54:20.9918646-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 149,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:55:20.8423811-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:55:20.8886649-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 46,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:55:20.9754766-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:55:20.9821455-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 139,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:56:20.8422283-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:56:20.8818747-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 39,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:56:20.9691481-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 126,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:56:20.9752278-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:57:20.8426614-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:57:20.8730663-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 30,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:57:20.9801446-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 137,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:57:20.9821926-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 140,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:58:20.8428745-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:58:20.8611697-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 18,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:58:20.9667395-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:58:20.9842758-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 141,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:59:20.8422179-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:59:20.8783939-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 36,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:59:20.9670414-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T18:59:20.9889627-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 146,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:00:20.8419903-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:00:20.8629732-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 20,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:00:20.9732127-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 131,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:00:20.9759218-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:01:20.8421671-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:01:20.8955715-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 53,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:01:20.9737466-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 131,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:01:20.9856855-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 143,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:02:20.8422504-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:02:20.8825265-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 40,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:02:20.9751369-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:02:20.9777204-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 135,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:03:20.8423488-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:03:20.8625653-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 20,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:03:20.974576-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:03:20.9875705-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 145,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:04:20.841952-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:04:20.8732891-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 31,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:04:20.9501792-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 108,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:04:20.9606055-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 118,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:05:20.8423964-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:05:20.8615648-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 19,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:05:20.9706683-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 128,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:05:20.971172-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 128,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:06:20.842383-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:06:20.8865837-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 44,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:06:20.9693531-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 126,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:06:20.9874259-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 145,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:07:20.8426405-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:07:20.883183-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 41,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:07:20.9672036-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:07:20.978503-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:08:20.8419683-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:08:20.8527164-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 10,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:08:20.953023-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 111,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:08:20.9763687-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:09:20.8418872-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:09:20.87922-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 37,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:09:20.9576365-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 115,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:09:20.9679657-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 126,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:10:20.8420913-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:10:20.8898624-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 47,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:10:20.9812478-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 139,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:10:20.9853782-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 143,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:11:20.8423171-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:11:20.8746273-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 32,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:11:20.9673493-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:11:20.9838556-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 141,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:12:20.842557-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:12:20.8590598-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 17,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:12:20.9761725-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:12:20.9901135-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 148,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:13:20.8423846-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:13:20.8661595-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 23,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:13:20.9681543-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:13:20.9878379-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 145,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:14:20.8419083-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:14:20.8510865-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 9,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:14:20.9641209-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 122,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:14:20.9796619-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 137,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:15:20.842641-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:15:20.8707289-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 28,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:15:20.9634958-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 121,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:15:20.9842718-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 142,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:16:20.8420903-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:16:20.8840306-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 41,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:16:20.9619223-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 119,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:16:20.9769865-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:17:20.842367-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:17:20.8555183-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 13,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:17:20.9799069-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 137,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:17:20.9809264-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 138,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:18:20.8421738-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:18:20.8734359-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 31,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:18:20.9624018-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 120,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:18:20.9795406-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 137,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:19:20.8428272-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:19:20.8887888-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 46,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:19:20.9645398-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 122,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:19:20.9823438-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 140,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:20:20.84268-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:20:20.8732807-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 31,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:20:20.9648286-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 122,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:20:20.9762961-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:21:20.8420082-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:21:20.8581526-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 16,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:21:20.967738-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:21:20.9837527-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 141,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:22:20.8419908-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:22:20.873623-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 31,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:22:20.9677338-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:22:20.9754921-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:23:20.8423659-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:23:20.8624195-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 20,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:23:20.9685078-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 126,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:23:20.9824489-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 140,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:24:20.8431265-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 1,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:24:20.8522137-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 10,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:24:20.9475057-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 105,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:24:20.986033-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 144,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:25:20.8421415-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:25:20.8822875-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 40,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:25:20.9585481-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 116,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:25:20.9742635-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:26:20.8422645-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:26:20.8542338-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 11,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:26:20.963799-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 121,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:26:20.9783062-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:27:20.8422413-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:27:20.8598039-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 17,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:27:20.9790045-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:27:20.9800217-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 137,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:28:20.8421888-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:28:20.8652053-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 23,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:28:20.9769528-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:28:20.9898176-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 147,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:29:20.8422632-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:29:20.8614823-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 19,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:29:20.9665287-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:29:20.9758333-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:30:20.8429347-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:30:20.8900818-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 47,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:30:20.9763536-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:30:20.9809725-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 138,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:31:20.8428636-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:31:20.8722007-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 29,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:31:20.9723213-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:31:20.9765951-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:32:20.8422412-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:32:20.8601997-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 17,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:32:20.9738338-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 131,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:32:20.9769854-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:33:20.8420403-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:33:20.8853079-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 43,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:33:20.9724684-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 130,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:33:20.9812585-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 139,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:34:20.8428859-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:34:20.8595203-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 17,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:34:20.9637013-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 121,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:34:20.9785446-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:35:20.8422279-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:35:20.8762903-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 34,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:35:20.9572267-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 114,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:35:20.9763417-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:36:20.8420353-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:36:20.886193-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 44,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:36:20.9750399-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:36:20.9800939-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 138,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:37:20.8423162-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:37:20.8620179-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 19,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:37:20.9764643-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:37:20.9895883-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 147,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:38:20.8419279-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:38:20.8857401-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 43,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:38:20.9624275-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 120,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:38:20.9816201-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 139,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:39:20.8419715-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:39:20.8662207-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 24,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:39:20.9660142-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:39:20.9714606-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:40:20.842217-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:40:20.8887365-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 46,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:40:20.9699517-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 127,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:40:20.9748309-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:41:20.8425273-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:41:20.873508-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 31,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:41:20.9611576-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 119,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:41:20.9755873-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:42:20.8422472-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:42:20.8538682-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 11,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:42:20.9654637-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 123,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:42:20.9823384-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 140,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:43:20.8430573-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 1,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:43:20.8583509-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 16,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:43:20.9627634-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 120,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:43:20.9828979-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 140,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:44:20.8427554-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:44:20.8548402-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 12,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:44:20.9715338-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:44:20.9821108-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 139,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:45:20.8428647-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:45:20.8880297-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 45,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:45:20.9713223-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:45:20.9743078-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:46:20.8425229-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:46:20.8605084-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 18,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:46:20.9665863-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:46:20.9734332-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 131,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:47:20.8426436-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:47:20.8562609-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 14,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:47:20.952753-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 110,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:47:20.9706322-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 128,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:48:20.842451-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:48:20.8798601-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 37,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:48:20.9678973-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:48:20.9760501-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 134,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:49:20.8420903-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:49:20.8612461-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 19,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:49:20.9722248-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 130,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:49:20.9913727-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 149,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:50:20.8421318-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:50:20.873866-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 31,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:50:20.9717456-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:50:20.9905732-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 148,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:51:20.8420054-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:51:20.8765167-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 34,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:51:20.9676772-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:51:20.9760019-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:52:20.8428308-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:52:20.8635145-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 21,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:52:20.9728552-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 130,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:52:20.9750766-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 132,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:53:20.8424057-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:53:20.8630835-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 20,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:53:20.9698031-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 127,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:53:20.9723675-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:54:20.8423036-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:54:20.8789712-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 36,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:54:20.9588949-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 116,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:54:20.9813893-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 139,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:55:20.8419753-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:55:20.8574843-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 15,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:55:20.9679734-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:55:20.9772126-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 135,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:56:20.842349-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:56:20.8832238-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 40,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:56:20.9609077-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 118,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:56:20.9794347-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 137,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:57:20.8426896-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:57:20.8573399-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 15,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:57:20.9652735-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 123,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:57:20.985813-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 143,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:58:20.8424294-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:58:20.883452-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 41,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:58:20.9732695-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 131,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:58:20.9849854-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 143,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:59:20.8423862-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:59:20.855032-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 12,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:59:20.9650217-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 122,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T19:59:20.9881488-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 145,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:00:20.8422856-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:00:20.8888036-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 46,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:00:20.969701-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 127,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:00:20.9948556-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 152,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:01:20.8421586-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:01:20.8755613-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 33,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:01:20.9560953-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 113,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:01:20.9685177-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 126,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:02:20.8419124-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:02:20.8835664-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 41,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:02:20.9631283-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 121,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:02:20.9835635-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 141,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:03:20.8420235-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:03:20.8764579-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 34,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:03:20.9563452-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 114,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:03:20.9840609-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 142,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:04:20.842175-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:04:20.8512778-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 9,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:04:20.9676571-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:04:20.9759418-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:05:20.8419705-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:05:20.8859309-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 43,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:05:20.9678287-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:05:20.9709964-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:06:20.843142-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 1,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:06:20.8750462-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 32,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:06:20.9662832-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 124,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:06:20.9904319-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 148,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:07:20.8420693-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:07:20.862482-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 20,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:07:20.9627546-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 120,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:07:20.9874264-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 145,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:08:20.8422152-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:08:20.864733-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 22,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:08:20.962403-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 120,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:08:20.9762072-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 133,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:09:20.8421189-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:09:20.8807634-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 38,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:09:20.9673616-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 125,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:09:20.9847083-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 142,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:10:20.8423298-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:10:20.8538264-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 11,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:10:20.9648512-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 122,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:10:20.9846307-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 142,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:11:20.8428214-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:11:20.8717039-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 29,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:11:20.9614671-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 119,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:11:20.9934446-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 151,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:12:20.8420376-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:12:20.9022939-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 60,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:12:20.9830599-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 141,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:12:20.987161-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 145,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:13:20.8420073-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:13:20.8503824-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 8,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:13:20.9582275-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 116,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:13:20.9782947-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 136,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:14:20.8440185-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 1,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:14:20.8662354-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 23,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:14:20.9483861-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 105,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:14:21.0306406-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 187,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:15:20.8427882-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 0,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:15:20.8618549-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 19,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:15:20.9698064-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 127,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:15:21.0050266-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 162,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:17:06.5100879-05:00",
-    "endpoint_id": "Default-Google DNS UDP",
+    "endpoint_id": "UDP:8.8.8.8:53",
     "latency_ms": 1,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:17:06.5493156-05:00",
-    "endpoint_id": "Default-Google TCP",
+    "endpoint_id": "TCP:google.com:80",
     "latency_ms": 40,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:17:06.6386669-05:00",
-    "endpoint_id": "Default-Google DNS",
+    "endpoint_id": "ICMP:8.8.8.8",
     "latency_ms": 129,
     "status": "success"
   },
   {
     "timestamp": "2025-12-08T20:17:06.6509604-05:00",
-    "endpoint_id": "Default-GitHub HTTP",
+    "endpoint_id": "HTTP:https://github.com",
     "latency_ms": 142,
     "status": "success"
   }
