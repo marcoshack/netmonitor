@@ -35,7 +35,7 @@ func NewApp() *App {
 
 	cfg, notifications, _ := config.LoadConfig(configPath)
 	// We ignore error here because LoadConfig returns default if fail, or error if completely broken.
-	// Ideally we handle it.
+	// TODO: Ideally we handle it.
 
 	store := data.NewStorage(dataDir)
 	mon := monitor.NewMonitor(cfg)
