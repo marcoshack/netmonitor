@@ -21,6 +21,8 @@ type App struct {
 	// Paths
 	ConfigPath string
 	DataDir    string
+	// Validation
+	ConfigWarnings []string
 }
 
 // NewApp creates a new App application struct
@@ -31,7 +33,7 @@ func NewApp() *App {
 	// Ensure absolute paths in real app, but relative is fine for portable desktop app often.
 	// Wails runs from build dir or current dir.
 
-	cfg, _ := config.LoadConfig(configPath)
+	cfg, warnings, _ := config.LoadConfig(configPath)
 	// We ignore error here because LoadConfig returns default if fail, or error if completely broken.
 	// Ideally we handle it.
 
@@ -39,11 +41,12 @@ func NewApp() *App {
 	mon := monitor.NewMonitor(cfg)
 
 	return &App{
-		Config:     cfg,
-		Monitor:    mon,
-		Storage:    store,
-		ConfigPath: configPath,
-		DataDir:    dataDir,
+		Config:         cfg,
+		Monitor:        mon,
+		Storage:        store,
+		ConfigPath:     configPath,
+		DataDir:        dataDir,
+		ConfigWarnings: warnings,
 	}
 }
 
@@ -140,4 +143,25 @@ func (a *App) ManualTest(endpoint models.Endpoint) models.TestResult {
 
 func (a *App) GetRegions() map[string]models.Region {
 	return a.Config.Regions
+}
+
+func (a *App) GetConfigWarnings() []string {
+	return a.ConfigWarnings
+}
+
+func (a *App) RemoveDuplicateEndpoints() string {
+	// The config loaded in a.Config is already deduped by LoadConfig.
+	// So we just need to save it back to disk.
+	if len(a.ConfigWarnings) == 0 {
+		return "No duplicates to remove."
+	}
+
+	err := config.SaveConfig(a.ConfigPath, a.Config)
+	if err != nil {
+		return err.Error()
+	}
+
+	// Clear warnings as we've saved the clean version
+	a.ConfigWarnings = []string{}
+	return ""
 }

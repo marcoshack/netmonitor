@@ -17,6 +17,9 @@ window.addEventListener('DOMContentLoaded', init);
 
 async function init() {
     try {
+        // Check for Config Errors
+        checkConfigErrors();
+
         // Load Config
         currentConfig = await window.go.main.App.GetConfig();
 
@@ -28,6 +31,7 @@ async function init() {
 
         setupSettings();
         setupDetailsModal();
+        setupNotificationsModal();
 
         // Initial Layout
         renderDashboard();
@@ -39,6 +43,57 @@ async function init() {
         console.error("Initialization failed", err);
         document.getElementById("status-message").innerText = "Error: " + err;
     }
+}
+
+async function checkConfigErrors() {
+    try {
+        const warnings = await window.go.main.App.GetConfigWarnings();
+        if (warnings && warnings.length > 0) {
+            showNotificationsModal(warnings);
+        }
+    } catch (err) {
+        console.error("Failed to check config errors", err);
+    }
+}
+
+function setupNotificationsModal() {
+    const modal = document.getElementById("notifications-modal");
+    document.getElementById("btn-close-notifications").onclick = () => {
+        modal.classList.remove("active");
+    };
+    document.getElementById("btn-ignore-notifications").onclick = () => {
+        modal.classList.remove("active");
+    };
+
+    document.getElementById("btn-fix-duplicates").onclick = async () => {
+        try {
+            const err = await window.go.main.App.RemoveDuplicateEndpoints();
+            if (err) {
+                alert("Error removing duplicates: " + err);
+            } else {
+                alert("Duplicates removed and configuration saved.");
+                modal.classList.remove("active");
+                // Reload config
+                currentConfig = await window.go.main.App.GetConfig();
+                setupRegionSelector();
+                renderDashboard();
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Failed to fix duplicates: " + error);
+        }
+    };
+}
+
+function showNotificationsModal(warnings) {
+    const list = document.getElementById("notifications-list");
+    list.innerHTML = "";
+    warnings.forEach(w => {
+        const li = document.createElement("li");
+        li.innerText = w;
+        list.appendChild(li);
+    });
+    document.getElementById("notifications-modal").classList.add("active");
 }
 
 function setupRegionSelector() {
@@ -95,16 +150,26 @@ function renderDashboard() {
 }
 
 function createEndpointCard(ep) {
-    const id = `${currentRegion}-${ep.name}`; // Consistent ID generation
+    // Generate ID consistent with backend: Type:Address
+    // Wait, createEndpointCard used to generate ID based on region and name.
+    // The backend now sends results with ID = Type:Address.
+    // BUT, the frontend needs to match the ID from the result to the card.
+    // The previous frontend implementation used: `${currentRegion}-${ep.name}`
+
+    // The backend change I made: `EndpointID = fmt.Sprintf("%s:%s", ep.Type, ep.Address)`
+
+    // So here in frontend I MUST also update how I generate the ID for the card so that `handleTestResult` can find it.
+
+    const id = `${ep.type}:${ep.address}`;
 
     const div = document.createElement("div");
     div.className = "card";
+    // IDs can contain special chars like http:// or : so we should escape or use a safe selector?
+    // CSS selectors with colons need escaping. `document.getElementById` is fine with colons.
     div.id = `card-${id}`;
 
     // Add click event to open details
     div.onclick = (e) => {
-        // Prevent click if clicking on chart specifically if we wanted, 
-        // but user asked "click in any endpoint", so clicking anywhere on card is good.
         openDetailView(id);
     };
     div.style.cursor = "pointer";
@@ -132,8 +197,6 @@ function createEndpointCard(ep) {
 }
 
 async function fetchHistory(range) {
-    // Clear existing results or keep them? 
-    // Usually fetching range means "reload all data for this range".
     testResults = {};
 
     try {
@@ -155,9 +218,10 @@ async function fetchHistory(range) {
         });
 
         // Initialize any missing charts
-        const cards = document.querySelectorAll('[id^="card-"]');
+        // We need to iterate over currently rendered cards
+        const cards = document.querySelectorAll('.card');
         cards.forEach(card => {
-            const id = card.id.replace("card-", "");
+            const id = card.id.replace("card-", ""); // This might be tricky if ID contains 'card-' itself, but unlikely.
             if (!chartInstances[id]) {
                 initChart(id);
             } else {
@@ -197,6 +261,7 @@ function updateChartHistory(id) {
 function initChart(id) {
     if (chartInstances[id]) return chartInstances[id];
 
+    // IDs with special chars need to be handled carefully in getElementById? No, strings are fine.
     const canvas = document.getElementById(`canvas-${id}`);
     if (!canvas) return null;
 
@@ -279,7 +344,14 @@ function handleTestResult(result) {
     }
 
     // Is it visible on current dashboard?
-    if (id.startsWith(currentRegion + "-")) {
+    // Previously checked `id.startsWith(currentRegion + "-")`.
+    // Now ID is `Type:Address`.
+    // We need to check if this endpoint belongs to the current region.
+    // We can do this by finding the endpoint in config and comparing IDs.
+
+    // However, finding it every time might be slow.
+    // But since we only have one region active, we can check if the ID corresponds to any card currently in DOM.
+    if (document.getElementById(`card-${id}`)) {
         // Update Card UI
         const latSpan = document.getElementById(`latency-${id}`);
         const dot = document.getElementById(`status-dot-${id}`);
@@ -341,19 +413,10 @@ function closeDetailView() {
 
 function updateDetailView(id) {
     // 1. Find Endpoint Config
-    const parts = id.split("-");
-    // This splitting is fragile if region has hyphens. 
-    // Better iterate regions to find match.
-    // currentConfig.regions[currentRegion].endpoints
-    // We know 'currentRegion' is selected. 
-    // And id = currentRegion + "-" + ep.name
-    // So we can extract ep name.
+    // ID is Type:Address
 
-    // A safer way: Check if id starts with currentRegion + "-"
-    if (!id.startsWith(currentRegion + "-")) return; // Only show details for current region items?
-
-    const epName = id.substring(currentRegion.length + 1);
-    const endpoint = currentConfig.regions[currentRegion].endpoints.find(e => e.name === epName);
+    // Search in current region endpoints
+    const endpoint = currentConfig.regions[currentRegion].endpoints.find(e => `${e.type}:${e.address}` === id);
 
     if (!endpoint) return;
 

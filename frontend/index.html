@@ -60,6 +60,28 @@
             <div>Last Updated: <span id="last-updated">Never</span></div>
         </footer>
 
+        <!-- Notifications Modal -->
+        <div id="notifications-modal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="flex items-center justify-between" style="margin-bottom: 1.5rem">
+                    <h2 class="text-xl text-error">Configuration Errors</h2>
+                    <button id="btn-close-notifications" class="btn btn-icon">✕</button>
+                </div>
+
+                <div class="glass-panel" style="padding: 1rem; margin-bottom: 1.5rem; border: 1px solid var(--accent-error);">
+                    <p style="margin-bottom: 0.5rem">The following duplicates were found in your configuration and have been ignored:</p>
+                    <ul id="notifications-list" style="padding-left: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+                        <!-- List injected here -->
+                    </ul>
+                </div>
+
+                <div class="flex gap-md">
+                    <button id="btn-fix-duplicates" class="btn btn-primary" style="flex: 1; background-color: var(--accent-error);">Remove Duplicates from Config</button>
+                    <button id="btn-ignore-notifications" class="btn" style="flex: 1">Ignore</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Settings Modal -->
         <div id="settings-modal" class="modal-overlay">
             <div class="modal-content">

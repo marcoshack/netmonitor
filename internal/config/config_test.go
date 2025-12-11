@@ -11,7 +11,7 @@ func TestLoadSaveConfig(t *testing.T) {
 	defer os.Remove(tmpFile)
 
 	// Test Default Load
-	cfg, err := LoadConfig(tmpFile)
+	cfg, _, err := LoadConfig(tmpFile)
 	if err != nil {
 		t.Fatalf("LoadConfig failed: %v", err)
 	}
@@ -27,7 +27,7 @@ func TestLoadSaveConfig(t *testing.T) {
 	}
 
 	// Reload
-	cfg2, err := LoadConfig(tmpFile)
+	cfg2, _, err := LoadConfig(tmpFile)
 	if err != nil {
 		t.Fatalf("Reload failed: %v", err)
 	}
