@@ -32,13 +32,13 @@ func DefaultConfig() *models.Configuration {
 }
 
 // LoadConfig reads the configuration from the specified file path
-func LoadConfig(path string) (*models.Configuration, []string, error) {
+func LoadConfig(path string) (*models.Configuration, []models.Notification, error) {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		// Return default config if file doesn't exist
 		cfg := DefaultConfig()
 		// Attempt to save the default config so the user has a starting point
 		_ = SaveConfig(path, cfg)
-		return cfg, []string{}, nil
+		return cfg, []models.Notification{}, nil
 	}
 
 	data, err := os.ReadFile(path)
@@ -57,14 +57,18 @@ func LoadConfig(path string) (*models.Configuration, []string, error) {
 
 	// Validation for duplicates
 	seen := make(map[string]bool)
-	var warnings []string
+	var notifications []models.Notification
 
 	for regionName, region := range cfg.Regions {
 		var validEndpoints []models.Endpoint
 		for _, ep := range region.Endpoints {
 			id := fmt.Sprintf("%s:%s", ep.Type, ep.Address)
 			if seen[id] {
-				warnings = append(warnings, fmt.Sprintf("Duplicate endpoint ignored: %s (%s) in region %s", ep.Name, id, regionName))
+				notifications = append(notifications, models.Notification{
+					Level:   "error",
+					Type:    "config",
+					Message: fmt.Sprintf("Duplicate endpoint ignored: %s (%s) in region %s", ep.Name, id, regionName),
+				})
 			} else {
 				seen[id] = true
 				validEndpoints = append(validEndpoints, ep)
@@ -75,7 +79,7 @@ func LoadConfig(path string) (*models.Configuration, []string, error) {
 		cfg.Regions[regionName] = region
 	}
 
-	return &cfg, warnings, nil
+	return &cfg, notifications, nil
 }
 
 // SaveConfig writes the configuration to the specified file path

@@ -22,7 +22,7 @@ type App struct {
 	ConfigPath string
 	DataDir    string
 	// Validation
-	ConfigWarnings []string
+	Notifications []models.Notification
 }
 
 // NewApp creates a new App application struct
@@ -33,7 +33,7 @@ func NewApp() *App {
 	// Ensure absolute paths in real app, but relative is fine for portable desktop app often.
 	// Wails runs from build dir or current dir.
 
-	cfg, warnings, _ := config.LoadConfig(configPath)
+	cfg, notifications, _ := config.LoadConfig(configPath)
 	// We ignore error here because LoadConfig returns default if fail, or error if completely broken.
 	// Ideally we handle it.
 
@@ -41,12 +41,12 @@ func NewApp() *App {
 	mon := monitor.NewMonitor(cfg)
 
 	return &App{
-		Config:         cfg,
-		Monitor:        mon,
-		Storage:        store,
-		ConfigPath:     configPath,
-		DataDir:        dataDir,
-		ConfigWarnings: warnings,
+		Config:        cfg,
+		Monitor:       mon,
+		Storage:       store,
+		ConfigPath:    configPath,
+		DataDir:       dataDir,
+		Notifications: notifications,
 	}
 }
 
@@ -145,14 +145,14 @@ func (a *App) GetRegions() map[string]models.Region {
 	return a.Config.Regions
 }
 
-func (a *App) GetConfigWarnings() []string {
-	return a.ConfigWarnings
+func (a *App) GetNotifications() []models.Notification {
+	return a.Notifications
 }
 
 func (a *App) RemoveDuplicateEndpoints() string {
 	// The config loaded in a.Config is already deduped by LoadConfig.
 	// So we just need to save it back to disk.
-	if len(a.ConfigWarnings) == 0 {
+	if len(a.Notifications) == 0 {
 		return "No duplicates to remove."
 	}
 
@@ -161,7 +161,7 @@ func (a *App) RemoveDuplicateEndpoints() string {
 		return err.Error()
 	}
 
-	// Clear warnings as we've saved the clean version
-	a.ConfigWarnings = []string{}
+	// Clear notifications as we've saved the clean version
+	a.Notifications = []models.Notification{}
 	return ""
 }

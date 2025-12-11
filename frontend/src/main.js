@@ -47,9 +47,9 @@ async function init() {
 
 async function checkConfigErrors() {
     try {
-        const warnings = await window.go.main.App.GetConfigWarnings();
-        if (warnings && warnings.length > 0) {
-            showNotificationsModal(warnings);
+        const notifications = await window.go.main.App.GetNotifications();
+        if (notifications && notifications.length > 0) {
+            showNotificationsModal(notifications);
         }
     } catch (err) {
         console.error("Failed to check config errors", err);
@@ -85,12 +85,12 @@ function setupNotificationsModal() {
     };
 }
 
-function showNotificationsModal(warnings) {
+function showNotificationsModal(notifications) {
     const list = document.getElementById("notifications-list");
     list.innerHTML = "";
-    warnings.forEach(w => {
+    notifications.forEach(n => {
         const li = document.createElement("li");
-        li.innerText = w;
+        li.innerText = n.message;
         list.appendChild(li);
     });
     document.getElementById("notifications-modal").classList.add("active");

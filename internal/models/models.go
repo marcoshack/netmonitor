@@ -53,3 +53,10 @@ type Configuration struct {
 	Regions  map[string]Region `json:"regions"`
 	Settings AppSettings       `json:"settings"`
 }
+
+// Notification represents a system notification
+type Notification struct {
+	Level   string `json:"level"`   // e.g., "error", "warning", "info"
+	Type    string `json:"type"`    // e.g., "config"
+	Message string `json:"message"` // e.g., "Duplicate endpoint ignored"
+}
