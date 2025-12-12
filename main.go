@@ -3,22 +3,42 @@ package main
 import (
 	"context"
 	"embed"
+	"flag"
 
 	"github.com/getlantern/systray"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+
+	"github.com/marcoshack/netmonitor/internal/logger"
 )
 
 //go:embed all:frontend/dist
 var assets embed.FS
 
 func main() {
+	// Parse CLI flags
+	debug := flag.Bool("debug", false, "Enable debug logging")
+	flag.Parse()
+
+	// Initialize Logger
+	logDir := "logs"
+	l, closeLogger, err := logger.New(logDir, *debug)
+	if err != nil {
+		println("Error initializing logger:", err.Error())
+		// Proceed without logger or exit? Proceeding might be safer for UX, but logging is broken.
+		// For now, print error. The app might still run.
+	}
+	defer closeLogger()
+
+	// Create context with logger
+	ctx := l.WithContext(context.Background())
+
 	// Create an instance of the app structure
-	app := NewApp()
+	app := NewApp(ctx)
 
 	// Create application with options
-	err := wails.Run(&options.App{
+	err = wails.Run(&options.App{
 		Title:  "netmonitor",
 		Width:  app.Config.Settings.WindowWidth,
 		Height: app.Config.Settings.WindowHeight,

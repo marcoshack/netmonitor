@@ -8,6 +8,8 @@ import (
 	"testing"
 	"time"
 
+	"context"
+
 	"github.com/marcoshack/netmonitor/internal/models"
 )
 
@@ -18,7 +20,7 @@ func TestMonitorHTTP(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	mon := NewMonitor(nil) // Config not needed for direct TestEndpoint
+	mon := NewMonitor(context.Background(), nil) // Config not needed for direct TestEndpoint
 
 	ep := models.Endpoint{
 		Name:    "Test HTTP",
@@ -52,7 +54,7 @@ func TestMonitorTCP(t *testing.T) {
 	}
 	defer ln.Close()
 
-	mon := NewMonitor(nil)
+	mon := NewMonitor(context.Background(), nil)
 
 	ep := models.Endpoint{
 		Name:    "Test TCP",

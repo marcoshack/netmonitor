@@ -9,8 +9,15 @@ import (
 	"github.com/marcoshack/netmonitor/internal/data"
 	"github.com/marcoshack/netmonitor/internal/models"
 	"github.com/marcoshack/netmonitor/internal/monitor"
+	"github.com/rs/zerolog/log"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
+
+	"os/exec"
+	"path/filepath"
+	stdruntime "runtime"
+
+	"github.com/marcoshack/netmonitor/internal/logger"
 )
 
 // App struct
@@ -22,24 +29,33 @@ type App struct {
 	// Paths
 	ConfigPath string
 	DataDir    string
+
+	// Logger Context (from main)
+	logCtx context.Context
 }
 
 // NewApp creates a new App application struct
-func NewApp() *App {
+func NewApp(ctx context.Context) *App {
 	configPath := "config.json"
 	dataDir := "data"
 
 	// Ensure absolute paths in real app, but relative is fine for portable desktop app often.
 	// Wails runs from build dir or current dir.
 
-	cfg, _ := config.LoadConfig(configPath)
+	cfg, _ := config.LoadConfig(ctx, configPath)
 	// We ignore error here because LoadConfig returns default if fail, or error if completely broken.
 	// Ideally we handle it.
 
 	store := data.NewStorage(dataDir)
-	mon := monitor.NewMonitor(cfg)
+
+	// Initialize Logger (already done in main, passed via ctx)
+	// logDir := "logs"
+	// _ = logger.Init(logDir)
+
+	mon := monitor.NewMonitor(ctx, cfg)
 
 	return &App{
+		logCtx:     ctx,
 		Config:     cfg,
 		Monitor:    mon,
 		Storage:    store,
@@ -51,7 +67,15 @@ func NewApp() *App {
 // Startup is called when the app starts. The context is saved
 // so we can call the runtime methods
 func (a *App) Startup(ctx context.Context) {
-	a.ctx = ctx
+	// Merge Wails context with our logger context
+	// We want to use the logger from a.logCtx, but the runtime features from ctx.
+	// Usually we just need the logger attached to ctx.
+	// Since we are not passing ctx further down (Monitor has its own ctx),
+	// we just need to save the Wails context for runtime calls.
+	// But if we want to log in App methods using log.Ctx(a.ctx), we better attach logger.
+
+	l := log.Ctx(a.logCtx)     // Retrieve logger from main context
+	a.ctx = l.WithContext(ctx) // Attach logger to Wails context
 
 	// Initialize system tray
 	go a.InitSystemTray()
@@ -104,6 +128,7 @@ func (a *App) Shutdown(ctx context.Context) {
 	if a.Monitor != nil {
 		a.Monitor.Stop()
 	}
+	// logger.Close() handled in main via defer
 }
 
 // Backend Methods exposed to Frontend
@@ -119,6 +144,10 @@ func (a *App) SaveConfig(cfg models.Configuration) string {
 	// or protect with mutex. For MVP this is acceptable if careful.
 	// Ideally Monitor handles config updates.
 
+	// Ideally Monitor handles config updates.
+
+	// We need context for SaveConfig? It doesn't take it currently but let's see implementation.
+	// config.SaveConfig just writes file.
 	err := config.SaveConfig(a.ConfigPath, a.Config)
 	if err != nil {
 		return err.Error()
@@ -190,4 +219,22 @@ func (a *App) WindowResized() {
 func (a *App) GenerateEndpointID(address string, protocol models.EndpointType) string {
 	idData := address + string(protocol)
 	return uuid.NewSHA1(uuid.NameSpaceURL, []byte(idData)).String()[:7]
+}
+
+func (a *App) OpenLogDirectory() {
+	path := logger.GetLogPath()
+	dir := filepath.Dir(path)
+
+	var cmd *exec.Cmd
+	switch stdruntime.GOOS {
+	case "windows":
+		cmd = exec.Command("explorer", dir)
+	case "darwin":
+		cmd = exec.Command("open", dir)
+	default: // linux
+		cmd = exec.Command("xdg-open", dir)
+	}
+	if cmd != nil {
+		_ = cmd.Start()
+	}
 }

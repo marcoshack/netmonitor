@@ -1,6 +1,7 @@
 package monitor
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"net/http"
@@ -11,9 +12,11 @@ import (
 	"github.com/google/uuid"
 	"github.com/marcoshack/netmonitor/internal/models"
 	probing "github.com/prometheus-community/pro-bing"
+	"github.com/rs/zerolog/log"
 )
 
 type Monitor struct {
+	Ctx         context.Context
 	Config      *models.Configuration
 	StopChan    chan struct{}
 	ResultsChan chan models.TestResult
@@ -21,8 +24,9 @@ type Monitor struct {
 	mu          sync.Mutex
 }
 
-func NewMonitor(cfg *models.Configuration) *Monitor {
+func NewMonitor(ctx context.Context, cfg *models.Configuration) *Monitor {
 	return &Monitor{
+		Ctx:         ctx,
 		Config:      cfg,
 		StopChan:    make(chan struct{}),
 		ResultsChan: make(chan models.TestResult, 100),
@@ -39,6 +43,7 @@ func (m *Monitor) Start() {
 	m.StopChan = make(chan struct{}) // Recreate in case it was closed
 	m.mu.Unlock()
 
+	log.Ctx(m.Ctx).Info().Msg("Monitor started")
 	go m.runLoop()
 }
 
@@ -50,6 +55,7 @@ func (m *Monitor) Stop() {
 	}
 	close(m.StopChan)
 	m.IsRunning = false
+	log.Ctx(m.Ctx).Info().Msg("Monitor stopped")
 }
 
 func (m *Monitor) runLoop() {
@@ -130,6 +136,14 @@ func (m *Monitor) TestEndpoint(ep models.Endpoint) models.TestResult {
 	// Note: Providing Protocol (Type) and Address ensures uniqueness for same address different protocols.
 	idData := ep.Address + string(ep.Type)
 	shortId := uuid.NewSHA1(uuid.NameSpaceURL, []byte(idData)).String()[:7]
+
+	log.Ctx(m.Ctx).Debug().
+		Str("id", shortId).
+		Str("address", ep.Address).
+		Str("type", string(ep.Type)).
+		Int64("latency_ms", durationMs).
+		Int("status", status).
+		Msg("Endpoint tested")
 
 	return models.TestResult{
 		Ts: time.Now().Unix(),

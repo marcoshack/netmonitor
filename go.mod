@@ -6,6 +6,7 @@ require (
 	github.com/getlantern/systray v1.2.2
 	github.com/google/uuid v1.6.0
 	github.com/prometheus-community/pro-bing v0.7.0
+	github.com/rs/zerolog v1.34.0
 	github.com/wailsapp/wails/v2 v2.11.0
 )
 

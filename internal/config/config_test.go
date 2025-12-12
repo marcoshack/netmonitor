@@ -1,6 +1,7 @@
 package config
 
 import (
+	"context"
 	"os"
 	"reflect"
 	"testing"
@@ -11,7 +12,7 @@ func TestLoadSaveConfig(t *testing.T) {
 	defer os.Remove(tmpFile)
 
 	// Test Default Load
-	cfg, err := LoadConfig(tmpFile)
+	cfg, err := LoadConfig(context.Background(), tmpFile)
 	if err != nil {
 		t.Fatalf("LoadConfig failed: %v", err)
 	}
@@ -27,7 +28,7 @@ func TestLoadSaveConfig(t *testing.T) {
 	}
 
 	// Reload
-	cfg2, err := LoadConfig(tmpFile)
+	cfg2, err := LoadConfig(context.Background(), tmpFile)
 	if err != nil {
 		t.Fatalf("Reload failed: %v", err)
 	}

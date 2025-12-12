@@ -33,6 +33,7 @@ async function init() {
         setupSettings();
         setupDetailsModal();
         setupWindowListeners();
+        setupLogsButton();
 
         // Initial Layout
         renderDashboard();
@@ -589,4 +590,15 @@ function setupWindowListeners() {
             }
         }, 500);
     });
+}
+
+function setupLogsButton() {
+    const btn = document.getElementById("btn-logs");
+    if (btn) {
+        btn.addEventListener("click", () => {
+            if (window.go && window.go.main && window.go.main.App) {
+                window.go.main.App.OpenLogDirectory();
+            }
+        });
+    }
 }

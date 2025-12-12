@@ -1,11 +1,14 @@
 package config
 
 import (
+	"context"
 	"encoding/json"
 	"os"
 	"path/filepath"
 
 	"github.com/marcoshack/netmonitor/internal/models"
+
+	"github.com/rs/zerolog/log"
 )
 
 // DefaultConfig returns a default configuration structure
@@ -35,9 +38,10 @@ func DefaultConfig() *models.Configuration {
 }
 
 // LoadConfig reads the configuration from the specified file path
-func LoadConfig(path string) (*models.Configuration, error) {
+func LoadConfig(ctx context.Context, path string) (*models.Configuration, error) {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		// Return default config if file doesn't exist
+		log.Ctx(ctx).Info().Str("path", path).Msg("Config file not found, creating default config")
 		cfg := DefaultConfig()
 		// Attempt to save the default config so the user has a starting point
 		_ = SaveConfig(path, cfg)
@@ -46,6 +50,7 @@ func LoadConfig(path string) (*models.Configuration, error) {
 
 	data, err := os.ReadFile(path)
 	if err != nil {
+		log.Ctx(ctx).Error().Err(err).Str("path", path).Msg("Failed to read config file")
 		return nil, err
 	}
 
@@ -57,6 +62,8 @@ func LoadConfig(path string) (*models.Configuration, error) {
 	if cfg.Settings.TestIntervalSeconds < 1 {
 		cfg.Settings.TestIntervalSeconds = 300
 	}
+
+	log.Ctx(ctx).Info().Interface("config", cfg).Msg("Configuration loaded")
 
 	return &cfg, nil
 }

@@ -34,6 +34,10 @@ export function ManualTest(arg1) {
   return window['go']['main']['App']['ManualTest'](arg1);
 }
 
+export function OpenLogDirectory() {
+  return window['go']['main']['App']['OpenLogDirectory']();
+}
+
 export function QuitApp() {
   return window['go']['main']['App']['QuitApp']();
 }

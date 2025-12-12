@@ -18,6 +18,8 @@ export function InitSystemTray():Promise<void>;
 
 export function ManualTest(arg1:models.Endpoint):Promise<models.TestResult>;
 
+export function OpenLogDirectory():Promise<void>;
+
 export function QuitApp():Promise<void>;
 
 export function SaveConfig(arg1:models.Configuration):Promise<string>;
