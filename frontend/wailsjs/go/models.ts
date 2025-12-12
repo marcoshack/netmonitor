@@ -127,6 +127,7 @@ export namespace models {
 	    id: string;
 	    ms: number;
 	    st: number;
+	    err: any;
 	
 	    static createFrom(source: any = {}) {
 	        return new TestResult(source);
@@ -138,6 +139,7 @@ export namespace models {
 	        this.id = source["id"];
 	        this.ms = source["ms"];
 	        this.st = source["st"];
+	        this.err = source["err"];
 	    }
 	}
 
