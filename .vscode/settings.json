@@ -1,0 +1,10 @@
+{
+    "go.toolsEnvVars": {
+        "GOFLAGS": "-tags=tools"
+    },
+    "gopls": {
+        "build.buildFlags": [
+            "-tags=tools"
+        ]
+    }
+}

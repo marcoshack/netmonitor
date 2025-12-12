@@ -26,15 +26,11 @@ all: coverage build
 # Setup workspace and install tools
 setup:
 	go mod tidy
-	go mod download
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint
-	go install github.com/wailsapp/wails/v2/cmd/wails
-	go install golang.org/x/tools/cmd/goimports
 	cd frontend && npm install
 
 # Build the application
 build:
-	wails build
+	go tool wails build
 
 # Run tests
 test:
