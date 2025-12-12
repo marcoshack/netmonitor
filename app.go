@@ -150,6 +150,8 @@ func (a *App) GetHistoryRange(durationStr string) []models.TestResult {
 	var start time.Time
 
 	switch durationStr {
+	case "1h":
+		start = end.Add(-1 * time.Hour)
 	case "week":
 		start = end.AddDate(0, 0, -7)
 	case "month":
