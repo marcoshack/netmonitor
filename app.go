@@ -216,6 +216,37 @@ func (a *App) WindowResized() {
 	_ = config.SaveConfig(a.ConfigPath, a.Config)
 }
 
+func (a *App) AddEndpoint(endpoint models.Endpoint) string {
+	if endpoint.Name == "" || endpoint.Address == "" {
+		return "Name and Address are required"
+	}
+	if endpoint.Timeout <= 0 {
+		return "Timeout must be greater than 0"
+	}
+
+	// Generate ID (though currently not stored in Endpoint struct in config,
+	// it's good practice or might be needed for runtime if we change models)
+	// The config just lists endpoints.
+
+	// Add to default region
+	region := a.Config.Regions["Default"]
+	region.Endpoints = append(region.Endpoints, endpoint)
+	a.Config.Regions["Default"] = region
+
+	// Save
+	err := config.SaveConfig(a.ConfigPath, a.Config)
+	if err != nil {
+		return "Failed to save config: " + err.Error()
+	}
+
+	// Restart Monitor
+	a.Monitor.Stop()
+	a.Monitor.Config = a.Config
+	a.Monitor.Start()
+
+	return ""
+}
+
 func (a *App) GenerateEndpointID(address string, protocol models.EndpointType) string {
 	idData := address + string(protocol)
 	return uuid.NewSHA1(uuid.NameSpaceURL, []byte(idData)).String()[:7]

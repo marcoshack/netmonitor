@@ -31,6 +31,7 @@ async function init() {
         window.runtime.EventsOn("test-result", handleTestResult);
 
         setupSettings();
+        setupAddMonitor();
         setupDetailsModal();
         setupWindowListeners();
         setupLogsButton();
@@ -99,6 +100,14 @@ function setupRegionSelector() {
 }
 
 function renderDashboard() {
+    // Destroy existing chart instances before wiping DOM
+    Object.keys(chartInstances).forEach(id => {
+        if (chartInstances[id]) {
+            chartInstances[id].destroy();
+        }
+    });
+    chartInstances = {};
+
     const grid = document.getElementById("endpoints-grid");
     grid.innerHTML = ""; // Clear existing
 
@@ -600,4 +609,75 @@ function setupLogsButton() {
             }
         });
     }
+}
+
+function setupAddMonitor() {
+    const modal = document.getElementById("add-monitor-modal");
+
+    // Open
+    const btn = document.getElementById("btn-add-monitor");
+    if (btn) {
+        btn.addEventListener("click", () => {
+            modal.classList.add("active");
+        });
+    }
+
+    // Close
+    document.getElementById("btn-close-add-monitor").addEventListener("click", () => {
+        modal.classList.remove("active");
+    });
+
+    // Close on background click
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) modal.classList.remove("active");
+    });
+
+    // Submit
+    document.getElementById("add-monitor-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("add-name").value;
+        const type = document.getElementById("add-type").value;
+        const address = document.getElementById("add-address").value;
+        const timeout = parseInt(document.getElementById("add-timeout").value);
+
+        const newEndpoint = {
+            name: name,
+            type: type, // Ensure exact casing matches struct if needed, but select values are uppercase
+            address: address,
+            timeout: timeout
+        };
+
+        try {
+            const err = await window.go.main.App.AddEndpoint(newEndpoint);
+            if (err) {
+                alert("Error adding monitor: " + err);
+            } else {
+                modal.classList.remove("active");
+                document.getElementById("add-monitor-form").reset();
+
+                // Refresh App State
+                currentConfig = await window.go.main.App.GetConfig();
+                await setupEndpoints();
+                // Ensure we are on the region where we added it? 
+                // Currently only Default region exists in UI logic mostly, or it adds to Default.
+                // If currentRegion is not Default, user might not see it. 
+                // But AddEndpoint adds to "Default".
+                if (currentRegion !== "Default" && Object.keys(currentConfig.regions).includes("Default")) {
+                    // Optionally switch to Default or let user switch. 
+                    // Let's just render.
+                }
+                renderDashboard();
+
+                // Re-fetch and re-init charts
+                const range = document.getElementById("time-range-select").value;
+                await fetchHistory(range);
+
+                document.getElementById("status-message").innerText = "Monitor Added";
+            }
+        } catch (error) {
+            console.error(error);
+            alert("System error: " + error);
+        }
+    });
 }

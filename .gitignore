@@ -3,3 +3,4 @@ build/test
 logs/
 node_modules
 frontend/dist
+netmonitor.exe
