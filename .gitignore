@@ -1,4 +1,5 @@
 build/bin
 build/test
+logs/
 node_modules
 frontend/dist

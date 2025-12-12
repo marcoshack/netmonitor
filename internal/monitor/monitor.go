@@ -146,7 +146,7 @@ func (m *Monitor) TestEndpoint(ep models.Endpoint) models.TestResult {
 		Msg("Endpoint tested")
 
 	return models.TestResult{
-		Ts: time.Now().Unix(),
+		Ts: time.Now().UnixMilli(),
 		Id: shortId,
 		Ms: durationMs,
 		St: status,

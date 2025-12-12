@@ -36,6 +36,10 @@ func TestMonitorHTTP(t *testing.T) {
 	if res.Ms < 0 {
 		t.Errorf("Invalid latency: %d", res.Ms)
 	}
+	// Verify timestamp is in milliseconds (13 digits) -> > 1000000000000
+	if res.Ts < 1000000000000 {
+		t.Errorf("Expected timestamp in milliseconds, got %d", res.Ts)
+	}
 
 	// Test Failure
 	ep.Address = "http://localhost:59999" // Unlikely port

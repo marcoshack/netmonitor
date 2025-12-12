@@ -17,7 +17,7 @@ func TestStorage(t *testing.T) {
 
 	ts := time.Date(2023, 11, 15, 12, 0, 0, 0, time.UTC)
 	res1 := models.TestResult{
-		Ts: ts.Unix(),
+		Ts: ts.UnixMilli(),
 		Id: "test-ep",
 		Ms: 50,
 		St: 0,
@@ -50,7 +50,7 @@ func TestStorage(t *testing.T) {
 
 	// Append another
 	res2 := models.TestResult{
-		Ts: ts.Add(1 * time.Minute).Unix(),
+		Ts: ts.Add(1 * time.Minute).UnixMilli(),
 		Id: "test-ep-2",
 		Ms: 60,
 		St: 0,

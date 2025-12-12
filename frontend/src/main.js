@@ -164,8 +164,7 @@ async function fetchHistory(range) {
             if (!testResults[id]) testResults[id] = [];
 
             // Standardize timestamp
-            // Backend sends ts (epoch seconds)
-            r.timestamp = new Date(r.ts * 1000);
+            r.timestamp = new Date(r.ts);
             r.latency_ms = r.ms; // Map for compatibility with charts
             r.statusStr = r.st === 0 ? "success" : "failure";
 
@@ -287,7 +286,7 @@ function initChart(id) {
 
 function handleTestResult(result) {
     // Normalize data
-    result.timestamp = new Date(result.ts * 1000);
+    result.timestamp = new Date(result.ts);
     result.latency_ms = result.ms;
     result.statusStr = result.st === 0 ? "success" : "failure";
 
