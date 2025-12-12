@@ -24,6 +24,8 @@ export function OpenLogDirectory():Promise<void>;
 
 export function QuitApp():Promise<void>;
 
+export function ReorderEndpoints(arg1:string,arg2:Array<string>):Promise<string>;
+
 export function SaveConfig(arg1:models.Configuration):Promise<string>;
 
 export function ShowWindow():Promise<void>;

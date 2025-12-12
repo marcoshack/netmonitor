@@ -290,6 +290,43 @@ func (a *App) UpdateEndpoint(updatedEndpoint models.Endpoint) string {
 	return ""
 }
 
+func (a *App) ReorderEndpoints(regionName string, newOrderIDs []string) string {
+	region, ok := a.Config.Regions[regionName]
+	if !ok {
+		return "Region not found"
+	}
+
+	endpointMap := make(map[string]models.Endpoint)
+	for _, ep := range region.Endpoints {
+		id := a.GenerateEndpointID(ep.Address, ep.Type)
+		endpointMap[id] = ep
+	}
+
+	var newEndpoints []models.Endpoint
+	for _, id := range newOrderIDs {
+		if ep, exists := endpointMap[id]; exists {
+			newEndpoints = append(newEndpoints, ep)
+			delete(endpointMap, id)
+		}
+	}
+
+	if len(newEndpoints) != len(region.Endpoints) {
+		for _, ep := range endpointMap {
+			newEndpoints = append(newEndpoints, ep)
+		}
+	}
+
+	region.Endpoints = newEndpoints
+	a.Config.Regions[regionName] = region
+
+	err := config.SaveConfig(a.ConfigPath, a.Config)
+	if err != nil {
+		return "Failed to save config: " + err.Error()
+	}
+
+	return ""
+}
+
 func (a *App) OpenLogDirectory() {
 	path := logger.GetLogPath()
 	dir := filepath.Dir(path)

@@ -59,6 +59,7 @@ async function setupEndpoints() {
     for (const [regionName, region] of Object.entries(currentConfig.regions)) {
         for (const ep of region.endpoints) {
             const id = await window.go.main.App.GenerateEndpointID(ep.address, ep.type);
+            ep._id = id; // Store ID on config object for ordering
             endpointMap[id] = { ...ep, regionName: regionName, id: id };
         }
     }
@@ -117,13 +118,34 @@ function renderDashboard() {
 
     if (!currentRegion) return;
 
-    // Filter endpoints for current region from endpointMap
-    const regionEndpoints = Object.values(endpointMap).filter(ep => ep.regionName === currentRegion);
+    // Enable Drop on Grid
+    grid.ondragover = (e) => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(grid, e.clientY);
+        const draggable = document.querySelector('.dragging');
+        if (afterElement == null) {
+            grid.appendChild(draggable);
+        } else {
+            grid.insertBefore(draggable, afterElement);
+        }
+    };
 
-    regionEndpoints.forEach(ep => {
-        const card = createEndpointCard(ep);
-        grid.appendChild(card);
-    });
+    grid.ondrop = (e) => {
+        e.preventDefault();
+        handleDrop();
+    };
+
+    // Render in Config Order
+    const regionData = currentConfig.regions[currentRegion];
+    if (regionData && regionData.endpoints) {
+        regionData.endpoints.forEach(ep => {
+            // Use the _id we attached in setupEndpoints to find the full data in map
+            if (ep._id && endpointMap[ep._id]) {
+                const card = createEndpointCard(endpointMap[ep._id]);
+                grid.appendChild(card);
+            }
+        });
+    }
 }
 
 function createEndpointCard(ep) {
@@ -140,6 +162,16 @@ function createEndpointCard(ep) {
         openDetailView(id);
     };
     div.style.cursor = "pointer";
+
+    // Drag and Drop
+    div.draggable = true;
+    div.ondragstart = (e) => {
+        div.classList.add('dragging');
+        // e.dataTransfer.setData('text/plain', id); // We use class for selection
+    };
+    div.ondragend = (e) => {
+        div.classList.remove('dragging');
+    };
 
     div.innerHTML = `
         <div class="card-header">
@@ -161,6 +193,68 @@ function createEndpointCard(ep) {
     `;
 
     return div;
+}
+
+function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll('.card:not(.dragging)')];
+
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+async function handleDrop() {
+    // Get new order from DOM
+    const grid = document.getElementById("endpoints-grid");
+    const cards = [...grid.children];
+    const newOrderIDs = cards.map(c => c.id.replace("card-", ""));
+
+    // Update Local Config Memory
+    const region = currentConfig.regions[currentRegion];
+    if (region && region.endpoints) {
+        // Sort endpoints array based on newOrderIDs
+        // Map ID to endpoint object first
+        const epMap = {};
+        region.endpoints.forEach(ep => {
+            if (ep._id) epMap[ep._id] = ep;
+        });
+
+        const newEndpoints = [];
+        newOrderIDs.forEach(id => {
+            if (epMap[id]) newEndpoints.push(epMap[id]);
+        });
+
+        // Append leftovers?
+        region.endpoints.forEach(ep => {
+            if (ep._id && !newEndpoints.includes(ep)) {
+                newEndpoints.push(ep);
+            }
+        });
+
+        region.endpoints = newEndpoints;
+        currentConfig.regions[currentRegion] = region;
+    }
+
+    // Call Backend
+    try {
+        const err = await window.go.main.App.ReorderEndpoints(currentRegion, newOrderIDs);
+        if (err) {
+            console.error("Failed to reorder:", err);
+            // Revert changes or show error?
+            // For now just log. Local state is already updated so UI looks right.
+            // If backend failed, next reload will revert.
+        } else {
+            console.log("Reorder saved");
+        }
+    } catch (e) {
+        console.error(e);
+    }
 }
 
 async function fetchHistory(range) {

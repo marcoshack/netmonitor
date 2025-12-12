@@ -46,6 +46,10 @@ export function QuitApp() {
   return window['go']['main']['App']['QuitApp']();
 }
 
+export function ReorderEndpoints(arg1, arg2) {
+  return window['go']['main']['App']['ReorderEndpoints'](arg1, arg2);
+}
+
 export function SaveConfig(arg1) {
   return window['go']['main']['App']['SaveConfig'](arg1);
 }
