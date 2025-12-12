@@ -58,8 +58,8 @@ export function ShowWindow() {
   return window['go']['main']['App']['ShowWindow']();
 }
 
-export function UpdateEndpoint(arg1) {
-  return window['go']['main']['App']['UpdateEndpoint'](arg1);
+export function UpdateEndpoint(arg1, arg2, arg3) {
+  return window['go']['main']['App']['UpdateEndpoint'](arg1, arg2, arg3);
 }
 
 export function WindowResized() {

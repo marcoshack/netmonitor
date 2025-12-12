@@ -14,6 +14,7 @@ let currentDetailId = null;
 // Edit Mode State
 let isEditMode = false;
 let editingEndpointId = null;
+let originalEndpoint = null; // {address, type} for detecting changes
 
 // Wails Runtime and Backend variables (injected by Wails)
 // We assume window.go.main.App is available
@@ -723,6 +724,7 @@ function setupAddMonitor() {
         btn.addEventListener("click", () => {
             isEditMode = false;
             editingEndpointId = null;
+            originalEndpoint = null;
             document.querySelector("#add-monitor-modal h2").innerText = "Add Monitor";
             document.querySelector("#add-monitor-form button[type='submit']").innerText = "Add Monitor";
 
@@ -733,6 +735,9 @@ function setupAddMonitor() {
             document.getElementById("add-type").disabled = false;
             document.getElementById("add-address").title = "";
             document.getElementById("add-type").title = "";
+
+            // Hide warning
+            document.getElementById("edit-warning").style.display = "none";
 
             modal.classList.add("active");
         });
@@ -767,7 +772,12 @@ function setupAddMonitor() {
         try {
             let err;
             if (isEditMode) {
-                err = await window.go.main.App.UpdateEndpoint(newEndpoint);
+                // Pass old identity to find the correct record to update
+                err = await window.go.main.App.UpdateEndpoint(
+                    originalEndpoint.address,
+                    originalEndpoint.type,
+                    newEndpoint
+                );
             } else {
                 err = await window.go.main.App.AddEndpoint(newEndpoint);
             }
@@ -799,7 +809,25 @@ function setupAddMonitor() {
 
                 // If editing, also update details view if it's the one open
                 if (isEditMode && currentDetailId === editingEndpointId) {
-                    updateDetailView(currentDetailId);
+                    // Start: Fix for ID change
+                    const newId = await window.go.main.App.GenerateEndpointID(newEndpoint.address, newEndpoint.type);
+                    if (newId !== currentDetailId) {
+                        // ID changed (address/protocol changed)
+                        currentDetailId = newId;
+                        // Re-open/Refresh details with new ID
+                        // We need to ensure graph exists or init it
+                        updateDetailView(newId);
+
+                        // Destroy old chart instance if key changed? 
+                        // Actually renderDashboard destroyed all charts and created new cards.
+                        // But detailChartInstance is global single instance for the modal?
+                        // Let's check initDetailChart logic. It uses "detail-canvas". 
+                        // It doesn't seem to depend on ID for the instance itself, just data.
+                        renderDetailChart(newId);
+                    } else {
+                        updateDetailView(currentDetailId);
+                    }
+                    // End: Fix for ID change
                 }
             }
         } catch (error) {
@@ -812,6 +840,10 @@ function openEditMonitor(endpoint) {
     const modal = document.getElementById("add-monitor-modal");
     isEditMode = true;
     editingEndpointId = endpoint.id;
+    originalEndpoint = {
+        address: endpoint.address,
+        type: endpoint.type
+    };
 
     document.querySelector("#add-monitor-modal h2").innerText = "Edit Monitor";
     document.querySelector("#add-monitor-form button[type='submit']").innerText = "Save Changes";
@@ -822,16 +854,29 @@ function openEditMonitor(endpoint) {
     document.getElementById("add-address").value = endpoint.address;
     document.getElementById("add-timeout").value = endpoint.timeout;
 
-    // Disable identity fields
+    // Enable identity fields (now allowed)
     const addrInput = document.getElementById("add-address");
     const typeInput = document.getElementById("add-type");
 
-    addrInput.disabled = true;
-    typeInput.disabled = true;
+    addrInput.disabled = false;
+    typeInput.disabled = false;
+    addrInput.title = "";
+    typeInput.title = "";
 
-    const tip = "To change Address or Type, please create a new monitor. Changing these would reset the history graph.";
-    addrInput.title = tip;
-    typeInput.title = tip;
+    // Setup warning listeners
+    const checkChanges = () => {
+        const newAddr = addrInput.value;
+        const newType = typeInput.value;
+        const changed = (newAddr !== originalEndpoint.address) || (newType !== originalEndpoint.type);
+        document.getElementById("edit-warning").style.display = changed ? "block" : "none";
+    };
+
+    addrInput.oninput = checkChanges;
+    typeInput.onchange = checkChanges;
+
+    // Initial check (should be hidden)
+    document.getElementById("edit-warning").style.display = "none";
 
     modal.classList.add("active");
 }
+

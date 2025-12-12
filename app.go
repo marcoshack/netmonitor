@@ -167,8 +167,8 @@ func (a *App) GetHistory(dateStr string) []models.TestResult {
 		// return empty or today
 		t = time.Now()
 	}
-	res, _ := a.Storage.GetResultsForDay(t)
-	return res
+	rawRes, _ := a.Storage.GetResultsForDay(t)
+	return a.filterResultsByCurrentConfig(rawRes)
 }
 
 func (a *App) GetHistoryRange(durationStr string) []models.TestResult {
@@ -192,7 +192,25 @@ func (a *App) GetHistoryRange(durationStr string) []models.TestResult {
 	}
 
 	res, _ := a.Storage.GetResultsForRange(start, end)
-	return res
+	return a.filterResultsByCurrentConfig(res)
+}
+
+func (a *App) filterResultsByCurrentConfig(results []models.TestResult) []models.TestResult {
+	validIDs := make(map[string]bool)
+	for _, region := range a.Config.Regions {
+		for _, ep := range region.Endpoints {
+			id := a.GenerateEndpointID(ep.Address, ep.Type)
+			validIDs[id] = true
+		}
+	}
+
+	var filtered []models.TestResult
+	for _, r := range results {
+		if validIDs[r.Id] {
+			filtered = append(filtered, r)
+		}
+	}
+	return filtered
 }
 
 func (a *App) ManualTest(endpoint models.Endpoint) models.TestResult {
@@ -252,19 +270,23 @@ func (a *App) GenerateEndpointID(address string, protocol models.EndpointType) s
 	return uuid.NewSHA1(uuid.NameSpaceURL, []byte(idData)).String()[:7]
 }
 
-func (a *App) UpdateEndpoint(updatedEndpoint models.Endpoint) string {
-	// Find the endpoint in the Default region
+func (a *App) UpdateEndpoint(oldAddress string, oldType string, updatedEndpoint models.Endpoint) string {
+	// Find the endpoint in the Default region using old values
 	region, ok := a.Config.Regions["Default"]
+
 	if !ok {
 		return "Default region not found"
 	}
 
 	found := false
 	for i, ep := range region.Endpoints {
-		if ep.Address == updatedEndpoint.Address && ep.Type == updatedEndpoint.Type {
-			// Update fields
+		// Use oldAddress and oldType to identify which one to update
+		if ep.Address == oldAddress && string(ep.Type) == oldType {
+			// Update fields - including Address and Type now
 			region.Endpoints[i].Name = updatedEndpoint.Name
 			region.Endpoints[i].Timeout = updatedEndpoint.Timeout
+			region.Endpoints[i].Address = updatedEndpoint.Address
+			region.Endpoints[i].Type = updatedEndpoint.Type
 			found = true
 			break
 		}

@@ -30,6 +30,6 @@ export function SaveConfig(arg1:models.Configuration):Promise<string>;
 
 export function ShowWindow():Promise<void>;
 
-export function UpdateEndpoint(arg1:models.Endpoint):Promise<string>;
+export function UpdateEndpoint(arg1:string,arg2:string,arg3:models.Endpoint):Promise<string>;
 
 export function WindowResized():Promise<void>;
