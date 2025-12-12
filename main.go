@@ -59,6 +59,12 @@ func main() {
 		Bind: []interface{}{
 			app,
 		},
+		SingleInstanceLock: &options.SingleInstanceLock{
+			UniqueId: "e345b678-9012-3499-7890-123456789012",
+			OnSecondInstanceLaunch: func(secondInstanceData options.SecondInstanceData) {
+				app.ShowWindow()
+			},
+		},
 	})
 
 	if err != nil {
