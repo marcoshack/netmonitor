@@ -34,7 +34,8 @@ func (s *Storage) SaveResult(result models.TestResult) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	filepath := s.GetDailyFilePath(result.Timestamp)
+	timestamp := time.Unix(result.Ts, 0)
+	filepath := s.GetDailyFilePath(timestamp)
 
 	// In a real app with high volume, we'd want to buffer or use a more efficient storage.
 	// For this app, reading/appending/writing or appending to a file stream is fine.
@@ -102,7 +103,8 @@ func (s *Storage) GetResultsForRange(start, end time.Time) ([]models.TestResult,
 	for !current.After(end) {
 		dayResults, _ := s.GetResultsForDay(current)
 		for _, r := range dayResults {
-			if (r.Timestamp.Equal(start) || r.Timestamp.After(start)) && (r.Timestamp.Equal(end) || r.Timestamp.Before(end)) {
+			rTime := time.Unix(r.Ts, 0)
+			if (rTime.Equal(start) || rTime.After(start)) && (rTime.Equal(end) || rTime.Before(end)) {
 				allResults = append(allResults, r)
 			}
 		}

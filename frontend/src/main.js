@@ -3,8 +3,9 @@ import 'chartjs-adapter-date-fns';
 
 let currentConfig = null;
 let currentRegion = null;
-let testResults = {}; // EndpointId -> Array of full TestResult objects
+let testResults = {}; // EndpointId -> Array of full TestResult objects (using new keys: ts, id, ms, st)
 let chartInstances = {}; // id -> Chart instance
+let endpointMap = {}; // HashID -> { ...endpoint, regionName }
 
 // Detail View State
 let detailChartInstance = null;
@@ -19,6 +20,9 @@ async function init() {
     try {
         // Load Config
         currentConfig = await window.go.main.App.GetConfig();
+
+        // Initialize Endpoints Map (Generate IDs)
+        await setupEndpoints();
 
         // Setup Regions
         setupRegionSelector();
@@ -39,6 +43,18 @@ async function init() {
     } catch (err) {
         console.error("Initialization failed", err);
         document.getElementById("status-message").innerText = "Error: " + err;
+    }
+}
+
+async function setupEndpoints() {
+    endpointMap = {};
+    if (!currentConfig || !currentConfig.regions) return;
+
+    for (const [regionName, region] of Object.entries(currentConfig.regions)) {
+        for (const ep of region.endpoints) {
+            const id = await window.go.main.App.GenerateEndpointID(ep.address, ep.type);
+            endpointMap[id] = { ...ep, regionName: regionName, id: id };
+        }
     }
 }
 
@@ -85,18 +101,19 @@ function renderDashboard() {
     const grid = document.getElementById("endpoints-grid");
     grid.innerHTML = ""; // Clear existing
 
-    if (!currentRegion || !currentConfig.regions[currentRegion]) return;
+    if (!currentRegion) return;
 
-    const endpoints = currentConfig.regions[currentRegion].endpoints;
+    // Filter endpoints for current region from endpointMap
+    const regionEndpoints = Object.values(endpointMap).filter(ep => ep.regionName === currentRegion);
 
-    endpoints.forEach(ep => {
+    regionEndpoints.forEach(ep => {
         const card = createEndpointCard(ep);
         grid.appendChild(card);
     });
 }
 
 function createEndpointCard(ep) {
-    const id = `${currentRegion}-${ep.name}`; // Consistent ID generation
+    const id = ep.id; // Correct Hash ID
 
     const div = document.createElement("div");
     div.className = "card";
@@ -142,11 +159,15 @@ async function fetchHistory(range) {
 
         // Process results into map
         results.forEach(r => {
-            const id = r.endpoint_id;
+            const id = r.id; // Correct Hash ID
             if (!testResults[id]) testResults[id] = [];
 
             // Standardize timestamp
-            r.timestamp = new Date(r.timestamp);
+            // Backend sends ts (epoch seconds)
+            r.timestamp = new Date(r.ts * 1000);
+            r.latency_ms = r.ms; // Map for compatibility with charts
+            r.statusStr = r.st === 0 ? "success" : "failure";
+
             testResults[id].push(r);
         });
 
@@ -155,9 +176,9 @@ async function fetchHistory(range) {
             updateChartHistory(id);
         });
 
-        // Initialize any missing charts
-        const cards = document.querySelectorAll('[id^="card-"]');
-        cards.forEach(card => {
+        // Initialize any missing charts (only for visible cards)
+        const visibleCards = document.querySelectorAll('.card');
+        visibleCards.forEach(card => {
             const id = card.id.replace("card-", "");
             if (!chartInstances[id]) {
                 initChart(id);
@@ -264,11 +285,12 @@ function initChart(id) {
 }
 
 function handleTestResult(result) {
-    // result comes with timestamp as string probably if from JSON?
-    // Wails JSON encoding might keep it as string.
-    result.timestamp = new Date(result.timestamp);
+    // Normalize data
+    result.timestamp = new Date(result.ts * 1000);
+    result.latency_ms = result.ms;
+    result.statusStr = result.st === 0 ? "success" : "failure";
 
-    const id = result.endpoint_id;
+    const id = result.id; // Hash ID
 
     // Add to store
     if (!testResults[id]) testResults[id] = [];
@@ -280,18 +302,25 @@ function handleTestResult(result) {
     }
 
     // Is it visible on current dashboard?
-    if (id.startsWith(currentRegion + "-")) {
+    // Check if the endpoint belongs to current region using endpointMap
+    const ep = endpointMap[id];
+    if (ep && ep.regionName === currentRegion) {
         // Update Card UI
         const latSpan = document.getElementById(`latency-${id}`);
         const dot = document.getElementById(`status-dot-${id}`);
-        const updated = document.getElementById(`last-updated`);
+        // removed updated timestamp per request previously? or just kept it. Kept it. 
+        // But element id was `last-updated` which is unique? 
+        // Ah, `last-updated` seems global or duplicated?
+        // In createEndpointCard I don't see `last-updated`. 
+        // Wait, look at previous code: `updated = document.getElementById("last-updated");`
+        // If there are multiple cards, `last-updated` ID would be duplicate if inside card?
+        // In createEndpointCard, I don't see `last-updated` ID being created.
+        // It might be a header element (global status).
+        // Let's keep it if it exists.
 
         if (latSpan) latSpan.innerText = result.latency_ms;
         if (dot) {
-            dot.className = "status-dot " + (result.status === "success" ? "success" : "failure");
-        }
-        if (updated) {
-            updated.innerText = new Date().toLocaleTimeString();
+            dot.className = "status-dot " + (result.statusStr === "success" ? "success" : "failure");
         }
 
         // Update Chart
@@ -341,21 +370,8 @@ function closeDetailView() {
 }
 
 function updateDetailView(id) {
-    // 1. Find Endpoint Config
-    const parts = id.split("-");
-    // This splitting is fragile if region has hyphens. 
-    // Better iterate regions to find match.
-    // currentConfig.regions[currentRegion].endpoints
-    // We know 'currentRegion' is selected. 
-    // And id = currentRegion + "-" + ep.name
-    // So we can extract ep name.
-
-    // A safer way: Check if id starts with currentRegion + "-"
-    if (!id.startsWith(currentRegion + "-")) return; // Only show details for current region items?
-
-    const epName = id.substring(currentRegion.length + 1);
-    const endpoint = currentConfig.regions[currentRegion].endpoints.find(e => e.name === epName);
-
+    // 1. Find Endpoint Config form map
+    const endpoint = endpointMap[id];
     if (!endpoint) return;
 
     // 2. Populate Info
@@ -372,7 +388,7 @@ function updateDetailView(id) {
         const statusText = document.getElementById("detail-status-text");
         const dot = document.getElementById("detail-status-dot");
 
-        if (last.status === "success") {
+        if (last.statusStr === "success") {
             statusText.innerText = "Operational";
             statusText.className = "text-success font-bold";
             dot.className = "status-dot success";
@@ -405,7 +421,7 @@ function updateDetailView(id) {
         const tdStatus = document.createElement("td");
         tdStatus.className = "text-center";
         const statusSpan = document.createElement("span");
-        if (r.status === "success") {
+        if (r.statusStr === "success") {
             statusSpan.className = "text-success";
             statusSpan.innerText = "✔"; // Checkmark
         } else {

@@ -1,7 +1,5 @@
 package models
 
-import "time"
-
 // EndpointType defines the protocol used for testing
 type EndpointType string
 
@@ -34,11 +32,11 @@ type Region struct {
 
 // TestResult captures the outcome of a single endpoint test
 type TestResult struct {
-	Timestamp  time.Time `json:"timestamp"`
-	EndpointID string    `json:"endpoint_id"` // e.g., "Details: region-endpointName"
-	LatencyMs  int64     `json:"latency_ms"`
-	Status     string    `json:"status"` // "success" or "failure"
-	Error      string    `json:"error,omitempty"`
+	Ts  int64  `json:"ts"`
+	Id  string `json:"id"`
+	Ms  int64  `json:"ms"`
+	St  int    `json:"st"` // 0=success, 1=timeout, 2=error
+	Err error  `json:"err"`
 }
 
 // AppSettings defines global application settings

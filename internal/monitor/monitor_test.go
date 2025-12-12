@@ -28,19 +28,19 @@ func TestMonitorHTTP(t *testing.T) {
 	}
 
 	res := mon.TestEndpoint(ep)
-	if res.Status != "success" {
-		t.Errorf("Expected success, got %s (err: %s)", res.Status, res.Error)
+	if res.St != ResultSuccess {
+		t.Errorf("Expected success, got %d (err: %s)", res.St, res.Err)
 	}
-	if res.LatencyMs < 0 {
-		t.Errorf("Invalid latency: %d", res.LatencyMs)
+	if res.Ms < 0 {
+		t.Errorf("Invalid latency: %d", res.Ms)
 	}
 
 	// Test Failure
 	ep.Address = "http://localhost:59999" // Unlikely port
 	// Ensure fast fail?
 	res = mon.TestEndpoint(ep)
-	if res.Status != "failure" {
-		t.Errorf("Expected failure for bad port, got %s", res.Status)
+	if res.St != ResultError {
+		t.Errorf("Expected failure for bad port, got %d", res.St)
 	}
 }
 
@@ -62,8 +62,8 @@ func TestMonitorTCP(t *testing.T) {
 	}
 
 	res := mon.TestEndpoint(ep)
-	if res.Status != "success" {
-		t.Errorf("Expected success for TCP, got %s (err: %s)", res.Status, res.Error)
+	if res.St != ResultSuccess {
+		t.Errorf("Expected success for TCP, got %d (err: %s)", res.St, res.Err)
 	}
 }
 

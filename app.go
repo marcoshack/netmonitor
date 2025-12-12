@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/marcoshack/netmonitor/internal/config"
 	"github.com/marcoshack/netmonitor/internal/data"
 	"github.com/marcoshack/netmonitor/internal/models"
@@ -182,4 +183,9 @@ func (a *App) WindowResized() {
 	a.Config.Settings.WindowX = x
 	a.Config.Settings.WindowY = y
 	_ = config.SaveConfig(a.ConfigPath, a.Config)
+}
+
+func (a *App) GenerateEndpointID(address string, protocol models.EndpointType) string {
+	idData := address + string(protocol)
+	return uuid.NewSHA1(uuid.NameSpaceURL, []byte(idData)).String()[:7]
 }

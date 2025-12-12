@@ -8,6 +8,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/marcoshack/netmonitor/internal/models"
 	probing "github.com/prometheus-community/pro-bing"
 )
@@ -77,7 +78,8 @@ func (m *Monitor) RunAllTests() {
 			go func(rName string, ep models.Endpoint) {
 				defer wg.Done()
 				result := m.TestEndpoint(ep)
-				result.EndpointID = fmt.Sprintf("%s-%s", rName, ep.Name) // Simple ID generation
+				// ID is already generated in TestEndpoint based on address/protocol
+				// If we needed region in hash, we'd pass it. User said Address + Protocol.
 				m.ResultsChan <- result
 			}(regionName, endpoint)
 		}
@@ -86,9 +88,15 @@ func (m *Monitor) RunAllTests() {
 	wg.Wait()
 }
 
+const (
+	ResultSuccess = 0
+	ResultTimeout = 1
+	ResultError   = 2
+)
+
 func (m *Monitor) TestEndpoint(ep models.Endpoint) models.TestResult {
 	var err error
-	var status string
+	var status int
 	var durationMs int64
 
 	timeout := time.Duration(ep.Timeout) * time.Millisecond
@@ -109,17 +117,25 @@ func (m *Monitor) TestEndpoint(ep models.Endpoint) models.TestResult {
 
 	durationMs = d.Milliseconds()
 	if err != nil {
-		status = "failure"
-		// If it failed, we can still show the duration if it was a timeout or partial
+		if d >= timeout {
+			status = ResultTimeout
+		} else {
+			status = ResultError
+		}
 	} else {
-		status = "success"
+		status = ResultSuccess
 	}
 
+	// Generate ID: last 7 chars of UUID SHA1(NameSpaceURL, Address + Protocol)
+	// Note: Providing Protocol (Type) and Address ensures uniqueness for same address different protocols.
+	idData := ep.Address + string(ep.Type)
+	shortId := uuid.NewSHA1(uuid.NameSpaceURL, []byte(idData)).String()[:7]
+
 	return models.TestResult{
-		Timestamp: time.Now(),
-		LatencyMs: durationMs,
-		Status:    status,
-		Error:     errStr(err),
+		Ts: time.Now().Unix(),
+		Id: shortId,
+		Ms: durationMs,
+		St: status,
 	}
 }
 

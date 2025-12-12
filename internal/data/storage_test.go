@@ -17,10 +17,10 @@ func TestStorage(t *testing.T) {
 
 	ts := time.Date(2023, 11, 15, 12, 0, 0, 0, time.UTC)
 	res1 := models.TestResult{
-		Timestamp:  ts,
-		EndpointID: "test-ep",
-		LatencyMs:  50,
-		Status:     "success",
+		Ts: ts.Unix(),
+		Id: "test-ep",
+		Ms: 50,
+		St: 0,
 	}
 
 	// Test Save
@@ -44,16 +44,16 @@ func TestStorage(t *testing.T) {
 	if len(results) != 1 {
 		t.Errorf("Expected 1 result, got %d", len(results))
 	}
-	if results[0].EndpointID != "test-ep" {
-		t.Errorf("Expected endpoint ID test-ep, got %s", results[0].EndpointID)
+	if results[0].Id != "test-ep" {
+		t.Errorf("Expected endpoint ID test-ep, got %s", results[0].Id)
 	}
 
 	// Append another
 	res2 := models.TestResult{
-		Timestamp:  ts.Add(1 * time.Minute),
-		EndpointID: "test-ep-2",
-		LatencyMs:  60,
-		Status:     "success",
+		Ts: ts.Add(1 * time.Minute).Unix(),
+		Id: "test-ep-2",
+		Ms: 60,
+		St: 0,
 	}
 	_ = s.SaveResult(res2)
 
