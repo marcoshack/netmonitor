@@ -38,17 +38,14 @@ Before setting up the project, ensure you have the following installed:
     git clone https://github.com/marcoshack/netmonitor.git
     cd netmonitor
     ```
-4.  **Install Frontend Dependencies**:
+4.  **Setup Workspace**:
     ```powershell
-    cd frontend
-    npm install
-    cd ..
+    make setup
     ```
 5.  **Run in Development Mode**:
     ```powershell
     wails dev
     ```
-    This will compile the backend and start the application with hot-reload enabled.
 
 ### 🐧 Linux Setup (Ubuntu/Debian)
 
@@ -63,9 +60,7 @@ Before setting up the project, ensure you have the following installed:
     ```bash
     git clone https://github.com/marcoshack/netmonitor.git
     cd netmonitor
-    
-    # Install frontend deps
-    cd frontend && npm install && cd ..
+    make setup
     ```
 4.  **Run in Development Mode**:
     ```bash
@@ -86,9 +81,32 @@ Before setting up the project, ensure you have the following installed:
     ```bash
     git clone https://github.com/marcoshack/netmonitor.git
     cd netmonitor
-    cd frontend && npm install && cd ..
+    make setup
     ```
 3.  **Run**:
+    ```bash
+    wails dev
+    ```
+
+### 🍎 MacOS Setup
+
+1.  **Install Command Line Tools**:
+    Ensure you have the Xcode Command Line Tools installed.
+    ```bash
+    xcode-select --install
+    ```
+2.  **Install Go & Node.js**:
+    It is recommended to use [Homebrew](https://brew.sh/) to manage packages.
+    ```bash
+    brew install go node
+    ```
+3.  **Clone and Setup**:
+    ```bash
+    git clone https://github.com/marcoshack/netmonitor.git
+    cd netmonitor
+    make setup
+    ```
+4.  **Run in Development Mode**:
     ```bash
     wails dev
     ```
