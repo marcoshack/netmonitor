@@ -252,6 +252,44 @@ func (a *App) GenerateEndpointID(address string, protocol models.EndpointType) s
 	return uuid.NewSHA1(uuid.NameSpaceURL, []byte(idData)).String()[:7]
 }
 
+func (a *App) UpdateEndpoint(updatedEndpoint models.Endpoint) string {
+	// Find the endpoint in the Default region
+	region, ok := a.Config.Regions["Default"]
+	if !ok {
+		return "Default region not found"
+	}
+
+	found := false
+	for i, ep := range region.Endpoints {
+		if ep.Address == updatedEndpoint.Address && ep.Type == updatedEndpoint.Type {
+			// Update fields
+			region.Endpoints[i].Name = updatedEndpoint.Name
+			region.Endpoints[i].Timeout = updatedEndpoint.Timeout
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		return "Endpoint not found"
+	}
+
+	a.Config.Regions["Default"] = region
+
+	// Save
+	err := config.SaveConfig(a.ConfigPath, a.Config)
+	if err != nil {
+		return "Failed to save config: " + err.Error()
+	}
+
+	// Restart Monitor
+	a.Monitor.Stop()
+	a.Monitor.Config = a.Config
+	a.Monitor.Start()
+
+	return ""
+}
+
 func (a *App) OpenLogDirectory() {
 	path := logger.GetLogPath()
 	dir := filepath.Dir(path)

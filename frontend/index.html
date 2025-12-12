@@ -160,7 +160,17 @@
                         <div id="detail-status-dot" class="status-dot"></div>
                         <h2 id="detail-title" class="text-xl">Endpoint Details</h2>
                     </div>
-                    <button id="btn-close-details" class="btn btn-icon">✕</button>
+                    <div class="flex items-center gap-sm">
+                        <button id="btn-edit-details" class="btn btn-icon" title="Edit Monitor">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                        </button>
+                        <button id="btn-close-details" class="btn btn-icon">✕</button>
+                    </div>
                 </div>
 
                 <!-- Big Graph -->
@@ -169,10 +179,16 @@
                 </div>
 
                 <!-- Info -->
-                <div class="grid-2-col" style="margin: 1.5rem 0; gap: 1.5rem;">
+                <div class="details-grid" style="margin: 1.5rem 0; gap: 1.5rem;">
                     <div class="glass-panel" style="padding: 1rem;">
                         <div class="text-sm text-muted">Address</div>
-                        <div id="detail-address" class="text-lg font-mono" style="margin-top: 0.25rem"></div>
+                        <div id="detail-address" class="text-lg font-mono"
+                            style="margin-top: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        </div>
+                    </div>
+                    <div class="glass-panel" style="padding: 1rem;">
+                        <div class="text-sm text-muted">Status</div>
+                        <div id="detail-status-text" style="margin-top: 0.25rem"></div>
                     </div>
                     <div class="glass-panel" style="padding: 1rem;">
                         <div class="text-sm text-muted">Protocol</div>
@@ -184,10 +200,6 @@
                             <div id="detail-latency" class="text-lg font-bold"></div>
                             <div class="text-sm text-muted">ms</div>
                         </div>
-                    </div>
-                    <div class="glass-panel" style="padding: 1rem;">
-                        <div class="text-sm text-muted">Status</div>
-                        <div id="detail-status-text" style="margin-top: 0.25rem"></div>
                     </div>
                 </div>
 

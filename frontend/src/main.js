@@ -11,6 +11,10 @@ let endpointMap = {}; // HashID -> { ...endpoint, regionName }
 let detailChartInstance = null;
 let currentDetailId = null;
 
+// Edit Mode State
+let isEditMode = false;
+let editingEndpointId = null;
+
 // Wails Runtime and Backend variables (injected by Wails)
 // We assume window.go.main.App is available
 
@@ -358,6 +362,11 @@ function handleTestResult(result) {
 function setupDetailsModal() {
     const modal = document.getElementById("details-modal");
     document.getElementById("btn-close-details").onclick = closeDetailView;
+    document.getElementById("btn-edit-details").onclick = () => {
+        if (currentDetailId && endpointMap[currentDetailId]) {
+            openEditMonitor(endpointMap[currentDetailId]);
+        }
+    };
     modal.onclick = (e) => {
         if (e.target === modal) closeDetailView();
     };
@@ -618,6 +627,19 @@ function setupAddMonitor() {
     const btn = document.getElementById("btn-add-monitor");
     if (btn) {
         btn.addEventListener("click", () => {
+            isEditMode = false;
+            editingEndpointId = null;
+            document.querySelector("#add-monitor-modal h2").innerText = "Add Monitor";
+            document.querySelector("#add-monitor-form button[type='submit']").innerText = "Add Monitor";
+
+            // Reset form and enable fields
+            const form = document.getElementById("add-monitor-form");
+            form.reset();
+            document.getElementById("add-address").disabled = false;
+            document.getElementById("add-type").disabled = false;
+            document.getElementById("add-address").title = "";
+            document.getElementById("add-type").title = "";
+
             modal.classList.add("active");
         });
     }
@@ -649,9 +671,15 @@ function setupAddMonitor() {
         };
 
         try {
-            const err = await window.go.main.App.AddEndpoint(newEndpoint);
+            let err;
+            if (isEditMode) {
+                err = await window.go.main.App.UpdateEndpoint(newEndpoint);
+            } else {
+                err = await window.go.main.App.AddEndpoint(newEndpoint);
+            }
+
             if (err) {
-                alert("Error adding monitor: " + err);
+                alert("Error: " + err);
             } else {
                 modal.classList.remove("active");
                 document.getElementById("add-monitor-form").reset();
@@ -673,11 +701,43 @@ function setupAddMonitor() {
                 const range = document.getElementById("time-range-select").value;
                 await fetchHistory(range);
 
-                document.getElementById("status-message").innerText = "Monitor Added";
+                document.getElementById("status-message").innerText = isEditMode ? "Monitor Updated" : "Monitor Added";
+
+                // If editing, also update details view if it's the one open
+                if (isEditMode && currentDetailId === editingEndpointId) {
+                    updateDetailView(currentDetailId);
+                }
             }
         } catch (error) {
             console.error(error);
             alert("System error: " + error);
         }
     });
+}
+function openEditMonitor(endpoint) {
+    const modal = document.getElementById("add-monitor-modal");
+    isEditMode = true;
+    editingEndpointId = endpoint.id;
+
+    document.querySelector("#add-monitor-modal h2").innerText = "Edit Monitor";
+    document.querySelector("#add-monitor-form button[type='submit']").innerText = "Save Changes";
+
+    // Populate
+    document.getElementById("add-name").value = endpoint.name;
+    document.getElementById("add-type").value = endpoint.type;
+    document.getElementById("add-address").value = endpoint.address;
+    document.getElementById("add-timeout").value = endpoint.timeout;
+
+    // Disable identity fields
+    const addrInput = document.getElementById("add-address");
+    const typeInput = document.getElementById("add-type");
+
+    addrInput.disabled = true;
+    typeInput.disabled = true;
+
+    const tip = "To change Address or Type, please create a new monitor. Changing these would reset the history graph.";
+    addrInput.title = tip;
+    typeInput.title = tip;
+
+    modal.classList.add("active");
 }
