@@ -35,9 +35,9 @@ type App struct {
 }
 
 // NewApp creates a new App application struct
-func NewApp(ctx context.Context) *App {
-	configPath := "config.json"
-	dataDir := "data"
+func NewApp(ctx context.Context, appDir string) *App {
+	configPath := filepath.Join(appDir, "config.json")
+	dataDir := filepath.Join(appDir, "data")
 
 	// Ensure absolute paths in real app, but relative is fine for portable desktop app often.
 	// Wails runs from build dir or current dir.

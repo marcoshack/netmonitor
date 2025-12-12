@@ -4,6 +4,8 @@ import (
 	"context"
 	"embed"
 	"flag"
+	"os"
+	"path/filepath"
 
 	"github.com/getlantern/systray"
 	"github.com/wailsapp/wails/v2"
@@ -21,8 +23,17 @@ func main() {
 	debug := flag.Bool("debug", false, "Enable debug logging")
 	flag.Parse()
 
+	// Get User Config Directory
+	configDir, err := os.UserConfigDir()
+	if err != nil {
+		println("Error getting user config directory:", err.Error())
+		configDir = "." // Fallback to current directory
+	}
+	appDir := filepath.Join(configDir, "NetMonitor")
+	_ = os.MkdirAll(appDir, 0755)
+
 	// Initialize Logger
-	logDir := "logs"
+	logDir := filepath.Join(appDir, "logs")
 	l, closeLogger, err := logger.New(logDir, *debug)
 	if err != nil {
 		println("Error initializing logger:", err.Error())
@@ -35,7 +46,7 @@ func main() {
 	ctx := l.WithContext(context.Background())
 
 	// Create an instance of the app structure
-	app := NewApp(ctx)
+	app := NewApp(ctx, appDir)
 
 	// Create application with options
 	err = wails.Run(&options.App{
