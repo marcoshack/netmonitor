@@ -15,6 +15,7 @@ let currentDetailId = null;
 let isEditMode = false;
 let editingEndpointId = null;
 let originalEndpoint = null; // {address, type} for detecting changes
+let confirmationCallback = null;
 
 // Wails Runtime and Backend variables (injected by Wails)
 // We assume window.go.main.App is available
@@ -40,7 +41,9 @@ async function init() {
         setupDetailsModal();
         setupWindowListeners();
         setupLogsButton();
+
         setupGlobalEsc(); // New
+        setupConfirmationModal();
 
         // Initial Layout
         renderDashboard();
@@ -463,31 +466,67 @@ function setupDetailsModal() {
             openEditMonitor(endpointMap[currentDetailId]);
         }
     };
-    document.getElementById("btn-delete-details").onclick = async () => {
+    document.getElementById("btn-delete-details").onclick = () => {
         if (!currentDetailId || !endpointMap[currentDetailId]) return;
 
         const ep = endpointMap[currentDetailId];
-        if (confirm(`Are you sure you want to delete "${ep.name}"? Data files will be preserved.`)) {
-            try {
-                const err = await window.go.main.App.DeleteEndpoint(ep.address, ep.type);
-                if (err) {
-                    alert("Failed to delete endpoint: " + err);
-                } else {
-                    closeDetailView();
-                    // Refresh App State
-                    currentConfig = await window.go.main.App.GetConfig();
-                    await setupEndpoints();
-                    renderDashboard();
+
+        showConfirmation(
+            "Delete Monitor",
+            `Are you sure you want to delete "${ep.name}"? Data files will be preserved.`,
+            async () => {
+                try {
+                    const err = await window.go.main.App.DeleteEndpoint(ep.address, ep.type);
+                    if (err) {
+                        alert("Failed to delete endpoint: " + err);
+                    } else {
+                        closeDetailView();
+                        // Refresh App State
+                        currentConfig = await window.go.main.App.GetConfig();
+                        await setupEndpoints();
+                        renderDashboard();
+                    }
+                } catch (e) {
+                    console.error(e);
+                    alert("Error deleting endpoint: " + e);
                 }
-            } catch (e) {
-                console.error(e);
-                alert("Error deleting endpoint: " + e);
             }
-        }
+        );
     };
     modal.onclick = (e) => {
         if (e.target === modal) closeDetailView();
     };
+}
+
+function setupConfirmationModal() {
+    const modal = document.getElementById("confirmation-modal");
+    const btnCancel = document.getElementById("btn-confirm-cancel");
+    const btnConfirm = document.getElementById("btn-confirm-action");
+
+    const close = () => {
+        modal.classList.remove("active");
+        confirmationCallback = null;
+    };
+
+    btnCancel.onclick = close;
+
+    btnConfirm.onclick = () => {
+        if (confirmationCallback) {
+            confirmationCallback();
+        }
+        close();
+    };
+
+    modal.onclick = (e) => {
+        if (e.target === modal) close();
+    };
+}
+
+function showConfirmation(title, message, onConfirm) {
+    document.getElementById("confirm-title").innerText = title;
+    document.getElementById("confirm-message").innerText = message;
+    confirmationCallback = onConfirm;
+    document.getElementById("confirmation-modal").classList.add("active");
 }
 
 function openDetailView(id) {

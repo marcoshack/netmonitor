@@ -246,6 +246,21 @@
             </div>
         </div>
 
+        <!-- Confirmation Modal -->
+        <div id="confirmation-modal" class="modal-overlay" style="z-index: 2000;">
+            <div class="modal-content" style="max-width: 400px;">
+                <h2 id="confirm-title" class="text-xl" style="margin-bottom: 1rem">Confirm Action</h2>
+                <p id="confirm-message" style="margin-bottom: 1.5rem; color: var(--text-dim); line-height: 1.5;">Are you
+                    sure?</p>
+
+                <div class="flex gap-md">
+                    <button id="btn-confirm-cancel" class="btn btn-secondary" style="flex: 1">Cancel</button>
+                    <button id="btn-confirm-action" class="btn btn-primary"
+                        style="flex: 1; background: var(--accent-error); border-color: var(--accent-error);">Delete</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Scripts -->
