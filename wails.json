@@ -9,5 +9,11 @@
   "author": {
     "name": "Marcos Hack",
     "email": "marcoshack@gmail.com"
+  },
+  "info": {
+    "companyName": "Marcos Hack",
+    "productName": "NetMonitor",
+    "productVersion": "1.0.0",
+    "copyright": "Copyright 2025 Marcos Hack. All rights reserved."
   }
 }

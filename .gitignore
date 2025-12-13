@@ -4,3 +4,4 @@ logs/
 node_modules
 frontend/dist
 netmonitor.exe
+build/windows/installer/tmp
