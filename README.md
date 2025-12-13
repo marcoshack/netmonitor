@@ -11,8 +11,6 @@ NetMonitor is a real-time desktop network monitoring application built with [Wai
 - **Configurable**: Easy JSON-based configuration for endpoints, thresholds, and intervals.
 
 [![NetMonitor Screenshot](assets/netmonitor-20251210.png)](https://www.youtube.com/watch?v=fsdT9iVjCSM)
-<br>
-<small>[https://www.youtube.com/watch?v=fsdT9iVjCSM](https://www.youtube.com/watch?v=fsdT9iVjCSM)</small>
 
 ## Prerequisites
 
