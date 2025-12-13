@@ -495,6 +495,12 @@ function openDetailView(id) {
     const modal = document.getElementById("details-modal");
     modal.classList.add("active");
 
+    // Reset scroll position
+    const content = modal.querySelector(".modal-content");
+    if (content) {
+        content.scrollTop = 0;
+    }
+
     updateDetailView(id);
     initDetailChart(); // Create if not exists
     renderDetailChart(id);
