@@ -462,6 +462,28 @@ function setupDetailsModal() {
             openEditMonitor(endpointMap[currentDetailId]);
         }
     };
+    document.getElementById("btn-delete-details").onclick = async () => {
+        if (!currentDetailId || !endpointMap[currentDetailId]) return;
+
+        const ep = endpointMap[currentDetailId];
+        if (confirm(`Are you sure you want to delete "${ep.name}"? Data files will be preserved.`)) {
+            try {
+                const err = await window.go.main.App.DeleteEndpoint(ep.address, ep.type);
+                if (err) {
+                    alert("Failed to delete endpoint: " + err);
+                } else {
+                    closeDetailView();
+                    // Refresh App State
+                    currentConfig = await window.go.main.App.GetConfig();
+                    await setupEndpoints();
+                    renderDashboard();
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Error deleting endpoint: " + e);
+            }
+        }
+    };
     modal.onclick = (e) => {
         if (e.target === modal) closeDetailView();
     };

@@ -6,6 +6,10 @@ export function AddEndpoint(arg1) {
   return window['go']['main']['App']['AddEndpoint'](arg1);
 }
 
+export function DeleteEndpoint(arg1, arg2) {
+  return window['go']['main']['App']['DeleteEndpoint'](arg1, arg2);
+}
+
 export function GenerateEndpointID(arg1, arg2) {
   return window['go']['main']['App']['GenerateEndpointID'](arg1, arg2);
 }

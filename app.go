@@ -312,6 +312,43 @@ func (a *App) UpdateEndpoint(oldAddress string, oldType string, updatedEndpoint 
 	return ""
 }
 
+func (a *App) DeleteEndpoint(address string, endpointType string) string {
+	region, ok := a.Config.Regions["Default"]
+	if !ok {
+		return "Default region not found"
+	}
+
+	found := false
+	var newEndpoints []models.Endpoint
+
+	for _, ep := range region.Endpoints {
+		if ep.Address == address && string(ep.Type) == endpointType {
+			found = true
+			continue // Skip this one to delete it
+		}
+		newEndpoints = append(newEndpoints, ep)
+	}
+
+	if !found {
+		return "Endpoint not found"
+	}
+
+	region.Endpoints = newEndpoints
+	a.Config.Regions["Default"] = region
+
+	err := config.SaveConfig(a.ConfigPath, a.Config)
+	if err != nil {
+		return "Failed to save config: " + err.Error()
+	}
+
+	// Restart Monitor
+	a.Monitor.Stop()
+	a.Monitor.Config = a.Config
+	a.Monitor.Start()
+
+	return ""
+}
+
 func (a *App) ReorderEndpoints(regionName string, newOrderIDs []string) string {
 	region, ok := a.Config.Regions[regionName]
 	if !ok {

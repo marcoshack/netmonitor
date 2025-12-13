@@ -4,6 +4,8 @@ import {models} from '../models';
 
 export function AddEndpoint(arg1:models.Endpoint):Promise<string>;
 
+export function DeleteEndpoint(arg1:string,arg2:string):Promise<string>;
+
 export function GenerateEndpointID(arg1:string,arg2:models.EndpointType):Promise<string>;
 
 export function GetConfig():Promise<models.Configuration>;
