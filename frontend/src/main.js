@@ -338,18 +338,59 @@ function updateChartHistory(id) {
     const chart = chartInstances[id];
     if (!chart) return;
 
-    const results = testResults[id] || [];
-
     // Sort
-    results.sort((a, b) => a.timestamp - b.timestamp);
+    const rawResults = testResults[id] || [];
+    rawResults.sort((a, b) => a.timestamp - b.timestamp);
 
-    // Map to {x, y}
-    const data = results.map(r => ({
-        x: r.timestamp,
-        y: r.latency_ms
-    }));
+    // Dedup: Resolve conflicts at same timestamp
+    const results = [];
+    if (rawResults.length > 0) {
+        let prev = rawResults[0];
+        results.push(prev);
+        for (let i = 1; i < rawResults.length; i++) {
+            const curr = rawResults[i];
+            if (curr.timestamp.getTime() === prev.timestamp.getTime()) {
+                // Determine which to keep. prioritize failure > success
+                if (prev.statusStr === "success" && curr.statusStr !== "success") {
+                    // Replace prev with curr (failure)
+                    results[results.length - 1] = curr;
+                    prev = curr;
+                }
+                // Else keep prev (failure) or curr is just duplicate success.
+                // If both are different failures? Just keep one.
+            } else {
+                results.push(curr);
+                prev = curr;
+            }
+        }
+    }
 
-    chart.data.datasets[0].data = data;
+    const latencyData = [];
+    const failureData = [];
+    let lastTime = 0;
+    const intervalSec = (currentConfig && currentConfig.settings) ? currentConfig.settings.test_interval_seconds : 30;
+    const gapThreshold = intervalSec * 2500; // 2.5x interval in ms to detect gaps
+
+    results.forEach(r => {
+        const time = r.timestamp.getTime();
+
+        // 1. Check for time gap (Application offline)
+        if (lastTime > 0 && (time - lastTime) > gapThreshold) {
+            latencyData.push({ x: time - 1000, y: null });
+        }
+        lastTime = time;
+
+        if (r.statusStr === "success") {
+            latencyData.push({ x: r.timestamp, y: r.latency_ms });
+        } else {
+            // Failure
+            latencyData.push({ x: r.timestamp, y: null }); // Break line
+            failureData.push({ x: r.timestamp, y: 0, status: r.st });    // Red dot at bottom
+        }
+    });
+
+    chart.data.datasets[0].data = latencyData;
+    chart.data.datasets[1].data = failureData;
     chart.update();
 }
 
@@ -369,17 +410,29 @@ function initChart(id) {
     chartInstances[id] = new Chart(ctx, {
         type: 'line',
         data: {
-            datasets: [{
-                label: 'Latency (ms)',
-                data: [], // populated async
-                borderColor: '#3b82f6',
-                backgroundColor: gradient,
-                borderWidth: 2,
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                fill: true,
-                tension: 0.3
-            }]
+            datasets: [
+                {
+                    label: 'Latency (ms)',
+                    data: [], // populated async
+                    borderColor: '#3b82f6',
+                    backgroundColor: gradient,
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    fill: true,
+                    tension: 0.3,
+                    spanGaps: false // IMPORTANT for gaps
+                },
+                {
+                    label: 'Failures',
+                    data: [],
+                    type: 'scatter',
+                    backgroundColor: '#ef4444',
+                    pointRadius: 1.5, // Small visible dot
+                    pointHoverRadius: 4, // Match latency hover
+                    borderWidth: 0
+                }
+            ]
         },
         options: {
             responsive: true,
@@ -390,6 +443,17 @@ function initChart(id) {
                     mode: 'index',
                     intersect: false,
                     displayColors: false,
+                    callbacks: {
+                        label: function (context) {
+                            if (context.dataset.label === 'Failures') {
+                                const st = context.raw.status;
+                                if (st === 1) return "Timeout";
+                                if (st === 2) return "Error";
+                                return "Failure";
+                            }
+                            return `Latency: ${context.parsed.y} ms`;
+                        }
+                    }
                 }
             },
             scales: {
@@ -439,23 +503,17 @@ function handleTestResult(result) {
     }
 
     // Is it visible on current dashboard?
-    // Check if the endpoint belongs to current region using endpointMap
     const ep = endpointMap[id];
     if (ep && ep.regionName === currentRegion) {
         // Update Card UI
         const latSpan = document.getElementById(`latency-${id}`);
         const dot = document.getElementById(`status-dot-${id}`);
-        // removed updated timestamp per request previously? or just kept it. Kept it. 
-        // But element id was `last-updated` which is unique? 
-        // Ah, `last-updated` seems global or duplicated?
-        // In createEndpointCard I don't see `last-updated`. 
-        // Wait, look at previous code: `updated = document.getElementById("last-updated");`
-        // If there are multiple cards, `last-updated` ID would be duplicate if inside card?
-        // In createEndpointCard, I don't see `last-updated` ID being created.
-        // It might be a header element (global status).
-        // Let's keep it if it exists.
 
-        if (latSpan) latSpan.innerText = result.latency_ms;
+        if (latSpan) {
+            if (result.st === 1) latSpan.innerText = "Timeout";
+            else if (result.st === 2) latSpan.innerText = "Error";
+            else latSpan.innerHTML = result.latency_ms + ' <span class="text-sm text-muted font-normal">ms</span>';
+        }
         if (dot) {
             dot.className = "status-dot " + (result.statusStr === "success" ? "success" : "failure");
         }
@@ -463,14 +521,56 @@ function handleTestResult(result) {
         // Update Chart
         const chart = chartInstances[id] || initChart(id);
         if (chart) {
-            chart.data.datasets[0].data.push({
-                x: result.timestamp,
-                y: result.latency_ms
-            });
-            // Simple trim for chart
-            if (chart.data.datasets[0].data.length > 2000) {
-                chart.data.datasets[0].data.shift();
+            // Check for gap (if we have previous data)
+            const latencyDS = chart.data.datasets[0];
+            const failureDS = chart.data.datasets[1];
+
+            // Get last point from either dataset to compare time
+            let lastTime = 0;
+            const lastLat = latencyDS.data[latencyDS.data.length - 1];
+            const lastFail = failureDS.data[failureDS.data.length - 1];
+
+            if (lastLat && lastLat.x) lastTime = Math.max(lastTime, lastLat.x.getTime());
+            else if (lastLat) lastTime = Math.max(lastTime, lastLat.getTime ? lastLat.getTime() : 0); // Handle raw date
+
+            if (lastFail && lastFail.x) lastTime = Math.max(lastTime, lastFail.x.getTime());
+
+            // Detect Gap (use configured interval with some buffer, e.g. 2.5x)
+            // If no config, default to 30s * 2.5
+            const intervalSec = (currentConfig && currentConfig.settings) ? currentConfig.settings.test_interval_seconds : 30;
+            const gapThreshold = intervalSec * 2500; // ms
+
+            if (lastTime > 0 && (result.timestamp.getTime() - lastTime) > gapThreshold) {
+                // Insert gap in latency dataset
+                // We add a null point at calculated time or just break line? 
+                // Chart.js breaks line if valid point satisfies spanGaps: false.
+                // Inserting a null value point explicitly breaks it.
+                latencyDS.data.push({ x: result.timestamp.getTime() - 1000, y: null });
             }
+
+            if (result.statusStr === "success") {
+                latencyDS.data.push({
+                    x: result.timestamp,
+                    y: result.latency_ms
+                });
+            } else {
+                // Failure: add to failure dataset AND add break to latency
+                failureDS.data.push({
+                    x: result.timestamp,
+                    y: 0 // Baseline
+                });
+                latencyDS.data.push({
+                    x: result.timestamp,
+                    y: null
+                });
+            }
+
+            // Simple trim
+            // We need to trim both consistently or just by length? 
+            // Better to trim by length to avoid memory leak
+            if (latencyDS.data.length > 2000) latencyDS.data.shift();
+            if (failureDS.data.length > 2000) failureDS.data.shift();
+
             chart.update('none');
         }
     }
@@ -485,6 +585,7 @@ function handleTestResult(result) {
 }
 
 // --- Details View Functions ---
+
 
 function setupDetailsModal() {
     const modal = document.getElementById("details-modal");
@@ -608,7 +709,15 @@ function updateDetailView(id) {
     const results = detailData || [];
     if (results.length > 0) {
         const last = results[results.length - 1];
-        document.getElementById("detail-latency").innerText = last.latency_ms;
+
+        const latDiv = document.getElementById("detail-latency");
+        if (last.st === 1) {
+            latDiv.innerHTML = '<span class="text-error">Timeout</span>';
+        } else if (last.st === 2) {
+            latDiv.innerHTML = '<span class="text-error">Error</span>';
+        } else {
+            latDiv.parentElement.innerHTML = `<div id="detail-latency" class="text-lg font-bold">${last.latency_ms}</div><div class="text-sm text-muted">ms</div>`;
+        }
 
         const statusText = document.getElementById("detail-status-text");
         const dot = document.getElementById("detail-status-dot");
@@ -618,7 +727,7 @@ function updateDetailView(id) {
             statusText.className = "text-success font-bold";
             dot.className = "status-dot success";
         } else {
-            statusText.innerText = "Failure: " + (last.error || "Unknown");
+            statusText.innerText = "Failure: " + (last.error || (last.st === 1 ? "Timeout" : "Error"));
             statusText.className = "text-error font-bold";
             dot.className = "status-dot failure";
         }
@@ -692,7 +801,16 @@ function initDetailChart() {
                 borderWidth: 2,
                 pointRadius: 1, // Visible points
                 fill: true,
-                tension: 0.3
+                tension: 0.3,
+                spanGaps: false
+            }, {
+                label: 'Failures',
+                data: [],
+                type: 'scatter',
+                backgroundColor: '#ef4444',
+                pointRadius: 1.5,
+                pointHoverRadius: 4,
+                borderWidth: 0
             }]
         },
         options: {
@@ -709,6 +827,15 @@ function initDetailChart() {
                         title: (items) => {
                             if (!items.length) return '';
                             return new Date(items[0].raw.x).toLocaleString();
+                        },
+                        label: function (context) {
+                            if (context.dataset.label === 'Failures') {
+                                const st = context.raw.status;
+                                if (st === 1) return "Timeout";
+                                if (st === 2) return "Error";
+                                return "Failure";
+                            }
+                            return `Latency: ${context.parsed.y} ms`;
                         }
                     }
                 }
@@ -738,16 +865,54 @@ function initDetailChart() {
 function renderDetailChart(id) {
     if (!detailChartInstance) return;
 
-    const results = detailData || [];
+    const rawResults = detailData || [];
     // Sort
-    const sorted = [...results].sort((a, b) => a.timestamp - b.timestamp);
+    const sortedRaw = [...rawResults].sort((a, b) => a.timestamp - b.timestamp);
 
-    const data = sorted.map(r => ({
-        x: r.timestamp,
-        y: r.latency_ms
-    }));
+    // Dedup
+    const sorted = [];
+    if (sortedRaw.length > 0) {
+        let prev = sortedRaw[0];
+        sorted.push(prev);
+        for (let i = 1; i < sortedRaw.length; i++) {
+            const curr = sortedRaw[i];
+            if (curr.timestamp.getTime() === prev.timestamp.getTime()) {
+                if (prev.statusStr === "success" && curr.statusStr !== "success") {
+                    sorted[sorted.length - 1] = curr;
+                    prev = curr;
+                }
+            } else {
+                sorted.push(curr);
+                prev = curr;
+            }
+        }
+    }
 
-    detailChartInstance.data.datasets[0].data = data;
+    const latencyData = [];
+    const failureData = [];
+    let lastTime = 0;
+    const intervalSec = (currentConfig && currentConfig.settings) ? currentConfig.settings.test_interval_seconds : 30;
+    const gapThreshold = intervalSec * 2500;
+
+    sorted.forEach(r => {
+        const time = r.timestamp.getTime();
+
+        // 1. Gap Detection
+        if (lastTime > 0 && (time - lastTime) > gapThreshold) {
+            latencyData.push({ x: time - 1000, y: null });
+        }
+        lastTime = time;
+
+        if (r.statusStr === "success") {
+            latencyData.push({ x: r.timestamp, y: r.latency_ms });
+        } else {
+            latencyData.push({ x: r.timestamp, y: null });
+            failureData.push({ x: r.timestamp, y: 0, status: r.st });
+        }
+    });
+
+    detailChartInstance.data.datasets[0].data = latencyData;
+    detailChartInstance.data.datasets[1].data = failureData;
     detailChartInstance.update();
 }
 
