@@ -40,6 +40,7 @@ async function init() {
         setupDetailsModal();
         setupWindowListeners();
         setupLogsButton();
+        setupGlobalEsc(); // New
 
         // Initial Layout
         renderDashboard();
@@ -676,9 +677,7 @@ function setupSettings() {
     });
 
     // Close
-    document.getElementById("btn-close-settings").addEventListener("click", () => {
-        modal.classList.remove("active");
-    });
+    document.getElementById("btn-close-settings").addEventListener("click", attemptCloseSettings);
 
     // Save
     document.getElementById("settings-form").addEventListener("submit", async (e) => {
@@ -699,7 +698,7 @@ function setupSettings() {
             if (err) {
                 alert("Error saving config: " + err);
             } else {
-                modal.classList.remove("active");
+                document.getElementById("settings-modal").classList.remove("active"); // Direct close on save
                 document.getElementById("status-message").innerText = "Settings Saved";
             }
         } catch (error) {
@@ -710,7 +709,7 @@ function setupSettings() {
 
     // Close on click outside
     modal.addEventListener("click", (e) => {
-        if (e.target === modal) modal.classList.remove("active");
+        if (e.target === modal) attemptCloseSettings();
     });
 }
 
@@ -766,13 +765,11 @@ function setupAddMonitor() {
     }
 
     // Close
-    document.getElementById("btn-close-add-monitor").addEventListener("click", () => {
-        modal.classList.remove("active");
-    });
+    document.getElementById("btn-close-add-monitor").addEventListener("click", attemptCloseAddMonitor);
 
     // Close on background click
     modal.addEventListener("click", (e) => {
-        if (e.target === modal) modal.classList.remove("active");
+        if (e.target === modal) attemptCloseAddMonitor();
     });
 
     // Submit
@@ -863,8 +860,10 @@ function openEditMonitor(endpoint) {
     isEditMode = true;
     editingEndpointId = endpoint.id;
     originalEndpoint = {
+        name: endpoint.name,
         address: endpoint.address,
-        type: endpoint.type
+        type: endpoint.type,
+        timeout: endpoint.timeout
     };
 
     document.querySelector("#add-monitor-modal h2").innerText = "Edit Monitor";
@@ -902,3 +901,76 @@ function openEditMonitor(endpoint) {
     modal.classList.add("active");
 }
 
+
+function setupGlobalEsc() {
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            const settingsModal = document.getElementById("settings-modal");
+            const addModal = document.getElementById("add-monitor-modal");
+            const detailsModal = document.getElementById("details-modal");
+
+            if (settingsModal.classList.contains("active")) {
+                attemptCloseSettings();
+            } else if (addModal.classList.contains("active")) {
+                attemptCloseAddMonitor();
+            } else if (detailsModal.classList.contains("active")) {
+                closeDetailView();
+            }
+        }
+    });
+}
+
+function hasSettingsChanged() {
+    if (!currentConfig || !currentConfig.settings) return false;
+    // Handle potential string vs number issues by casting to correct types
+    const currentInterval = parseInt(document.getElementById("setting-interval").value);
+    const currentRetention = parseInt(document.getElementById("setting-retention").value);
+    const currentNotif = document.getElementById("setting-notifications").checked;
+
+    return (
+        currentInterval !== currentConfig.settings.test_interval_seconds ||
+        currentRetention !== currentConfig.settings.data_retention_days ||
+        currentNotif !== currentConfig.settings.notifications_enabled
+    );
+}
+
+function attemptCloseSettings() {
+    const modal = document.getElementById("settings-modal");
+    if (!modal.classList.contains("active")) return;
+
+    if (hasSettingsChanged()) {
+        if (!confirm("You have unsaved changes. Are you sure you want to close?")) {
+            return;
+        }
+    }
+    // Check if form is valid? No, cancellation implies ignoring invalid state too.
+    modal.classList.remove("active");
+}
+
+function hasMonitorChanged() {
+    if (!isEditMode || !originalEndpoint) return false;
+
+    const currentName = document.getElementById("add-name").value;
+    const currentType = document.getElementById("add-type").value;
+    const currentAddress = document.getElementById("add-address").value;
+    const currentTimeout = parseInt(document.getElementById("add-timeout").value);
+
+    return (
+        currentName !== originalEndpoint.name ||
+        currentType !== originalEndpoint.type ||
+        currentAddress !== originalEndpoint.address ||
+        currentTimeout !== originalEndpoint.timeout
+    );
+}
+
+function attemptCloseAddMonitor() {
+    const modal = document.getElementById("add-monitor-modal");
+    if (!modal.classList.contains("active")) return;
+
+    if (isEditMode && hasMonitorChanged()) {
+        if (!confirm("You have unsaved changes. Are you sure you want to close?")) {
+            return;
+        }
+    }
+    modal.classList.remove("active");
+}
