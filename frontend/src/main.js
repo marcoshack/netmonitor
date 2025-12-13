@@ -10,6 +10,7 @@ let endpointMap = {}; // HashID -> { ...endpoint, regionName }
 // Detail View State
 let detailChartInstance = null;
 let currentDetailId = null;
+let detailData = null; // Independent data for detail view
 
 // Edit Mode State
 let isEditMode = false;
@@ -309,6 +310,30 @@ async function fetchHistory(range) {
     }
 }
 
+async function fetchDetailHistory(id, range) {
+    try {
+        const results = await window.go.main.App.GetHistoryRange(range);
+
+        // Filter for this specific endpoint
+        const filtered = results.filter(r => r.id === id);
+
+        // Normalize and update detailData
+        detailData = filtered.map(r => {
+            // Clone or modify? results are fresh from backend so modifying is fine
+            r.timestamp = new Date(r.ts);
+            r.latency_ms = r.ms;
+            r.statusStr = r.st === 0 ? "success" : "failure";
+            return r;
+        });
+
+        // Update View
+        updateDetailView(id);
+
+    } catch (err) {
+        console.error("Failed to fetch detail history", err);
+    }
+}
+
 function updateChartHistory(id) {
     const chart = chartInstances[id];
     if (!chart) return;
@@ -452,6 +477,9 @@ function handleTestResult(result) {
 
     // Is it the currently detailed endpoint?
     if (currentDetailId && currentDetailId === id) {
+        if (detailData) {
+            detailData.push(result);
+        }
         updateDetailView(id);
     }
 }
@@ -466,6 +494,14 @@ function setupDetailsModal() {
             openEditMonitor(endpointMap[currentDetailId]);
         }
     };
+
+    // Period Selector
+    document.getElementById("detail-time-select").addEventListener("change", (e) => {
+        if (currentDetailId) {
+            fetchDetailHistory(currentDetailId, e.target.value);
+        }
+    });
+
     document.getElementById("btn-delete-details").onclick = () => {
         if (!currentDetailId || !endpointMap[currentDetailId]) return;
 
@@ -534,6 +570,13 @@ function openDetailView(id) {
     const modal = document.getElementById("details-modal");
     modal.classList.add("active");
 
+    // Sync selector to main dashboard
+    const mainRange = document.getElementById("time-range-select").value;
+    document.getElementById("detail-time-select").value = mainRange;
+
+    // Build independent data copy
+    detailData = testResults[id] ? [...testResults[id]] : [];
+
     // Reset scroll position
     const content = modal.querySelector(".modal-content");
     if (content) {
@@ -548,6 +591,7 @@ function openDetailView(id) {
 function closeDetailView() {
     document.getElementById("details-modal").classList.remove("active");
     currentDetailId = null;
+    detailData = null;
 }
 
 function updateDetailView(id) {
@@ -561,7 +605,7 @@ function updateDetailView(id) {
     document.getElementById("detail-protocol").innerText = endpoint.type;
 
     // 3. Get Latest Data
-    const results = testResults[id] || [];
+    const results = detailData || [];
     if (results.length > 0) {
         const last = results[results.length - 1];
         document.getElementById("detail-latency").innerText = last.latency_ms;
@@ -694,7 +738,7 @@ function initDetailChart() {
 function renderDetailChart(id) {
     if (!detailChartInstance) return;
 
-    const results = testResults[id] || [];
+    const results = detailData || [];
     // Sort
     const sorted = [...results].sort((a, b) => a.timestamp - b.timestamp);
 
