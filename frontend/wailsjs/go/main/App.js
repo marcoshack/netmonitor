@@ -30,6 +30,10 @@ export function GetRegions() {
   return window['go']['main']['App']['GetRegions']();
 }
 
+export function GetStartOnBoot() {
+  return window['go']['main']['App']['GetStartOnBoot']();
+}
+
 export function HideWindow() {
   return window['go']['main']['App']['HideWindow']();
 }
@@ -56,6 +60,10 @@ export function ReorderEndpoints(arg1, arg2) {
 
 export function SaveConfig(arg1) {
   return window['go']['main']['App']['SaveConfig'](arg1);
+}
+
+export function SetStartOnBoot(arg1) {
+  return window['go']['main']['App']['SetStartOnBoot'](arg1);
 }
 
 export function ShowWindow() {

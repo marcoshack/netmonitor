@@ -18,6 +18,7 @@ import (
 	stdruntime "runtime"
 
 	"github.com/marcoshack/netmonitor/internal/logger"
+	"github.com/marcoshack/netmonitor/internal/startup"
 )
 
 // App struct
@@ -402,4 +403,16 @@ func (a *App) OpenLogDirectory() {
 	if cmd != nil {
 		_ = cmd.Start()
 	}
+}
+
+func (a *App) GetStartOnBoot() bool {
+	return startup.Get()
+}
+
+func (a *App) SetStartOnBoot(enabled bool) string {
+	err := startup.Set(enabled)
+	if err != nil {
+		return err.Error()
+	}
+	return ""
 }

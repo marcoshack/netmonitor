@@ -16,6 +16,8 @@ export function GetHistoryRange(arg1:string):Promise<Array<models.TestResult>>;
 
 export function GetRegions():Promise<Record<string, models.Region>>;
 
+export function GetStartOnBoot():Promise<boolean>;
+
 export function HideWindow():Promise<void>;
 
 export function InitSystemTray():Promise<void>;
@@ -29,6 +31,8 @@ export function QuitApp():Promise<void>;
 export function ReorderEndpoints(arg1:string,arg2:Array<string>):Promise<string>;
 
 export function SaveConfig(arg1:models.Configuration):Promise<string>;
+
+export function SetStartOnBoot(arg1:boolean):Promise<string>;
 
 export function ShowWindow():Promise<void>;
 

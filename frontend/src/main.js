@@ -920,13 +920,22 @@ function setupSettings() {
     const modal = document.getElementById("settings-modal");
 
     // Open
-    document.getElementById("btn-settings").addEventListener("click", () => {
+    document.getElementById("btn-settings").addEventListener("click", async () => {
         // Populate fields
         if (currentConfig && currentConfig.settings) {
             document.getElementById("setting-interval").value = currentConfig.settings.test_interval_seconds;
             document.getElementById("setting-retention").value = currentConfig.settings.data_retention_days;
             document.getElementById("setting-notifications").checked = currentConfig.settings.notifications_enabled;
         }
+
+        // Get Start on Boot status
+        try {
+            const startOnBoot = await window.go.main.App.GetStartOnBoot();
+            document.getElementById("setting-start-on-boot").checked = startOnBoot;
+        } catch (e) {
+            console.error("Failed to get start on boot status:", e);
+        }
+
         modal.classList.add("active");
     });
 
@@ -937,21 +946,34 @@ function setupSettings() {
     document.getElementById("settings-form").addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const newSettings = {
-            test_interval_seconds: parseInt(document.getElementById("setting-interval").value),
-            data_retention_days: parseInt(document.getElementById("setting-retention").value),
-            notifications_enabled: document.getElementById("setting-notifications").checked
+        const interval = parseInt(document.getElementById("setting-interval").value);
+        const retention = parseInt(document.getElementById("setting-retention").value);
+        const notifications = document.getElementById("setting-notifications").checked;
+        const startOnBoot = document.getElementById("setting-start-on-boot").checked;
+
+        const newConfig = {
+            ...currentConfig,
+            settings: {
+                ...currentConfig.settings,
+                test_interval_seconds: interval,
+                data_retention_days: retention,
+                notifications_enabled: notifications
+            }
         };
 
-        // Update local object deeply
-        currentConfig.settings = newSettings;
-
-        // Send to backend
         try {
-            const err = await window.go.main.App.SaveConfig(currentConfig);
+            const err = await window.go.main.App.SaveConfig(newConfig);
             if (err) {
                 alert("Error saving config: " + err);
             } else {
+                // Save Start on Boot
+                const bootErr = await window.go.main.App.SetStartOnBoot(startOnBoot);
+                if (bootErr) {
+                    console.error("Failed to set start on boot:", bootErr);
+                    // Don't block close, but maybe warn?
+                }
+
+                currentConfig = newConfig; // Update local
                 document.getElementById("settings-modal").classList.remove("active"); // Direct close on save
                 document.getElementById("status-message").innerText = "Settings Saved";
             }

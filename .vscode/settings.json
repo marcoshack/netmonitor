@@ -6,5 +6,6 @@
         "build.buildFlags": [
             "-tags=tools"
         ]
-    }
+    },
+    "makefile.configureOnOpen": false
 }
